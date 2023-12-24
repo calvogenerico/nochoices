@@ -53,6 +53,34 @@ describe('Option', () => {
     })
   })
 
+  describe('unwrap_or', () => {
+    it('None returns the default value', () => {
+      const none = Option.None()
+      const defaultValue = 123
+      expect(none.unwrapOr(defaultValue)).to.eql(123)
+    })
+
+    it('Some returns the contained value', () => {
+      const value = { a: 123 }
+      const some = Option.Some(value)
+      const defaultValue = { a: 0 }
+      expect(some.unwrapOr(defaultValue)).to.equal(value)
+    })
+  })
+
+  describe('unwrap_or_else', () => {
+    it('None executes the provided function and returns that value', () => {
+      const none = Option.None()
+      const obj = {}
+      let called = false
+      expect(none.unwrapOrElse(() => {
+        called = true
+        return obj
+      })).to.equal(obj)
+      expect(called).to.eql(true)
+    })
+  })
+
   describe('map', () => {
     it('None returns none', () => {
       const opt: Option<number> = Option.None()

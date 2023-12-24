@@ -25,4 +25,12 @@ export class None<T> extends OptionalValue<T> {
   expect (err: Error): T {
     throw err
   }
+
+  unwrapOr (defaultValue: T): T {
+    return defaultValue;
+  }
+
+  unwrapOrElse (defaultFn: () => T): T {
+    return defaultFn();
+  }
 }

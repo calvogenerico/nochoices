@@ -12,4 +12,8 @@ export abstract class OptionalValue<T> {
   abstract filter (fn: (a: T) => boolean): Option<T>
 
   abstract expect (err: Error): T
+
+  abstract unwrapOr (defaultValue: T): T
+
+  abstract unwrapOrElse (defaultFn: () => T): T
 }

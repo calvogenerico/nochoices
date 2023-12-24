@@ -40,5 +40,13 @@ export class Option<T> {
   expect (err: Error): T {
     return this.value.expect(err)
   }
+
+  unwrapOr (defaultValue: T): T {
+    return this.value.unwrapOr(defaultValue)
+  }
+
+  unwrapOrElse (defaultFn: () => T): T {
+    return this.value.unwrapOrElse(defaultFn)
+  }
 }
 

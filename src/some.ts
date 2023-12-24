@@ -37,4 +37,13 @@ export class Some<T> extends OptionalValue<T> {
   expect (_err: Error): T {
     return this.value;
   }
+
+  unwrapOr (_defaultValue: T): T {
+    return this.value;
+  }
+
+  unwrapOrElse (_defaultFn: () => T): T {
+    return this.value;
+  }
+
 }
