@@ -14,11 +14,11 @@ export class Option<T> {
     return new Option<T>(new None())
   }
 
-  isAbsent(): boolean {
+  isNone(): boolean {
     return this.value.isAbsent()
   }
 
-  isPresent(): boolean {
+  isSome(): boolean {
     return this.value.isPresent()
   }
 
