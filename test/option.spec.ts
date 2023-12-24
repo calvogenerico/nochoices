@@ -94,6 +94,7 @@ describe('Option', () => {
         called = true
         return true
       })
+      expect(res.isSome()).to.eql(true)
       expect(called).to.eql(true)
     })
   })
