@@ -1,4 +1,4 @@
-import { describe, it } from 'mocha'
+import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {Option} from "../src/index.js";
 
@@ -86,9 +86,15 @@ describe('Option', () => {
     })
 
     it('Sends the right value to the fn', () => {
-      const none = Option.Some(123)
-      const res = none.filter((_) => false)
-      expect(res.isNone()).to.eql(true)
+      const obj = {}
+      const some = Option.Some(obj)
+      let called = false
+      const res = some.filter((a) => {
+        expect(a).to.equal(obj)
+        called = true
+        return true
+      })
+      expect(called).to.eql(true)
     })
   })
 })
