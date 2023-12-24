@@ -1,5 +1,5 @@
 import {OptionalValue} from "./optional-value.js";
-import {Option} from "./option.js";
+import {FlatteOption, Option} from "./option.js";
 
 export class None<T> extends OptionalValue<T> {
   isPresent (): boolean {

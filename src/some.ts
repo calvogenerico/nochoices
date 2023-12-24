@@ -1,5 +1,5 @@
 import {OptionalValue} from "./optional-value.js";
-import {Option} from "./option.js";
+import {FlatteOption, Option} from "./option.js";
 
 export class Some<T> extends OptionalValue<T> {
   value: T
@@ -45,5 +45,4 @@ export class Some<T> extends OptionalValue<T> {
   unwrapOrElse (_defaultFn: () => T): T {
     return this.value;
   }
-
 }

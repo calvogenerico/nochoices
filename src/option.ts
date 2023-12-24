@@ -48,5 +48,35 @@ export class Option<T> {
   unwrapOrElse (defaultFn: () => T): T {
     return this.value.unwrapOrElse(defaultFn)
   }
-}
 
+  flatten (): Option<FlatteOption<T>> {
+    if (this.isSome()) {
+      const inner = this.unwrap();
+      if (inner instanceof Option) {
+        return inner
+      } else {
+        return this as Option<FlatteOption<T>>
+      }
+    } else {
+      return Option.None()
+    }
+  }
+}
+// Option<1>
+
+// Option<Option<1>>
+
+// export type FlatOption<T> = T extends Option<infer U>
+//     ? (U extends Option<infer V>
+//         ? Option<V>
+//         : Option<U>
+//         )
+//     : Option<T>
+
+// export type FlatOption<T> = T extends Option<infer U>
+//     ? (U extends Option<any>? FlatOption<U> : U)
+//     : T
+
+export type FlatteOption<T> = T extends Option<infer U>
+    ? U
+    : T

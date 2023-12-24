@@ -153,4 +153,34 @@ describe('Option', () => {
       expect(called).to.eql(true)
     })
   })
+
+  describe('#flatten', () => {
+    it('none keeps being none', () => {
+      const none = Option.None()
+      const flattened = none.flatten();
+      expect(flattened.isNone()).to.eql(true)
+    })
+
+    it('some of some of t returns some of t', () => {
+      const some = Option.Some(Option.Some(1))
+      const flattened = some.flatten();
+      expect(flattened.isSome()).to.eql(true)
+      expect(flattened.unwrap()).to.eql(1)
+    })
+
+    it('some of t returns some of t', () => {
+      const some = Option.Some(1)
+      const flattened = some.flatten();
+      expect(flattened.isSome()).to.eql(true)
+      expect(flattened.unwrap()).to.eql(1)
+    })
+
+    it('some of some of some of t returns some of some of t', () => {
+      const obj = {};
+      const some = Option.Some(Option.Some(Option.Some(obj)))
+      const flattened = some.flatten();
+      expect(flattened.isSome()).to.eql(true)
+      expect(flattened.unwrap().unwrap()).to.eql(obj)
+    })
+  })
 })

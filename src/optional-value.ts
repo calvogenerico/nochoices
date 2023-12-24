@@ -1,4 +1,4 @@
-import {Option} from "./option.js";
+import {FlatteOption, Option} from "./option.js";
 
 export abstract class OptionalValue<T> {
   abstract isPresent (): boolean
