@@ -23,6 +23,21 @@ describe('Option', () => {
     expect(opt.isAbsent()).to.eql(false)
   })
 
+  describe('unwrap', () => {
+    it('None.unwrap throws an error', () => {
+      let none = Option.None()
+      expect(() => none.unwrap()).to.throw(Error, 'unwrap over None.')
+      expect(none.isAbsent()).to.eq(true)
+    })
+
+    it('Some.unwrap returns the contained value', () => {
+      const obj = {}
+      let none = Option.Some(obj)
+      let value = none.unwrap()
+      expect(value).to.equal(obj)
+    })
+  })
+
   describe('map', () => {
     it('None returns none', () => {
       let opt: Option<number> = Option.None()
@@ -35,6 +50,13 @@ describe('Option', () => {
       let mapped = opt.map((a) => a + 1)
       expect(mapped.isPresent())
       expect(mapped.unwrap()).to.eql(2)
+    })
+
+    it('can change the type of the option', () => {
+      let opt1 = Option.Some(1)
+      let opt2 = opt1.map(_ => 'a')
+      expect(opt2.isPresent())
+      expect(opt2.unwrap()).to.eql('a')
     })
   })
 })
