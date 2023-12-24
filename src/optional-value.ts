@@ -10,4 +10,6 @@ export abstract class OptionalValue<T> {
   abstract map<M> (fn: (a: T) => M): Option<M>
 
   abstract filter (fn: (a: T) => boolean): Option<T>
+
+  abstract expect (err: Error): T
 }

@@ -3,11 +3,11 @@ import {Option} from "./option.js";
 
 export class None<T> extends OptionalValue<T> {
   isPresent (): boolean {
-    return false;
+    return false
   }
 
   isAbsent (): boolean {
-    return true;
+    return true
   }
 
   unwrap (): T {
@@ -19,6 +19,10 @@ export class None<T> extends OptionalValue<T> {
   }
 
   filter (_fn: (a: T) => boolean): Option<T> {
-    return Option.None();
+    return Option.None()
+  }
+
+  expect (err: Error): T {
+    throw err
   }
 }

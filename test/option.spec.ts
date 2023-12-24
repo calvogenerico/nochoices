@@ -38,6 +38,21 @@ describe('Option', () => {
     })
   })
 
+  describe('expect', () => {
+    it('None.expect trows specified error', () => {
+      const err = new Error('this is the error')
+      const none = Option.None()
+      expect(() => none.expect(err)).to.throw(Error, 'this is the error')
+    })
+
+    it('Some.expect returns the contained value', () => {
+      const obj = {}
+      const err = new Error('this is the error')
+      const some = Option.Some(obj)
+      expect(some.expect(err)).to.equal(obj)
+    })
+  })
+
   describe('map', () => {
     it('None returns none', () => {
       const opt: Option<number> = Option.None()

@@ -36,5 +36,9 @@ export class Option<T> {
   filter (fn: (a: T) => boolean): Option<T> {
     return this.value.filter(fn)
   }
+
+  expect (err: Error): T {
+    return this.value.expect(err)
+  }
 }
 

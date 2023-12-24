@@ -33,4 +33,8 @@ export class Some<T> extends OptionalValue<T> {
     }
     return Option.None();
   }
+
+  expect (_err: Error): T {
+    return this.value;
+  }
 }
