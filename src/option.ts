@@ -29,6 +29,10 @@ export class Option<T> {
   unwrap (): T {
     return this.value.unwrap()
   }
+
+  filter (fn: (a: T) => boolean): Option<T> {
+    return this.value.filter(fn)
+  }
 }
 
 abstract class OptionalValue<T> {
@@ -38,6 +42,8 @@ abstract class OptionalValue<T> {
   abstract unwrap(): T
 
   abstract map<M>(fn: (a: T) => M): Option<M>
+
+  abstract filter(fn: (a: T) => boolean): Option<T>
 }
 
 class None<T> extends OptionalValue<T> {
@@ -55,6 +61,10 @@ class None<T> extends OptionalValue<T> {
 
   map<M>(_fn: (a: T) => M): Option<M> {
     return Option.None()
+  }
+
+  filter (_fn: (a: T) => boolean): Option<T> {
+    return Option.None();
   }
 }
 
@@ -80,5 +90,13 @@ class Some<T> extends OptionalValue<T> {
   map<M> (fn: (a: T) => M): Option<M> {
     const newValue = fn(this.value)
     return Option.Some(newValue);
+  }
+
+  filter (fn: (a: T) => boolean): Option<T> {
+    const res = fn(this.value);
+    if (res) {
+      return Option.Some(this.value)
+    }
+    return Option.None();
   }
 }

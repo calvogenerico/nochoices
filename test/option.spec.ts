@@ -59,4 +59,36 @@ describe('Option', () => {
       expect(opt2.unwrap()).to.eql('a')
     })
   })
+
+  describe('filter', () => {
+    it('None keeps none when the filterFn returns true', () => {
+      const none = Option.None()
+      const res = none.filter((_) => true)
+      expect(res.isNone()).to.eql(true)
+    })
+
+    it('None keeps none when the filterFn returns false', () => {
+      const none = Option.None()
+      const res = none.filter((_) => false)
+      expect(res.isNone()).to.eql(true)
+    })
+
+    it('Some keeps the value when the filterFn returns true', () => {
+      const some = Option.Some(123)
+      const res = some.filter((_) => true)
+      expect(res.unwrap()).to.eql(123)
+    })
+
+    it('Some returns None when when the filterFn returns false', () => {
+      const some = Option.Some(123)
+      const res = some.filter((_) => false)
+      expect(res.isNone()).to.eql(true)
+    })
+
+    it('Sends the right value to the fn', () => {
+      const none = Option.Some(123)
+      const res = none.filter((_) => false)
+      expect(res.isNone()).to.eql(true)
+    })
+  })
 })
