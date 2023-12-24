@@ -23,7 +23,7 @@ describe('Option', () => {
     expect(opt.isNone()).to.eql(false)
   })
 
-  describe('unwrap', () => {
+  describe('#unwrap', () => {
     it('None.unwrap throws an error', () => {
       const none = Option.None()
       expect(() => none.unwrap()).to.throw(Error, 'unwrap over None.')
@@ -38,7 +38,7 @@ describe('Option', () => {
     })
   })
 
-  describe('expect', () => {
+  describe('#expect', () => {
     it('None.expect trows specified error', () => {
       const err = new Error('this is the error')
       const none = Option.None()
@@ -53,7 +53,7 @@ describe('Option', () => {
     })
   })
 
-  describe('unwrap_or', () => {
+  describe('#unwrap_or', () => {
     it('None returns the default value', () => {
       const none = Option.None()
       const defaultValue = 123
@@ -68,7 +68,7 @@ describe('Option', () => {
     })
   })
 
-  describe('unwrap_or_else', () => {
+  describe('#unwrap_or_else', () => {
     it('None executes the provided function and returns that value', () => {
       const none = Option.None()
       const obj = {}
@@ -81,7 +81,7 @@ describe('Option', () => {
     })
   })
 
-  describe('map', () => {
+  describe('#map', () => {
     it('None returns none', () => {
       const opt: Option<number> = Option.None()
       const mapped = opt.map((a) => a + 1)
@@ -101,9 +101,21 @@ describe('Option', () => {
       expect(opt2.isSome())
       expect(opt2.unwrap()).to.eql('a')
     })
+
+    it('some sends the inner value to the fn', () => {
+      const obj = {}
+      const some = Option.Some(obj)
+      let called = false
+      some.map((value) => {
+        expect(value).to.equal(obj)
+        called = true
+        return value
+      })
+      expect(called).to.eql(true)
+    })
   })
 
-  describe('filter', () => {
+  describe('#filter', () => {
     it('None keeps none when the filterFn returns true', () => {
       const none = Option.None()
       const res = none.filter((_) => true)
