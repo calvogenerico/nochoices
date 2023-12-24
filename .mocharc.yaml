@@ -1,0 +1,12 @@
+node-option:
+  - import=tsx/esm
+recursive: true
+extension: ".spec.ts"
+#  {
+#    "node-option": [
+#    "loader=ts-node/esm"
+#  ],
+#  "recursive": true,
+#  "reporter": "spec",
+#  "extension": ".spec.ts"
+#}
