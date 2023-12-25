@@ -18,4 +18,6 @@ export abstract class OptionalValue<T> {
   abstract unwrapOrElse (defaultFn: () => T): T
   
   abstract flatten(): Option<FlattenOption<T>>
+
+  abstract mapOr<U>(defaultValue: U, mapFn: (value: T) => U): U
 }

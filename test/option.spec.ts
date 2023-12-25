@@ -184,4 +184,30 @@ describe('Option', () => {
       expect(flattened.unwrap().unwrap()).to.eql(obj)
     })
   })
+
+  describe('#mapOr', () => {
+    it('returns the default value for None', () => {
+      const none = Option.None<number>()
+      const mapped = none.mapOr(10, a => a + 1)
+      expect(mapped).to.eql(10)
+    })
+
+    it('returns the transformed value when is some', () => {
+      const some = Option.Some(10)
+      const mapped = some.mapOr(-1, a => a + 1)
+      expect(mapped).to.eql(11)
+    })
+
+    it('some sends the right value to map fn', () => {
+      const obj = {}
+      const some = Option.Some(obj)
+      let called = false
+      const mapped = some.mapOr(-1, a => {
+        expect(a).to.equal(obj)
+        called = true
+        return 10
+      })
+      expect(called).to.eql(true)
+    })
+  })
 })

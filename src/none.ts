@@ -37,4 +37,8 @@ export class None<T> extends OptionalValue<T> {
   flatten (): Option<FlattenOption<T>> {
     return Option.None();
   }
+
+  mapOr<U> (defaultValue: U, _mapFn: (value: T) => U): U {
+    return defaultValue;
+  }
 }

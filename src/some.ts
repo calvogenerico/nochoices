@@ -53,4 +53,8 @@ export class Some<T> extends OptionalValue<T> {
       return Option.Some(this.value) as Option<FlattenOption<T>>
     }
   }
+
+  mapOr<U> (_defaultValue: U, mapFn: (value: T) => U): U {
+    return mapFn(this.value);
+  }
 }
