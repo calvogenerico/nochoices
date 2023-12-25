@@ -60,6 +60,10 @@ export class Option<T> {
   mapOrElse<U>(defFn: () => U, mapFn: (value: T) => U): U {
     return this.value.mapOrElse(defFn, mapFn)
   }
+
+  zip<U>(another: Option<U>): Option<[T, U]> {
+    return this.value.zip(another.value)
+  }
 }
 
 export type FlattenOption<T> = T extends Option<infer U>

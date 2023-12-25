@@ -237,4 +237,34 @@ describe('Option', () => {
       expect(called).to.eql(true)
     })
   })
+
+  describe('#zip', () => {
+    it('none returns None when receives None as argument', () => {
+      const none = Option.None()
+      const arg = Option.None()
+      const zipped = none.zip(arg)
+      expect(zipped.isNone()).to.eql(true)
+    })
+
+    it('none returns None when receives Some as argument', () => {
+      const none = Option.None()
+      const arg = Option.Some(10)
+      const zipped = none.zip(arg)
+      expect(zipped.isNone()).to.eql(true)
+    })
+
+    it('Some returns None when recieves None', () => {
+      const some = Option.Some(10)
+      const arg = Option.None()
+      const zipped = some.zip(arg)
+      expect(zipped.isNone()).to.eql(true)
+    })
+
+    it('Some returns Some with both values when recieves Soem', () => {
+      const some = Option.Some(10)
+      const arg = Option.Some('foo')
+      const zipped = some.zip(arg)
+      expect(zipped.unwrap()).to.eql([10, 'foo'])
+    })
+  })
 })

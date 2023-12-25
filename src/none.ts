@@ -1,5 +1,6 @@
 import {OptionalValue} from "./optional-value.js";
 import {FlattenOption, Option} from "./option.js";
+import {Some} from "./some.js";
 
 export class None<T> extends OptionalValue<T> {
   isPresent (): boolean {
@@ -44,5 +45,13 @@ export class None<T> extends OptionalValue<T> {
 
   mapOrElse<U> (defFn: () => U, _mapFn: (value: T) => U): U {
     return defFn();
+  }
+
+  zip<U> (_another: OptionalValue<U>): Option<[T, U]> {
+    return Option.None();
+  }
+
+  zipWithSome<U> (_some: Some<U>): Option<[U, T]> {
+    return Option.None();
   }
 }

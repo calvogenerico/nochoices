@@ -61,4 +61,12 @@ export class Some<T> extends OptionalValue<T> {
   mapOrElse<U> (_defFn: () => U, mapFn: (value: T) => U): U {
     return mapFn(this.value);
   }
+
+  zip<U> (another: OptionalValue<U>): Option<[T, U]> {
+    return another.zipWithSome(this)
+  }
+
+  zipWithSome<U> (some: Some<U>): Option<[U, T]> {
+    return Option.Some([some.value, this.value]);
+  }
 }
