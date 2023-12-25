@@ -1,5 +1,5 @@
 import {OptionalValue} from "./optional-value.js";
-import {FlatteOption, Option} from "./option.js";
+import {FlattenOption, Option} from "./option.js";
 
 export class None<T> extends OptionalValue<T> {
   isPresent (): boolean {
@@ -32,5 +32,9 @@ export class None<T> extends OptionalValue<T> {
 
   unwrapOrElse (defaultFn: () => T): T {
     return defaultFn();
+  }
+
+  flatten (): Option<FlattenOption<T>> {
+    return Option.None();
   }
 }

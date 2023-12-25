@@ -1,5 +1,5 @@
 import {OptionalValue} from "./optional-value.js";
-import {FlatteOption, Option} from "./option.js";
+import {FlattenOption, Option} from "./option.js";
 
 export class Some<T> extends OptionalValue<T> {
   value: T
@@ -44,5 +44,13 @@ export class Some<T> extends OptionalValue<T> {
 
   unwrapOrElse (_defaultFn: () => T): T {
     return this.value;
+  }
+
+  flatten (): Option<FlattenOption<T>> {
+    if (this.value instanceof Option) {
+      return this.value
+    } else {
+      return Option.Some(this.value) as Option<FlattenOption<T>>
+    }
   }
 }

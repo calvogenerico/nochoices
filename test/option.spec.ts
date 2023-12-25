@@ -1,6 +1,7 @@
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {Option} from "../src/index.js";
+import {Some} from "../src/some.js";
 
 describe('Option', () => {
   it('None is absent', () => {

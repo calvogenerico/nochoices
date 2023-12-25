@@ -1,4 +1,4 @@
-import {FlatteOption, Option} from "./option.js";
+import {FlattenOption, Option} from "./option.js";
 
 export abstract class OptionalValue<T> {
   abstract isPresent (): boolean
@@ -16,4 +16,6 @@ export abstract class OptionalValue<T> {
   abstract unwrapOr (defaultValue: T): T
 
   abstract unwrapOrElse (defaultFn: () => T): T
+  
+  abstract flatten(): Option<FlattenOption<T>>
 }
