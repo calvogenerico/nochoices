@@ -41,4 +41,8 @@ export class None<T> extends OptionalValue<T> {
   mapOr<U> (defaultValue: U, _mapFn: (value: T) => U): U {
     return defaultValue;
   }
+
+  mapOrElse<U> (defFn: () => U, _mapFn: (value: T) => U): U {
+    return defFn();
+  }
 }

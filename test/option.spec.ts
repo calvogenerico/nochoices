@@ -210,4 +210,31 @@ describe('Option', () => {
       expect(called).to.eql(true)
     })
   })
+
+  describe('#mapOrElse', () => {
+    it('none returns execs the provided generator', () => {
+      const n = 123123
+      const none = Option.None<number>()
+      const res = none.mapOrElse(() => n, (_) =>  10)
+      expect(res).to.eql(n)
+    })
+
+    it('some returns maps the value', () => {
+      const some = Option.Some(10)
+      const res = some.mapOrElse(() => -1, a =>  a + 1)
+      expect(res).to.eql(11)
+    })
+
+    it('sends the right argument to map fn', () => {
+      const obj = {}
+      const some = Option.Some(obj)
+      let called = false
+      const mapped = some.mapOrElse(() => -1, a => {
+        expect(a).to.equal(obj)
+        called = true
+        return 10
+      })
+      expect(called).to.eql(true)
+    })
+  })
 })

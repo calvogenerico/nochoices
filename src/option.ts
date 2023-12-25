@@ -56,6 +56,10 @@ export class Option<T> {
   mapOr<U>(defaultValue: U, mapFn: (value: T) => U): U {
     return this.value.mapOr(defaultValue, mapFn)
   }
+
+  mapOrElse<U>(defFn: () => U, mapFn: (value: T) => U): U {
+    return this.value.mapOrElse(defFn, mapFn)
+  }
 }
 
 export type FlattenOption<T> = T extends Option<infer U>
