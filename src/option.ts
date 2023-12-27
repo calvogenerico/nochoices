@@ -2,6 +2,10 @@ import {OptionalValue} from "./optional-value.js";
 import {Some} from "./some.js";
 import {None} from "./none.js";
 
+export type FlattenOption<T> = T extends Option<infer U>
+    ? U
+    : T
+
 export class Option<T> {
   private value: OptionalValue<T>;
 
@@ -68,8 +72,15 @@ export class Option<T> {
   zipWith<U, V>(another: Option<U>, zipWithFn: (t: T, u: U) => V): Option<V> {
     return this.value.zipWith(another.value, zipWithFn)
   }
-}
 
-export type FlattenOption<T> = T extends Option<infer U>
-    ? U
-    : T
+
+  and<V>(another: Option<V>): Option<V> {
+    return this.value.and(another)
+
+    // if (this.isSome()) {
+    //   return another
+    // } else {
+    //   return Option.None()
+    // }
+  }
+}

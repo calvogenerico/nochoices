@@ -297,4 +297,34 @@ describe('Option', () => {
       expect(res.unwrap()).to.eql('aaa')
     })
   })
+
+  describe('#and', () => {
+    it('none and none returns none', () => {
+      const none = Option.None()
+      const arg = Option.None()
+      const res = none.and(arg)
+      expect(res).to.eql(Option.None())
+    })
+
+    it('none and some returns none', () => {
+      const none = Option.None()
+      const arg = Option.Some(123)
+      const res = none.and(arg)
+      expect(res).to.eql(Option.None())
+    })
+
+    it('some and none returns none', () => {
+      const none = Option.Some(123)
+      const arg = Option.None()
+      const res = none.and(arg)
+      expect(res).to.eql(Option.None())
+    })
+
+    it('some and some returns some with the value and type of the parameter', () => {
+      const none = Option.Some(123)
+      const arg = Option.Some('foo')
+      const res = none.and(arg)
+      expect(res).to.eql(Option.Some('foo'))
+    })
+  })
 })
