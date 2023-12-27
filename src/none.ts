@@ -59,11 +59,15 @@ export class None<T> extends OptionalValue<T> {
     return Option.None();
   }
 
-  zipWithWithSome<U, V> (some: Some<U>, zipWithFn: (u: U, t: T) => V): Option<V> {
+  zipWithWithSome<U, V> (_some: Some<U>, _zipWithFn: (u: U, t: T) => V): Option<V> {
     return Option.None();
   }
 
-  and<V>(another: Option<V>): Option<V> {
+  and<V>(_another: Option<V>): Option<V> {
     return Option.None();
+  }
+
+  or(another: Option<T>): Option<T> {
+    return another;
   }
 }

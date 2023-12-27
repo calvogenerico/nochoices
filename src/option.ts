@@ -83,4 +83,8 @@ export class Option<T> {
     //   return Option.None()
     // }
   }
+
+  or(another: Option<T>): Option<T> {
+    return this.value.or(another)
+  }
 }

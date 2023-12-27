@@ -314,17 +314,50 @@ describe('Option', () => {
     })
 
     it('some and none returns none', () => {
-      const none = Option.Some(123)
+      const some = Option.Some(123)
       const arg = Option.None()
-      const res = none.and(arg)
+      const res = some.and(arg)
       expect(res).to.eql(Option.None())
     })
 
     it('some and some returns some with the value and type of the parameter', () => {
-      const none = Option.Some(123)
+      const some = Option.Some(123)
       const arg = Option.Some('foo')
-      const res = none.and(arg)
+      const res = some.and(arg)
       expect(res).to.eql(Option.Some('foo'))
     })
   })
+
+  describe('#or', () => {
+    it('none or none returns none', () => {
+      const none = Option.None()
+      const arg = Option.None()
+      const res = none.or(arg)
+      expect(res.isNone()).to.eql(true)
+    })
+
+    it('none or some returns the some given as arg', () => {
+      const none = Option.None()
+      const obj = {}
+      const arg = Option.Some(obj)
+      const res = none.or(arg)
+      expect(res.unwrap()).to.equal(obj)
+    })
+
+    it('some or none returns the first some', () => {
+      const obj = {}
+      const some = Option.Some(obj)
+      const arg: Option<{}> = Option.None()
+      const res = some.or(arg)
+      expect(res.unwrap()).to.equal(obj)
+    })
+
+    it('some or some returns the first some', () => {
+      const str = 'foo'
+      const some = Option.Some(str)
+      const arg = Option.Some('bar')
+      const res = some.or(arg)
+      expect(res.unwrap()).to.equal(str)
+    })
+  });
 })

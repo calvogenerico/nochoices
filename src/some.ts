@@ -81,4 +81,8 @@ export class Some<T> extends OptionalValue<T> {
   and<V>(another: Option<V>): Option<V> {
     return another;
   }
+
+  or(_another: Option<T>): Option<T> {
+    return Option.Some(this.value);
+  }
 }
