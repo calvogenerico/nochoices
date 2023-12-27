@@ -392,4 +392,7 @@ describe('Option', () => {
       expect(res.isNone()).to.eql(true)
     })
   })
+
+  describe('#andThen', () => {});
+  describe('#orElse', () => {});
 })
