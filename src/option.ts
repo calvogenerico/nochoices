@@ -87,4 +87,8 @@ export class Option<T> {
   or(another: Option<T>): Option<T> {
     return this.value.or(another)
   }
+
+  xor(another: Option<T>): Option<T> {
+    return this.value.xor(another.value)
+  }
 }

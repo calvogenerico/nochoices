@@ -70,4 +70,8 @@ export class None<T> extends OptionalValue<T> {
   or(another: Option<T>): Option<T> {
     return another;
   }
+
+  xor(another: OptionalValue<T>): Option<T> {
+    return another.isPresent() ? Option.Some(another.unwrap()): Option.None();
+  }
 }

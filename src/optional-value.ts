@@ -35,4 +35,6 @@ export abstract class OptionalValue<T> {
   abstract and<V>(another: Option<V>): Option<V>;
 
   abstract or(another: Option<T>): Option<T>
+
+  abstract xor(another: OptionalValue<T>): Option<T>
 }

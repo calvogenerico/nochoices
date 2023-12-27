@@ -85,4 +85,8 @@ export class Some<T> extends OptionalValue<T> {
   or(_another: Option<T>): Option<T> {
     return Option.Some(this.value);
   }
+
+  xor(another: OptionalValue<T>): Option<T> {
+    return another.isPresent() ? Option.None() : Option.Some(this.value);
+  }
 }

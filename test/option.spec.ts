@@ -359,5 +359,37 @@ describe('Option', () => {
       const res = some.or(arg)
       expect(res.unwrap()).to.equal(str)
     })
-  });
+  })
+
+  describe('#xor', () => {
+    it('None xor None returns None', () => {
+      const none = Option.None()
+      const arg = Option.None()
+      const res = none.xor(arg)
+      expect(res).to.eql(Option.None())
+    })
+
+    it('None xor Some returns the Some given as arg', () => {
+      const none = Option.None()
+      const value = {}
+      const arg = Option.Some(value)
+      const res = none.xor(arg)
+      expect(res.unwrap()).to.eql(value)
+    })
+
+    it('Some xor None returns the Some with the first value', () => {
+      const value = {}
+      const some = Option.Some(value)
+      const arg: Option<{}> = Option.None()
+      const res = some.xor(arg)
+      expect(res.unwrap()).to.eql(value)
+    })
+
+    it('Some xor Some returns None', () => {
+      const some = Option.Some(123)
+      const arg = Option.Some(456)
+      const res = some.xor(arg)
+      expect(res.isNone()).to.eql(true)
+    })
+  })
 })
