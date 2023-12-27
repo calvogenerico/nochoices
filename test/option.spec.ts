@@ -260,7 +260,7 @@ describe('Option', () => {
       expect(zipped.isNone()).to.eql(true)
     })
 
-    it('Some returns Some with both values when recieves Soem', () => {
+    it('Some returns Some with both values when receives another Some', () => {
       const some = Option.Some(10)
       const arg = Option.Some('foo')
       const zipped = some.zip(arg)
