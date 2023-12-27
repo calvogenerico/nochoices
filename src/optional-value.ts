@@ -27,4 +27,8 @@ export abstract class OptionalValue<T> {
   abstract zip<U> (another: OptionalValue<U>): Option<[T, U]>
 
   abstract zipWithSome<U>(some: Some<U>): Option<[U, T]>
+
+  abstract zipWith<U, V>(another: OptionalValue<U>, zipWithFn: (t: T, u: U) => V): Option<V>
+
+  abstract zipWithWithSome<U, V>(some: Some<U>, zipWithFn: (u: U, t: T) => V): Option<V>
 }

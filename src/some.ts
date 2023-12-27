@@ -69,4 +69,12 @@ export class Some<T> extends OptionalValue<T> {
   zipWithSome<U> (some: Some<U>): Option<[U, T]> {
     return Option.Some([some.value, this.value]);
   }
+
+  zipWith<U, V> (another: OptionalValue<U>, zipWithFn: (t: T, u: U) => V): Option<V> {
+    return another.zipWithWithSome(this, zipWithFn);
+  }
+
+  zipWithWithSome<U, V> (some: Some<U>, zipWithFn: (u: U, t: T) => V): Option<V> {
+    return Option.Some(zipWithFn(some.value, this.value));
+  }
 }

@@ -267,4 +267,34 @@ describe('Option', () => {
       expect(zipped.unwrap()).to.eql([10, 'foo'])
     })
   })
+
+  describe('#zipWith', () => {
+    it('None returns None when receives None as parameter', () => {
+      const none = Option.None()
+      const arg = Option.None();
+      const res = none.zipWith(arg, (_a, _b) => { expect.fail('should not be called')})
+      expect(res.isNone()).to.eql(true)
+    })
+
+    it('None returns None when receives Some as parameter', () => {
+      const none = Option.None()
+      const arg = Option.Some(10);
+      const res = none.zipWith(arg, (_a, _b) => { expect.fail('should not be called')})
+      expect(res.isNone()).to.eql(true)
+    })
+
+    it('Some returns None when receives None as parameter', () => {
+      const none = Option.Some(10)
+      const arg = Option.None();
+      const res = none.zipWith(arg, (_a, _b) => { expect.fail('should not be called')})
+      expect(res.isNone()).to.eql(true)
+    })
+
+    it('when Some receives Some it returns Some with the content of applying the map function', () => {
+      const none = Option.Some(3)
+      const arg = Option.Some('a');
+      const res = none.zipWith(arg, (a, b) => b.repeat(a))
+      expect(res.unwrap()).to.eql('aaa')
+    })
+  })
 })

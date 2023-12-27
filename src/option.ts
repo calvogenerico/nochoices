@@ -64,6 +64,10 @@ export class Option<T> {
   zip<U>(another: Option<U>): Option<[T, U]> {
     return this.value.zip(another.value)
   }
+
+  zipWith<U, V>(another: Option<U>, zipWithFn: (t: T, u: U) => V): Option<V> {
+    return this.value.zipWith(another.value, zipWithFn)
+  }
 }
 
 export type FlattenOption<T> = T extends Option<infer U>
