@@ -122,9 +122,10 @@ export class Option<T> {
 
   isSomeAnd (andFn: (t: T) => boolean): boolean {
     return this.value.isSomeAnd(andFn)
-    // if (this.isSome()) {
-    //   return andFn(this.unwrap())
-    // }
-    // return false
+  }
+
+  ifSome (param: (t: T) => void): Option<T> {
+    this.value.ifSome(param)
+    return this
   }
 }

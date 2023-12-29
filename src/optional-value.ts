@@ -49,4 +49,6 @@ export abstract class OptionalValue<T> {
   abstract takeValue (): Option<T>
 
   abstract isSomeAnd (andFn: (t: T) => boolean): boolean
+
+  abstract ifSome (param: (t: T) => void): void
 }

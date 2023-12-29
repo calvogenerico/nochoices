@@ -38,7 +38,7 @@ describe('Option', () => {
     it('none does not call the fn', () => {
       const none = Option.None()
       let called = false
-      const res = none.isSomeAnd(() => {
+      none.isSomeAnd(() => {
         called = true
         return true
       })
@@ -682,6 +682,40 @@ describe('Option', () => {
       some.replace(newValue)
       expect(some.isSome()).to.eql(true)
       expect(some.unwrap()).to.eql(newValue)
+    })
+  })
+
+  describe('#ifSome', () => {
+    it('none does not call the fn', () => {
+      const none = Option.None()
+      let called = false
+      none.ifSome((_) => {
+        called = true
+      })
+      expect(called).to.eql(false)
+    })
+
+    it('some calls the fn', () => {
+      const some = Option.Some(123)
+      let called = false
+      some.ifSome((t) => {
+        expect(t).to.eql(123)
+        called = true
+      })
+      expect(called).to.eql(true)
+    })
+
+    it('none returns none', () => {
+      const none = Option.None()
+      const res = none.ifSome((_) => {})
+      expect(res.isNone()).to.eql(true)
+    })
+
+    it('some returns self', () => {
+      const some = Option.Some(123)
+      const res = some.ifSome((_) => {})
+      expect(res.isSome()).to.eql(true)
+      expect(res).to.equal(some)
     })
   })
 })

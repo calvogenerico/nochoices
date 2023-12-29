@@ -113,4 +113,8 @@ export class Some<T> extends OptionalValue<T> {
   isSomeAnd (andFn: (t: T) => boolean): boolean {
     return andFn(this.value);
   }
+
+  ifSome (param: (t: T) => void): void {
+    param(this.value)
+  }
 }

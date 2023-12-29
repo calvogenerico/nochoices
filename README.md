@@ -11,14 +11,20 @@
   - `as_deref_mut`
   - `as_pin_ref`
   - `as_pin_mut`
-- Transformations with `Result`.
+  - `unwrap_unchecked`
+- Transformations to rust types `Result`.
   - `ok_or`
   - `ok_or_else`
   - `transpose`
+  - `as_slice`
+  - `as_mut_slice`
 
 - Conversions to iterator.
   - `into_iter`
   - `iter`
   - `iter_mut`
 
-- getOrInsertDefault
+- Methods that use rust specific traits
+  - `unwrap_or_default`
+  - `get_or_insert_default`
+

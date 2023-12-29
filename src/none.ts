@@ -98,4 +98,8 @@ export class None<T> extends OptionalValue<T> {
   isSomeAnd (_andFn: (t: T) => boolean): boolean {
     return false;
   }
+
+  ifSome (_param: (t: T) => void): void {
+    /* no-op */
+  }
 }
