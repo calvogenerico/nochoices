@@ -38,7 +38,7 @@ export abstract class OptionalValue<T> {
 
   abstract xorWithSome (some: Some<T>): Option<T>
 
-  abstract andThen<U>(fn: (t: T) => Option<U>): Option<U>
+  abstract andThen<U> (fn: (t: T) => Option<U>): Option<U>
 
   abstract orElse (fn: () => Option<T>): Option<T>
 
@@ -47,4 +47,6 @@ export abstract class OptionalValue<T> {
   abstract getOrInsertWith (fn: () => T): OptionalValue<T>
 
   abstract takeValue (): Option<T>
+
+  abstract isSomeAnd (andFn: (t: T) => boolean): boolean
 }

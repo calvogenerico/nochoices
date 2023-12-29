@@ -109,4 +109,8 @@ export class Some<T> extends OptionalValue<T> {
   takeValue (): Option<T> {
     return Option.Some(this.value);
   }
+
+  isSomeAnd (andFn: (t: T) => boolean): boolean {
+    return andFn(this.value);
+  }
 }

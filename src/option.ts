@@ -119,4 +119,12 @@ export class Option<T> {
     this.value = new Some(newValue)
     return new Option<T>(oldValue)
   }
+
+  isSomeAnd (andFn: (t: T) => boolean): boolean {
+    return this.value.isSomeAnd(andFn)
+    // if (this.isSome()) {
+    //   return andFn(this.unwrap())
+    // }
+    // return false
+  }
 }

@@ -94,4 +94,8 @@ export class None<T> extends OptionalValue<T> {
   takeValue (): Option<T> {
     return Option.None();
   }
+
+  isSomeAnd (_andFn: (t: T) => boolean): boolean {
+    return false;
+  }
 }

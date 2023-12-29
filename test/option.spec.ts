@@ -3,25 +3,80 @@ import {expect} from 'chai'
 import {Option} from "../src/index.js"
 
 describe('Option', () => {
-  it('None is absent', () => {
-    const opt = Option.None()
-    expect(opt.isNone()).to.eql(true)
+  describe('#isSome', () => {
+    it('None is not present', () => {
+      const opt = Option.None()
+      expect(opt.isSome()).to.eql(false)
+    })
+
+    it('Some is present', () => {
+      const opt = Option.Some(1)
+      expect(opt.isSome()).to.eql(true)
+    })
   })
 
-  it('None is not present', () => {
-    const opt = Option.None()
-    expect(opt.isSome()).to.eql(false)
+  describe('#isNone', () => {
+    it('None is absent', () => {
+      const opt = Option.None()
+      expect(opt.isNone()).to.eql(true)
+    })
+
+    it('Some is not absent', () => {
+      const opt = Option.Some(1)
+      expect(opt.isNone()).to.eql(false)
+    })
   })
 
-  it('Some is present', () => {
-    const opt = Option.Some(1)
-    expect(opt.isSome()).to.eql(true)
+
+  describe('#isSomeAnd', () => {
+    it('none returns false', () => {
+      const none = Option.None()
+      const res = none.isSomeAnd(() => true)
+      expect(res).to.eql(false)
+    })
+
+    it('none does not call the fn', () => {
+      const none = Option.None()
+      let called = false
+      const res = none.isSomeAnd(() => {
+        called = true
+        return true
+      })
+      expect(called).to.eql(false)
+    })
+
+    it('some returns false when the fn returns false', () => {
+      const some = Option.Some(123)
+      const res = some.isSomeAnd((_) => false)
+      expect(res).to.eql(false)
+    })
+
+    it('some returns true when the fn returns true', () => {
+      const some = Option.Some(123)
+      const res = some.isSomeAnd((_) => true)
+      expect(res).to.eql(true)
+    })
+
+    it('some calls the fn', () => {
+      const some = Option.Some(123)
+      let called = false
+      some.isSomeAnd((_) => {
+        called = true
+        return true
+      })
+      expect(called).to.eql(true)
+    })
+
+    it('returns calls the fn with using its internal value as the argument', () => {
+      const obj = {}
+      const some: Option<object> = Option.Some(obj)
+      some.isSomeAnd((o) => {
+        expect(o).to.equal(obj)
+        return true
+      })
+    })
   })
 
-  it('Some is not absent', () => {
-    const opt = Option.Some(1)
-    expect(opt.isNone()).to.eql(false)
-  })
 
   describe('#unwrap', () => {
     it('None.unwrap throws an error', () => {
