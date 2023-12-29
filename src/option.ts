@@ -107,4 +107,10 @@ export class Option<T> {
     this.value = this.value.getOrInsertWith(fn)
     return this.unwrap()
   }
+
+  take (): Option<T> {
+    const takeValue = this.value.takeValue()
+    this.value = new None()
+    return takeValue
+  }
 }

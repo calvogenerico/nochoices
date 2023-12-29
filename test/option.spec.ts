@@ -569,7 +569,30 @@ describe('Option', () => {
       expect(called).to.eql(false)
     })
   })
-  describe('#getOrInsertWith', () => {})
-  describe('#take', () => {})
+
+  describe('#take', () => {
+    it('take from none returns none', () => {
+      const none = Option.None()
+      expect(none.take().isNone()).to.eql(true)
+    })
+
+    it('take from none leaves self as none', () => {
+      const none = Option.None()
+      none.take();
+      expect(none.isNone()).to.eql(true)
+    })
+
+    it('some returns its contained value', () => {
+      const some = Option.Some(123)
+      const res = some.take();
+      expect(res.unwrap()).to.eql(123)
+    })
+
+    it('some mutates into none', () => {
+      const option = Option.Some(123)
+      option.take();
+      expect(option.isNone()).to.eql(true)
+    })
+  })
   describe('#replace', () => {})
 })

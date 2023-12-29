@@ -105,4 +105,8 @@ export class Some<T> extends OptionalValue<T> {
   getOrInsertWith (_fn: () => T): OptionalValue<T> {
     return this;
   }
+
+  takeValue (): Option<T> {
+    return Option.Some(this.value);
+  }
 }
