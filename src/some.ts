@@ -75,8 +75,8 @@ export class Some<T> extends OptionalValue<T> {
     return another;
   }
 
-  or(_another: Option<T>): Option<T> {
-    return Option.Some(this.value);
+  or(self: Option<T>, _another: Option<T>): Option<T> {
+    return self;
   }
 
   xor(another: OptionalValue<T>): Option<T> {
@@ -89,5 +89,9 @@ export class Some<T> extends OptionalValue<T> {
 
   xorWithSome (_some: Some<T>): Option<T> {
     return Option.None();
+  }
+
+  andThen<U> (fn: (t: T) => Option<U>): Option<U> {
+    return fn(this.value);
   }
 }

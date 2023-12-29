@@ -78,10 +78,14 @@ export class Option<T> {
   }
 
   or(another: Option<T>): Option<T> {
-    return this.value.or(another)
+    return this.value.or(this, another)
   }
 
   xor(another: Option<T>): Option<T> {
     return this.value.xor(another.value)
+  }
+
+  andThen <U>(fn: (t: T) => Option<U>): Option<U> {
+    return this.value.andThen(fn)
   }
 }

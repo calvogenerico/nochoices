@@ -326,6 +326,13 @@ describe('Option', () => {
       const res = some.and(arg)
       expect(res).to.eql(Option.Some('foo'))
     })
+
+    it('some and some returns exactly the same instance sent as argument', () => {
+      const some = Option.Some(123)
+      const arg = Option.Some('foo')
+      const res = some.and(arg)
+      expect(res).to.equal(arg)
+    })
   })
 
   describe('#or', () => {
@@ -350,6 +357,13 @@ describe('Option', () => {
       const arg: Option<{}> = Option.None()
       const res = some.or(arg)
       expect(res.unwrap()).to.equal(obj)
+    })
+
+    it('some or none returns exactly the same instance', () => {
+      const some = Option.Some(123)
+      const arg: Option<number> = Option.None()
+      const res = some.or(arg)
+      expect(res).to.equal(some)
     })
 
     it('some or some returns the first some', () => {
@@ -393,6 +407,56 @@ describe('Option', () => {
     })
   })
 
-  describe('#andThen', () => {});
+  describe('#andThen', () => {
+    it('none receives a function that returns none, the result is none', () => {
+      const none: Option<number> = Option.None()
+      const fn = (_a: number) => Option.None()
+      const res = none.andThen(fn)
+      expect(res.isNone()).to.eql(true)
+    })
+
+    it('some receives a function that returns some, the result is some of the result', () => {
+      const some: Option<number> = Option.Some(10)
+      const fn = (_a: number) => Option.Some('foo')
+      const res = some.andThen(fn)
+      expect(res.unwrap()).to.eql('foo')
+    })
+
+    it('some receives a function that returns none, the result is none', () => {
+      const some: Option<number> = Option.Some(10)
+      const fn = (_a: number) => Option.None()
+      const res = some.andThen(fn)
+      expect(res.isNone()).to.eql(true)
+    })
+
+    it('none receives a function that returns some, the result is none', () => {
+      const none: Option<number> = Option.None()
+      const fn = (_a: number) => Option.Some(10)
+      const res = none.andThen(fn)
+      expect(res.isNone()).to.eql(true)
+    })
+
+    it('sends the right argument to the callback', () => {
+      const obj = {}
+      const some: Option<{}> = Option.Some(obj)
+      let called = false
+      const res = some.andThen((a) => {
+        expect(a).to.equal(obj)
+        called = true
+        return Option.None()
+      })
+      expect(called).to.eql(true)
+    })
+
+    it('does not call the callback when returns none', () => {
+      const none: Option<{}> = Option.None()
+      let called = false
+      const res = none.andThen(() => {
+        called = true
+        return Option.None()
+      })
+      expect(called).to.eql(false)
+    })
+  })
   describe('#orElse', () => {});
 })

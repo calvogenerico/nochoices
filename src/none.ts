@@ -59,7 +59,7 @@ export class None<T> extends OptionalValue<T> {
     return Option.None();
   }
 
-  or(another: Option<T>): Option<T> {
+  or(_self: Option<T>, another: Option<T>): Option<T> {
     return another;
   }
 
@@ -73,5 +73,9 @@ export class None<T> extends OptionalValue<T> {
 
   xorWithSome (some: Some<T>): Option<T> {
     return Option.Some(some.unwrap());
+  }
+
+  andThen<U> (_fn: (t: T) => Option<U>): Option<U> {
+    return Option.None();
   }
 }
