@@ -54,10 +54,6 @@ export class Some<T> extends OptionalValue<T> {
     }
   }
 
-  mapOr<U> (_defaultValue: U, mapFn: (value: T) => U): U {
-    return mapFn(this.value);
-  }
-
   mapOrElse<U> (_defFn: () => U, mapFn: (value: T) => U): U {
     return mapFn(this.value);
   }

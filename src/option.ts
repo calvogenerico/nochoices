@@ -58,7 +58,7 @@ export class Option<T> {
   }
 
   mapOr<U>(defaultValue: U, mapFn: (value: T) => U): U {
-    return this.value.mapOr(defaultValue, mapFn)
+    return this.map(mapFn).unwrapOr(defaultValue)
   }
 
   mapOrElse<U>(defFn: () => U, mapFn: (value: T) => U): U {
