@@ -97,4 +97,8 @@ export class Some<T> extends OptionalValue<T> {
   orElse (_fn: () => Option<T>): Option<T> {
     return Option.Some(this.value)
   }
+
+  getOrInsert (_value: T): OptionalValue<T> {
+    return this;
+  }
 }

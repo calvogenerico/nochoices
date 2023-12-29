@@ -92,4 +92,14 @@ export class Option<T> {
   orElse (fn: () => Option<T>): Option<T> {
     return this.value.orElse(fn)
   }
+
+  insert (value: T): Option<T> {
+    this.value = new Some(value)
+    return this
+  }
+
+  getOrInsert (value: T): T {
+    this.value = this.value.getOrInsert(value)
+    return this.unwrap()
+  }
 }

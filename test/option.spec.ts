@@ -488,4 +488,49 @@ describe('Option', () => {
       expect(res.unwrap()).to.eql('foo')
     })
   })
+
+  describe('#insert', () => {
+    it('none gets transformed into some with the given value', () => {
+      const option = Option.None()
+      option.insert(10)
+      expect(option.unwrap()).to.eql(10)
+    })
+
+    it('some replace the old value with the one given as argument', () => {
+      const option = Option.Some(123)
+      option.insert(456)
+      expect(option.unwrap()).to.eql(456)
+    })
+  })
+
+  describe('#getOrInsert', () => {
+    it('none returns the value given by default.', () => {
+      const none = Option.None()
+      const res = none.getOrInsert(123)
+      expect(res).to.eql(123)
+    })
+
+    it('none gets converted into some with the value.', () => {
+      const option = Option.None()
+      option.getOrInsert(123)
+      expect(option.unwrap()).to.eql(123)
+    })
+
+    it('some returns the value contained inside and ignores the argument.', () => {
+      const some = Option.Some(123)
+      const res = some.getOrInsert(456)
+      expect(res).to.eql(123)
+    })
+
+    it('some keeps its original value.', () => {
+      const some = Option.Some(123)
+      some.getOrInsert(456)
+      expect(some.unwrap()).to.eql(123)
+    })
+  })
+
+  describe('#getOrInsertWith', () => {})
+  describe('#getOrInsertWith', () => {})
+  describe('#take', () => {})
+  describe('#replace', () => {})
 })

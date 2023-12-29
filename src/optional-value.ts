@@ -41,4 +41,6 @@ export abstract class OptionalValue<T> {
   abstract andThen<U>(fn: (t: T) => Option<U>): Option<U>
 
   abstract orElse (fn: () => Option<T>): Option<T>
+
+  abstract getOrInsert (value: T): OptionalValue<T>
 }
