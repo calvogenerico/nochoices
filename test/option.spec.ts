@@ -718,4 +718,25 @@ describe('Option', () => {
       expect(res).to.equal(some)
     })
   })
+
+  describe('#inspect', () => {
+    it('none does not call the fn', () => {
+      const none = Option.None()
+      let called = false
+      none.inspect((_) => {
+        called = true
+      })
+      expect(called).to.eql(false)
+    })
+
+    it('some calls the fn with the right arg', () => {
+      const some = Option.Some(123)
+      let called = false
+      some.inspect((arg) => {
+        expect(arg).to.eql(123)
+        called = true
+      })
+      expect(called).to.eql(true)
+    })
+  })
 })

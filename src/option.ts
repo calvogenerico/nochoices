@@ -128,4 +128,10 @@ export class Option<T> {
     this.value.ifSome(param)
     return this
   }
+
+  inspect (param: (t: T) => void) {
+    if (this.isSome()) {
+      param(this.unwrap())
+    }
+  }
 }
