@@ -20,10 +20,6 @@ export abstract class OptionalValue<T> {
 
   abstract flatten (): Option<FlattenOption<T>>
 
-  abstract mapOr<U> (defaultValue: U, mapFn: (value: T) => U): U
-
-  abstract mapOrElse<U> (defFn: () => U, mapFn: (value: T) => U): U
-
   abstract zip<U> (another: OptionalValue<U>): Option<[T, U]>
 
   abstract zipWithSome<U>(some: Some<U>): Option<[U, T]>
