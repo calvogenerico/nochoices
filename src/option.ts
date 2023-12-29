@@ -76,12 +76,6 @@ export class Option<T> {
 
   and<V>(another: Option<V>): Option<V> {
     return this.value.and(another)
-
-    // if (this.isSome()) {
-    //   return another
-    // } else {
-    //   return Option.None()
-    // }
   }
 
   or(another: Option<T>): Option<T> {
