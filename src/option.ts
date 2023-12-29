@@ -130,8 +130,10 @@ export class Option<T> {
   }
 
   inspect (param: (t: T) => void) {
-    if (this.isSome()) {
-      param(this.unwrap())
-    }
+    this.ifSome(param)
+  }
+
+  takeIf (param: (t: T) => boolean): Option<T> {
+    return this.filter(param).andThen(() => this.take())
   }
 }

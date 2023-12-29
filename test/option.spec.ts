@@ -352,6 +352,12 @@ describe('Option', () => {
     })
   })
 
+  describe('#unzip', () => {
+    it('has to be implemented', () => {
+      expect(true).to.eql(false)
+    })
+  })
+
   describe('#and', () => {
     it('none and none returns none', () => {
       const none = Option.None()
@@ -647,6 +653,48 @@ describe('Option', () => {
       const option = Option.Some(123)
       option.take();
       expect(option.isNone()).to.eql(true)
+    })
+  })
+
+  describe('#takeIf', () => {
+    it('none returns none', () => {
+      const none = Option.None()
+      const res = none.takeIf((_) => true)
+      expect(res.isNone()).to.eql(true)
+    })
+    it('none does not call the fn', () => {
+      const none = Option.None()
+      let called = false
+      const res = none.takeIf((_) => {
+        called = true
+        return true
+      })
+      expect(called).to.eql(false)
+    })
+
+    it('some returns some with its value when predicate is true', () => {
+      const some = Option.Some(123)
+      const res = some.takeIf((_) => true)
+      expect(res.isSome()).to.eql(true)
+      expect(res.unwrap()).to.eql(123)
+    })
+
+    it('some mutates into none when predicate returns true', () => {
+      const some = Option.Some(123)
+      some.takeIf((_) => true)
+      expect(some.isNone()).to.eql(true)
+    })
+
+    it('some returns none when preducate returns false', () => {
+      const some = Option.Some(123)
+      const res = some.takeIf((_) => false)
+      expect(res.isNone()).to.eql(true)
+    })
+
+    it('some does not mutate when predicate returns false', () => {
+      const some = Option.Some(123)
+      some.takeIf((_) => false)
+      expect(some.isSomeAnd(t => t === 123)).to.eql(true)
     })
   })
 
