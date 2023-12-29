@@ -1,4 +1,4 @@
-import {Option} from "./option.js";
+import {Option} from "./option.js"
 
 export function flatten<T>(opt: Option<Option<T>>): Option<T> {
   if (opt.isSome()) {

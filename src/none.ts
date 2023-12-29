@@ -1,6 +1,6 @@
-import {OptionalValue} from "./optional-value.js";
-import {FlattenOption, Option} from "./option.js";
-import {Some} from "./some.js";
+import {OptionalValue} from "./optional-value.js"
+import {FlattenOption, Option} from "./option.js"
+import {Some} from "./some.js"
 
 export class None<T> extends OptionalValue<T> {
   isPresent (): boolean {
@@ -28,58 +28,58 @@ export class None<T> extends OptionalValue<T> {
   }
 
   unwrapOr (defaultValue: T): T {
-    return defaultValue;
+    return defaultValue
   }
 
   unwrapOrElse (defaultFn: () => T): T {
-    return defaultFn();
+    return defaultFn()
   }
 
   flatten (): Option<FlattenOption<T>> {
-    return Option.None();
+    return Option.None()
   }
 
   zip<U> (_another: OptionalValue<U>): Option<[T, U]> {
-    return Option.None();
+    return Option.None()
   }
 
   zipWithSome<U> (_some: Some<U>): Option<[U, T]> {
-    return Option.None();
+    return Option.None()
   }
 
   zipWith<U, V> (_another: OptionalValue<U>, _zipWithFn: (t: T, u: U) => V): Option<V> {
-    return Option.None();
+    return Option.None()
   }
 
   zipWithWithSome<U, V> (_some: Some<U>, _zipWithFn: (u: U, t: T) => V): Option<V> {
-    return Option.None();
+    return Option.None()
   }
 
   and<V>(_another: Option<V>): Option<V> {
-    return Option.None();
+    return Option.None()
   }
 
   or(_self: Option<T>, another: Option<T>): Option<T> {
-    return another;
+    return another
   }
 
   xor(another: OptionalValue<T>): Option<T> {
-    return another.xorWithNone();
+    return another.xorWithNone()
   }
 
   xorWithNone (): Option<T> {
-    return Option.None();
+    return Option.None()
   }
 
   xorWithSome (some: Some<T>): Option<T> {
-    return Option.Some(some.unwrap());
+    return Option.Some(some.unwrap())
   }
 
   andThen<U> (_fn: (t: T) => Option<U>): Option<U> {
-    return Option.None();
+    return Option.None()
   }
 
   orElse (fn: () => Option<T>): Option<T> {
-    return fn();
+    return fn()
   }
 }

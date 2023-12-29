@@ -1,21 +1,20 @@
-import {OptionalValue} from "./optional-value.js";
-import {FlattenOption, Option} from "./option.js";
-import {None} from "./none.js";
+import {OptionalValue} from "./optional-value.js"
+import {FlattenOption, Option} from "./option.js"
 
 export class Some<T> extends OptionalValue<T> {
   value: T
 
   constructor (value: T) {
-    super();
+    super()
     this.value = value
   }
 
   isPresent (): boolean {
-    return true;
+    return true
   }
 
   isAbsent (): boolean {
-    return false;
+    return false
   }
 
   unwrap (): T {
@@ -24,27 +23,27 @@ export class Some<T> extends OptionalValue<T> {
 
   map<M> (fn: (a: T) => M): Option<M> {
     const newValue = fn(this.value)
-    return Option.Some(newValue);
+    return Option.Some(newValue)
   }
 
   filter (fn: (a: T) => boolean): Option<T> {
-    const res = fn(this.value);
+    const res = fn(this.value)
     if (res) {
       return Option.Some(this.value)
     }
-    return Option.None();
+    return Option.None()
   }
 
   expect (_err: Error): T {
-    return this.value;
+    return this.value
   }
 
   unwrapOr (_defaultValue: T): T {
-    return this.value;
+    return this.value
   }
 
   unwrapOrElse (_defaultFn: () => T): T {
-    return this.value;
+    return this.value
   }
 
   flatten (): Option<FlattenOption<T>> {
@@ -60,23 +59,23 @@ export class Some<T> extends OptionalValue<T> {
   }
 
   zipWithSome<U> (some: Some<U>): Option<[U, T]> {
-    return Option.Some([some.value, this.value]);
+    return Option.Some([some.value, this.value])
   }
 
   zipWith<U, V> (another: OptionalValue<U>, zipWithFn: (t: T, u: U) => V): Option<V> {
-    return another.zipWithWithSome(this, zipWithFn);
+    return another.zipWithWithSome(this, zipWithFn)
   }
 
   zipWithWithSome<U, V> (some: Some<U>, zipWithFn: (u: U, t: T) => V): Option<V> {
-    return Option.Some(zipWithFn(some.value, this.value));
+    return Option.Some(zipWithFn(some.value, this.value))
   }
 
   and<V>(another: Option<V>): Option<V> {
-    return another;
+    return another
   }
 
   or(self: Option<T>, _another: Option<T>): Option<T> {
-    return self;
+    return self
   }
 
   xor(another: OptionalValue<T>): Option<T> {
@@ -84,18 +83,18 @@ export class Some<T> extends OptionalValue<T> {
   }
 
   xorWithNone (): Option<T> {
-    return Option.Some(this.value);
+    return Option.Some(this.value)
   }
 
   xorWithSome (_some: Some<T>): Option<T> {
-    return Option.None();
+    return Option.None()
   }
 
   andThen<U> (fn: (t: T) => Option<U>): Option<U> {
-    return fn(this.value);
+    return fn(this.value)
   }
 
   orElse (_fn: () => Option<T>): Option<T> {
-    return Option.Some(this.value);
+    return Option.Some(this.value)
   }
 }

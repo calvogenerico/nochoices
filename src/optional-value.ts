@@ -1,6 +1,5 @@
-import {FlattenOption, Option} from "./option.js";
-import {Some} from "./some.js";
-import {None} from "./none.js";
+import {FlattenOption, Option} from "./option.js"
+import {Some} from "./some.js"
 
 export abstract class OptionalValue<T> {
   abstract isPresent (): boolean
@@ -29,7 +28,7 @@ export abstract class OptionalValue<T> {
 
   abstract zipWithWithSome<U, V> (some: Some<U>, zipWithFn: (u: U, t: T) => V): Option<V>
 
-  abstract and<V> (another: Option<V>): Option<V>;
+  abstract and<V> (another: Option<V>): Option<V>
 
   abstract or (self: Option<T>, another: Option<T>): Option<T>
 

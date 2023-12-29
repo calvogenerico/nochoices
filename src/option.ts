@@ -1,13 +1,13 @@
-import {OptionalValue} from "./optional-value.js";
-import {Some} from "./some.js";
-import {None} from "./none.js";
+import {OptionalValue} from "./optional-value.js"
+import {Some} from "./some.js"
+import {None} from "./none.js"
 
 export type FlattenOption<T> = T extends Option<infer U>
     ? U
     : T
 
 export class Option<T> {
-  private value: OptionalValue<T>;
+  private value: OptionalValue<T>
 
   private constructor (value: OptionalValue<T>) {
     this.value = value

@@ -1,7 +1,7 @@
-import {describe} from "mocha";
-import {Option} from "../src/index.js";
-import {flatten} from "../src/flatten.js";
-import {expect} from "chai";
+import {describe} from "mocha"
+import {Option} from "../src/index.js"
+import {flatten} from "../src/flatten.js"
+import {expect} from "chai"
 
 describe('flatten', () => {
   it('decrease one level of optional nesting for some of some of 1', () => {
