@@ -88,4 +88,8 @@ export class Option<T> {
   andThen <U>(fn: (t: T) => Option<U>): Option<U> {
     return this.value.andThen(fn)
   }
+
+  orElse (fn: () => Option<T>): Option<T> {
+    return this.value.orElse(fn)
+  }
 }

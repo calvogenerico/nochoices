@@ -78,4 +78,8 @@ export class None<T> extends OptionalValue<T> {
   andThen<U> (_fn: (t: T) => Option<U>): Option<U> {
     return Option.None();
   }
+
+  orElse (fn: () => Option<T>): Option<T> {
+    return fn();
+  }
 }

@@ -458,5 +458,34 @@ describe('Option', () => {
       expect(called).to.eql(false)
     })
   })
-  describe('#orElse', () => {});
+  describe('#orElse', () => {
+    it('none with a function that returns none is none', () => {
+      const none = Option.None()
+      const fn = () => Option.None()
+      const res = none.orElse(fn)
+      expect(res.isNone()).to.eql(true)
+    })
+
+    it('Some with a function that returns none is the original some', () => {
+      const none = Option.None()
+      const fn = () => Option.None()
+      const res = none.orElse(fn)
+      expect(res.isNone()).to.eql(true)
+    })
+
+    it('none with a function that returns some gets some with the value of the arg', () => {
+      const none: Option<number> = Option.None()
+      const fn = () => Option.Some(10)
+      const res = none.orElse(fn)
+      expect(res.unwrap()).to.eql(10)
+    })
+
+    it('some with a function that returns some gets some with the value of self', () => {
+      const data = 'foo'
+      const some = Option.Some(data)
+      const fn = () => Option.Some('bar')
+      const res = some.orElse(fn)
+      expect(res.unwrap()).to.eql('foo')
+    })
+  })
 })

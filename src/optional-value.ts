@@ -40,4 +40,6 @@ export abstract class OptionalValue<T> {
   abstract xorWithSome (some: Some<T>): Option<T>
 
   abstract andThen<U>(fn: (t: T) => Option<U>): Option<U>
+
+  abstract orElse (fn: () => Option<T>): Option<T>
 }

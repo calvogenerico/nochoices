@@ -94,4 +94,8 @@ export class Some<T> extends OptionalValue<T> {
   andThen<U> (fn: (t: T) => Option<U>): Option<U> {
     return fn(this.value);
   }
+
+  orElse (_fn: () => Option<T>): Option<T> {
+    return Option.Some(this.value);
+  }
 }
