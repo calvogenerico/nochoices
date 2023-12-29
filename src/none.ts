@@ -39,10 +39,6 @@ export class None<T> extends OptionalValue<T> {
     return Option.None();
   }
 
-  mapOrElse<U> (defFn: () => U, _mapFn: (value: T) => U): U {
-    return defFn();
-  }
-
   zip<U> (_another: OptionalValue<U>): Option<[T, U]> {
     return Option.None();
   }
@@ -68,6 +64,14 @@ export class None<T> extends OptionalValue<T> {
   }
 
   xor(another: OptionalValue<T>): Option<T> {
-    return another.isPresent() ? Option.Some(another.unwrap()): Option.None();
+    return another.xorWithNone();
+  }
+
+  xorWithNone (): Option<T> {
+    return Option.None();
+  }
+
+  xorWithSome (some: Some<T>): Option<T> {
+    return Option.Some(some.unwrap());
   }
 }
