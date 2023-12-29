@@ -473,7 +473,7 @@ describe('Option', () => {
       expect(res.isNone()).to.eql(true)
     })
 
-    it('none with a function that returns some gets some with the value of the arg', () => {
+    it('none with a function that returns some gets some with the returned option of the fn', () => {
       const none: Option<number> = Option.None()
       const fn = () => Option.Some(10)
       const res = none.orElse(fn)
