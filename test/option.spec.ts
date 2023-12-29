@@ -458,6 +458,7 @@ describe('Option', () => {
       expect(called).to.eql(false)
     })
   })
+
   describe('#orElse', () => {
     it('none with a function that returns none is none', () => {
       const none = Option.None()
