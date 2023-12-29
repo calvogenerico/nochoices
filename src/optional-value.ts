@@ -1,5 +1,6 @@
 import {FlattenOption, Option} from "./option.js";
 import {Some} from "./some.js";
+import {None} from "./none.js";
 
 export abstract class OptionalValue<T> {
   abstract isPresent (): boolean
@@ -33,4 +34,8 @@ export abstract class OptionalValue<T> {
   abstract or(another: Option<T>): Option<T>
 
   abstract xor(another: OptionalValue<T>): Option<T>
+
+  abstract xorWithNone(): Option<T>
+
+  abstract xorWithSome(some: Some<T>): Option<T>
 }

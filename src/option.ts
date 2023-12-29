@@ -73,7 +73,6 @@ export class Option<T> {
     return this.value.zipWith(another.value, zipWithFn)
   }
 
-
   and<V>(another: Option<V>): Option<V> {
     return this.value.and(another)
   }

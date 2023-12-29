@@ -1,5 +1,6 @@
 import {OptionalValue} from "./optional-value.js";
 import {FlattenOption, Option} from "./option.js";
+import {None} from "./none.js";
 
 export class Some<T> extends OptionalValue<T> {
   value: T
@@ -79,6 +80,14 @@ export class Some<T> extends OptionalValue<T> {
   }
 
   xor(another: OptionalValue<T>): Option<T> {
-    return another.isPresent() ? Option.None() : Option.Some(this.value);
+    return another.xorWithSome(this)
+  }
+
+  xorWithNone (): Option<T> {
+    return Option.Some(this.value);
+  }
+
+  xorWithSome (_some: Some<T>): Option<T> {
+    return Option.None();
   }
 }
