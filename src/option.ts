@@ -113,4 +113,10 @@ export class Option<T> {
     this.value = new None()
     return takeValue
   }
+
+  replace (newValue: T): Option<T> {
+    const oldValue = this.value
+    this.value = new Some(newValue)
+    return new Option<T>(oldValue)
+  }
 }

@@ -594,5 +594,39 @@ describe('Option', () => {
       expect(option.isNone()).to.eql(true)
     })
   })
-  describe('#replace', () => {})
+
+  describe('#replace', () => {
+    it('none mutates into some with the given value', () => {
+      const obj = {}
+      const option: Option<object> = Option.None()
+      option.replace(obj)
+      expect(option.isSome()).to.eql(true)
+      expect(option.unwrap()).to.equal(obj)
+    })
+
+    it('none returns none', () => {
+      const obj = {}
+      const none: Option<object> = Option.None()
+      const res = none.replace(obj)
+      expect(res.isNone()).to.eql(true)
+    })
+
+    it('some returns some with the old value', () => {
+      const oldValue = 123
+      const newValue = 456
+      const some = Option.Some(oldValue)
+      const res = some.replace(newValue)
+      expect(res.isSome()).to.eql(true)
+      expect(res.unwrap()).to.eql(oldValue)
+    })
+
+    it('some retains the new value inside', () => {
+      const oldValue = 123
+      const newValue = 456
+      const some = Option.Some(oldValue)
+      some.replace(newValue)
+      expect(some.isSome()).to.eql(true)
+      expect(some.unwrap()).to.eql(newValue)
+    })
+  })
 })
