@@ -102,4 +102,9 @@ export class Option<T> {
     this.value = this.value.getOrInsert(value)
     return this.unwrap()
   }
+
+  getOrInsertWith (fn: () => T): T {
+    this.value = this.value.getOrInsertWith(fn)
+    return this.unwrap()
+  }
 }

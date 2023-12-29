@@ -86,4 +86,8 @@ export class None<T> extends OptionalValue<T> {
   getOrInsert (value: T): OptionalValue<T> {
     return new Some(value);
   }
+
+  getOrInsertWith (fn: () => T): OptionalValue<T> {
+    return new Some(fn());
+  }
 }

@@ -101,4 +101,8 @@ export class Some<T> extends OptionalValue<T> {
   getOrInsert (_value: T): OptionalValue<T> {
     return this;
   }
+
+  getOrInsertWith (_fn: () => T): OptionalValue<T> {
+    return this;
+  }
 }

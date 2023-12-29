@@ -201,7 +201,7 @@ describe('Option', () => {
       const obj = {}
       const some = Option.Some(obj)
       let called = false
-      const mapped = some.mapOr(-1, a => {
+      some.mapOr(-1, a => {
         expect(a).to.equal(obj)
         called = true
         return 10
@@ -228,7 +228,7 @@ describe('Option', () => {
       const obj = {}
       const some = Option.Some(obj)
       let called = false
-      const mapped = some.mapOrElse(() => -1, a => {
+      some.mapOrElse(() => -1, a => {
         expect(a).to.equal(obj)
         called = true
         return 10
@@ -353,7 +353,7 @@ describe('Option', () => {
     it('some or none returns the first some', () => {
       const obj = {}
       const some = Option.Some(obj)
-      const arg: Option<{}> = Option.None()
+      const arg: Option<object> = Option.None()
       const res = some.or(arg)
       expect(res.unwrap()).to.equal(obj)
     })
@@ -393,7 +393,7 @@ describe('Option', () => {
     it('Some xor None returns the Some with the first value', () => {
       const value = {}
       const some = Option.Some(value)
-      const arg: Option<{}> = Option.None()
+      const arg: Option<object> = Option.None()
       const res = some.xor(arg)
       expect(res.unwrap()).to.eql(value)
     })
@@ -437,9 +437,9 @@ describe('Option', () => {
 
     it('sends the right argument to the callback', () => {
       const obj = {}
-      const some: Option<{}> = Option.Some(obj)
+      const some: Option<object> = Option.Some(obj)
       let called = false
-      const res = some.andThen((a) => {
+      some.andThen((a) => {
         expect(a).to.equal(obj)
         called = true
         return Option.None()
@@ -448,9 +448,9 @@ describe('Option', () => {
     })
 
     it('does not call the callback when returns none', () => {
-      const none: Option<{}> = Option.None()
+      const none: Option<object> = Option.None()
       let called = false
-      const res = none.andThen(() => {
+      none.andThen(() => {
         called = true
         return Option.None()
       })
@@ -529,7 +529,46 @@ describe('Option', () => {
     })
   })
 
-  describe('#getOrInsertWith', () => {})
+  describe('#getOrInsertWith', () => {
+    it('none returns the result of evaluating the generator fn', () => {
+      const none = Option.None()
+      const fn = () => 'foo'
+      const res = none.getOrInsertWith(fn);
+      expect(res).to.eql('foo')
+    })
+
+    it('none gets transformed into some with the value returned by the fn', () => {
+      const option = Option.None()
+      const fn = () => 'foo'
+      option.getOrInsertWith(fn);
+      expect(option.isSome()).to.eql(true)
+      expect(option.unwrap()).to.eql('foo')
+    })
+
+    it('some returns the value stored from before', () => {
+      const some = Option.Some(123)
+      const fn = () => 456
+      const res = some.getOrInsertWith(fn)
+      expect(res).to.eql(123)
+    })
+
+    it('some does not change its value', () => {
+      const some = Option.Some(123)
+      const fn = () => 456
+      some.getOrInsertWith(fn)
+      expect(some.unwrap()).to.eql(123)
+    })
+
+    it('some does not evaluate the function', () => {
+      const some = Option.Some(123)
+      let called = false
+      some.getOrInsertWith(() => {
+        called = true
+        return 456
+      })
+      expect(called).to.eql(false)
+    })
+  })
   describe('#getOrInsertWith', () => {})
   describe('#take', () => {})
   describe('#replace', () => {})
