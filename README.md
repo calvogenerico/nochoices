@@ -1,4 +1,6 @@
-# I'll give your the options
+# I don't want choices, what I need are options.
+
+
 
 
 
@@ -12,6 +14,7 @@
   - `as_pin_ref`
   - `as_pin_mut`
   - `unwrap_unchecked`
+
 - Transformations to rust types `Result`.
   - `ok_or`
   - `ok_or_else`
@@ -19,12 +22,31 @@
   - `as_slice`
   - `as_mut_slice`
 
-- Conversions to iterator.
+- Methods from traits that are not easy to translate to typescript.
   - `into_iter`
   - `iter`
   - `iter_mut`
+  - `from_residual`
+  - `hash`
+  - `hash_slice`
+  - `cmp`
+  - `max`
+  - `min`
+  - `clamp`
+  - `eq`
+  - `ne`
+  - `partial_cmp`
+  - `lt`
+  - `le`
+  - `gt`
+  - `ge`
+  - `product`
+  - `sum`
+  - `from_output`
+  - `branch`
 
 - Methods that use rust specific traits
   - `unwrap_or_default`
   - `get_or_insert_default`
-
+  - `copied`
+  - `cloned`
