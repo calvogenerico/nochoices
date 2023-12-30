@@ -6,6 +6,13 @@ export type FlattenOption<T> = T extends Option<infer U>
     ? U
     : T
 
+type MapFn<A, B> = (a: A) => B
+type Predicate<A> = (a: A) => boolean
+type GeneratorFn<A> = () => A
+type GeneratorOptFn<A> = () => Option<A>
+type ZipWithFn<A, B, C> = (a: A, b: B) => C
+type MapToOptionFn<A, B> = (a: A) => Option<B>
+
 export class Option<T> {
   private value: OptionalValue<T>
 
@@ -29,7 +36,7 @@ export class Option<T> {
     return this.value.isPresent()
   }
 
-  map <M>(fn: (a: T) => M): Option<M> {
+  map <M>(fn: MapFn<T, M>): Option<M> {
     return this.value.map(fn)
   }
 
@@ -37,7 +44,7 @@ export class Option<T> {
     return this.value.unwrap()
   }
 
-  filter (fn: (a: T) => boolean): Option<T> {
+  filter (fn: Predicate<T>): Option<T> {
     return this.value.filter(fn)
   }
 
@@ -49,7 +56,7 @@ export class Option<T> {
     return this.value.unwrapOr(defaultValue)
   }
 
-  unwrapOrElse (defaultFn: () => T): T {
+  unwrapOrElse (defaultFn: GeneratorFn<T>): T {
     return this.value.unwrapOrElse(defaultFn)
   }
 
@@ -57,11 +64,11 @@ export class Option<T> {
     return this.value.flatten()
   }
 
-  mapOr<U>(defaultValue: U, mapFn: (value: T) => U): U {
+  mapOr<U>(defaultValue: U, mapFn: MapFn<T, U>): U {
     return this.map(mapFn).unwrapOr(defaultValue)
   }
 
-  mapOrElse<U>(defFn: () => U, mapFn: (value: T) => U): U {
+  mapOrElse<U>(defFn: () => U, mapFn: MapFn<T, U>): U {
     return this.map(mapFn).unwrapOrElse(defFn)
   }
 
@@ -69,7 +76,7 @@ export class Option<T> {
     return this.value.zip(another.value)
   }
 
-  zipWith<U, V>(another: Option<U>, zipWithFn: (t: T, u: U) => V): Option<V> {
+  zipWith<U, V>(another: Option<U>, zipWithFn: ZipWithFn<T, U, V>): Option<V> {
     return this.value.zipWith(another.value, zipWithFn)
   }
 
@@ -85,11 +92,11 @@ export class Option<T> {
     return this.value.xor(another.value)
   }
 
-  andThen <U>(fn: (t: T) => Option<U>): Option<U> {
+  andThen <U>(fn: MapToOptionFn<T, U>): Option<U> {
     return this.value.andThen(fn)
   }
 
-  orElse (fn: () => Option<T>): Option<T> {
+  orElse (fn: GeneratorOptFn<T>): Option<T> {
     return this.value.orElse(fn)
   }
 
@@ -103,7 +110,7 @@ export class Option<T> {
     return this.unwrap()
   }
 
-  getOrInsertWith (fn: () => T): T {
+  getOrInsertWith (fn: GeneratorFn<T>): T {
     this.value = this.value.getOrInsertWith(fn)
     return this.unwrap()
   }
@@ -120,7 +127,7 @@ export class Option<T> {
     return new Option<T>(oldValue)
   }
 
-  isSomeAnd (andFn: (t: T) => boolean): boolean {
+  isSomeAnd (andFn: Predicate<T>): boolean {
     return this.value.isSomeAnd(andFn)
   }
 
@@ -138,7 +145,7 @@ export class Option<T> {
     this.ifSome(param)
   }
 
-  takeIf (param: (t: T) => boolean): Option<T> {
+  takeIf (param: Predicate<T>): Option<T> {
     return this.filter(param).andThen(() => this.take())
   }
 

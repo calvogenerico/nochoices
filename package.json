@@ -1,7 +1,7 @@
 {
   "name": "nochoices",
   "version": "1.0.0",
-  "description": "",
+  "description": "Full featured implementation of options into typescript.",
   "main": "index.js",
   "type": "module",
   "scripts": {
