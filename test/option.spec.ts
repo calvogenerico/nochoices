@@ -659,7 +659,7 @@ describe('Option', () => {
     it('none does not call the fn', () => {
       const none = Option.None()
       let called = false
-      const res = none.takeIf((_) => {
+      none.takeIf((_) => {
         called = true
         return true
       })
