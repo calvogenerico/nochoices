@@ -13,6 +13,7 @@ type GeneratorOptFn<A> = () => Option<A>
 type ZipWithFn<A, B, C> = (a: A, b: B) => C
 type MapToOptionFn<A, B> = (a: A) => Option<B>
 
+
 export class Option<T> {
   private value: OptionalValue<T>
 
