@@ -352,12 +352,6 @@ describe('Option', () => {
     })
   })
 
-  describe('#unzip', () => {
-    it('has to be implemented', () => {
-      expect(true).to.eql(false)
-    })
-  })
-
   describe('#and', () => {
     it('none and none returns none', () => {
       const none = Option.None()
