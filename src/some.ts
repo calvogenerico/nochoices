@@ -117,4 +117,8 @@ export class Some<T> extends OptionalValue<T> {
   ifSome (param: (t: T) => void): void {
     param(this.value)
   }
+
+  ifNone (_fn: () => void): void {
+    /* no-op */
+  }
 }

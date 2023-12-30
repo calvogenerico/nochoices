@@ -102,4 +102,8 @@ export class None<T> extends OptionalValue<T> {
   ifSome (_param: (t: T) => void): void {
     /* no-op */
   }
+
+  ifNone (fn: () => void): void {
+    fn()
+  }
 }

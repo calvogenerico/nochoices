@@ -761,6 +761,39 @@ describe('Option', () => {
     })
   })
 
+  describe('#ifNone', () => {
+    it('none calls the fn', () => {
+      const none = Option.None()
+      let called = false
+      none.ifNone(() => {
+        called = true
+      })
+      expect(called).to.eql(true)
+    })
+
+    it('some does not call the fn', () => {
+      const some = Option.Some(123)
+      let called = false
+      some.ifNone(() => {
+        called = true
+      })
+      expect(called).to.eql(false)
+    })
+
+    it('none returns none', () => {
+      const none = Option.None()
+      const res = none.ifNone(() => {})
+      expect(res.isNone()).to.eql(true)
+    })
+
+    it('some returns self', () => {
+      const some = Option.Some(123)
+      const res = some.ifNone(() => {})
+      expect(res.isSome()).to.eql(true)
+      expect(res).to.equal(some)
+    })
+  })
+
   describe('#inspect', () => {
     it('none does not call the fn', () => {
       const none = Option.None()

@@ -124,8 +124,13 @@ export class Option<T> {
     return this.value.isSomeAnd(andFn)
   }
 
-  ifSome (param: (t: T) => void): Option<T> {
-    this.value.ifSome(param)
+  ifSome (fn: (t: T) => void): Option<T> {
+    this.value.ifSome(fn)
+    return this
+  }
+
+  ifNone (fn: () => void): Option<T> {
+    this.value.ifNone(fn)
     return this
   }
 
