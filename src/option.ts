@@ -15,13 +15,13 @@ export type MapToOptionFn<A, B> = (a: A) => Option<B>
 
 
 /**
- * @class
  *
  * An Option<T> represents a value of type T that can be present ot not.
  * Values inside options cannot be used directly, which ensures a safe
  * data consumption.
  *
  * There are several ways to create an optional value:
+ *
  *
  * @example
  * ```ts
@@ -39,6 +39,17 @@ export type MapToOptionFn<A, B> = (a: A) => Option<B>
  * const opt2 = Option.Some('foo')
  * const opt3 = opt1.or(opt2)
  * ```
+ *
+ * Optional values can also perform operations
+ *
+ * @example
+ * ```ts
+ * const opt = Option.Some('foo')
+ * const opt2 = opt.map(v => v + 'bar') // === Some('foobar')
+ * const opt3 = opt.filter(v => v.length === 0) // === None
+ * ```
+ *
+ * @param T - The type of the object wrapped by the optional
  */
 export class Option<T> {
   private value: OptionalValue<T>
@@ -47,15 +58,62 @@ export class Option<T> {
     this.value = value
   }
 
-  static Some<T>(value: T): Option<T> {
+  /**
+   * Creates an instance of Option with a value. (Some)
+   *
+   * @static
+   * @param {T} value - The value to be wrapped in an Option.
+   * @typeparam T - Type of the value that the Option may contain.
+   * @returns {Option<T>} An instance of Option containing the provided value ( Some(value) ).
+   * @contructor
+   *
+   * @example
+   * ```ts
+   * const some = Option.Some('foo')
+   * some.unwrap() === 'foo' // true
+   * ```
+   */
+  static Some<T> (value: T): Option<T> {
     return new Option(new Some(value))
   }
 
-  static None<T>(): Option<T> {
+
+  /**
+   * Creates an empty optional value (represents no value).
+   *
+   * @static
+   * @typeparam T - Type of the value that the Option may contain.
+   * @returns {Option<T>} An instance of Option without a value ( None() ).
+   *
+   * @example
+   * ```ts
+   * const none = Option.None()
+   * none.isNone() // true
+   * ```
+   */
+  static None<T> (): Option<T> {
     return new Option<T>(new None())
   }
 
-  static fromNullable<T>(param: T | null | undefined): Option<T> {
+  /**
+   * Creates an instance of Option from a nullable value.
+   * If the provided value is null or undefined, it returns an Option without a value (None).
+   * Otherwise, it wraps the provided value in an Option (Some).
+   *
+   * @static
+   * @param {T | null | undefined} param - The value to be wrapped in an Option.
+   * @typeparam T - Type of the value that the Option may contain.
+   * @returns {Option<T>} An instance of Option containing the provided value if it's not null or undefined, otherwise an Option without a value.
+   *
+   * @example
+   * ```ts
+   * const nullable: string | null = null
+   * const maybe = Option.fromNullable(nullable) // None
+   * const nullable2: string | null = 'foo'
+   * const maybe2 = Option.fromNullable(nullable2) // Some('foo')
+   * ```
+   */
+  static fromNullable<T> (param: T | null | undefined): Option<T> {
     if (param === null || param === undefined) {
       return Option.None()
     } else {
@@ -63,15 +121,42 @@ export class Option<T> {
     }
   }
 
-  isNone(): boolean {
+
+  /**
+   * Checks if the Option instance does not contain a value.
+   *
+   * @returns {boolean} Returns true if the Option instance does not contain a value, otherwise false.
+   *
+   * @example
+   * ```ts
+   * const none = Option.None()
+   * none.isNone() // true
+   * const some = Option.Some('foo')
+   * some.isNone() // false
+   * ```
+   */
+  isNone (): boolean {
     return this.value.isAbsent()
   }
 
-  isSome(): boolean {
+/**
+ * Checks if the Option instance contains a value.
+ *
+ * @returns {boolean} Returns true if the Option instance contains a value, otherwise false.
+ *
+ * @example
+ * ```ts
+ * const none = Option.None()
+ * none.isSome() // false
+ * const some = Option.Some('foo')
+ * some.isSome() // true
+ * ```
+ */
+  isSome (): boolean {
     return this.value.isPresent()
   }
 
-  map <M>(fn: MapFn<T, M>): Option<M> {
+  map<M> (fn: MapFn<T, M>): Option<M> {
     return this.value.map(fn)
   }
 
@@ -99,35 +184,35 @@ export class Option<T> {
     return this.value.flatten()
   }
 
-  mapOr<U>(defaultValue: U, mapFn: MapFn<T, U>): U {
+  mapOr<U> (defaultValue: U, mapFn: MapFn<T, U>): U {
     return this.map(mapFn).unwrapOr(defaultValue)
   }
 
-  mapOrElse<U>(defFn: () => U, mapFn: MapFn<T, U>): U {
+  mapOrElse<U> (defFn: () => U, mapFn: MapFn<T, U>): U {
     return this.map(mapFn).unwrapOrElse(defFn)
   }
 
-  zip<U>(another: Option<U>): Option<[T, U]> {
+  zip<U> (another: Option<U>): Option<[T, U]> {
     return this.value.zip(another.value)
   }
 
-  zipWith<U, V>(another: Option<U>, zipWithFn: ZipWithFn<T, U, V>): Option<V> {
+  zipWith<U, V> (another: Option<U>, zipWithFn: ZipWithFn<T, U, V>): Option<V> {
     return this.value.zipWith(another.value, zipWithFn)
   }
 
-  and<V>(another: Option<V>): Option<V> {
+  and<V> (another: Option<V>): Option<V> {
     return this.value.and(another)
   }
 
-  or(another: Option<T>): Option<T> {
+  or (another: Option<T>): Option<T> {
     return this.value.or(this, another)
   }
 
-  xor(another: Option<T>): Option<T> {
+  xor (another: Option<T>): Option<T> {
     return this.value.xor(another.value)
   }
 
-  andThen <U>(fn: MapToOptionFn<T, U>): Option<U> {
+  andThen<U> (fn: MapToOptionFn<T, U>): Option<U> {
     return this.value.andThen(fn)
   }
 
