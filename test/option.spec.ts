@@ -827,4 +827,34 @@ describe('Option', () => {
       expect(some.toArray()).to.eql([obj])
     })
   })
+
+  describe('Option.fromNullable', () => {
+    it('returns none for null', () => {
+      const option = Option.fromNullable(null)
+      expect(option.isNone()).to.eql(true)
+    })
+
+    it('returns none for undefined', () => {
+      const option = Option.fromNullable(undefined)
+      expect(option.isNone()).to.eql(true)
+    })
+
+    it('returns some for a number', () => {
+      const option = Option.fromNullable(10)
+      expect(option.isSome()).to.eql(true)
+      expect(option.unwrap()).to.eql(10)
+    })
+
+    it('returns some for a false', () => {
+      const option = Option.fromNullable(false)
+      expect(option.isSome()).to.eql(true)
+      expect(option.unwrap()).to.eql(false)
+    })
+
+    it('returns some for a 0s', () => {
+      const option = Option.fromNullable(0)
+      expect(option.isSome()).to.eql(true)
+      expect(option.unwrap()).to.eql(0)
+    })
+  })
 })

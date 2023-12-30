@@ -6,14 +6,40 @@ export type FlattenOption<T> = T extends Option<infer U>
     ? U
     : T
 
-type MapFn<A, B> = (a: A) => B
-type Predicate<A> = (a: A) => boolean
-type GeneratorFn<A> = () => A
-type GeneratorOptFn<A> = () => Option<A>
-type ZipWithFn<A, B, C> = (a: A, b: B) => C
-type MapToOptionFn<A, B> = (a: A) => Option<B>
+export type MapFn<A, B> = (a: A) => B
+export type Predicate<A> = (a: A) => boolean
+export type GeneratorFn<A> = () => A
+export type GeneratorOptFn<A> = () => Option<A>
+export type ZipWithFn<A, B, C> = (a: A, b: B) => C
+export type MapToOptionFn<A, B> = (a: A) => Option<B>
 
 
+/**
+ * @class
+ *
+ * An Option<T> represents a value of type T that can be present ot not.
+ * Values inside options cannot be used directly, which ensures a safe
+ * data consumption.
+ *
+ * There are several ways to create an optional value:
+ *
+ * @example
+ * ```ts
+ * const none = Option.None()
+ * const some = Option.Some('foo')
+ * const nullable: string | null = 'bar'
+ * const maybe = Option.fromNullable(nullable)
+ * ```
+ *
+ * An optional can also be created combining other optionals:
+ *
+ * @example
+ * ```ts
+ * const opt1 = Option.None()
+ * const opt2 = Option.Some('foo')
+ * const opt3 = opt1.or(opt2)
+ * ```
+ */
 export class Option<T> {
   private value: OptionalValue<T>
 
@@ -27,6 +53,14 @@ export class Option<T> {
 
   static None<T>(): Option<T> {
     return new Option<T>(new None())
+  }
+
+  static fromNullable<T>(param: T | null | undefined): Option<T> {
+    if (param === null || param === undefined) {
+      return Option.None()
+    } else {
+      return Option.Some(param)
+    }
   }
 
   isNone(): boolean {
