@@ -119,9 +119,9 @@ Lastly, there are a few that I just like, so I added them.
 
 ### Added methods
 
-- `ifSome`
-- `ifNone`
-- `toArray`
+- `ifSome(fn: (t: T) => void): Option<T>`: execs the provided fn only if current value is some. Returns `this` always. 
+- `ifNone(fn: (t: T) => void): Option<T>`: execs the provided fn only if current value is none. Returns `this` always. 
+- `toArray(): T[]`: if none returns [], if some returns an array of size 1 with the value.
 
 ### Excluded methods
 The following methods where excluded:
