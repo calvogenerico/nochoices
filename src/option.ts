@@ -141,4 +141,8 @@ export class Option<T> {
   takeIf (param: (t: T) => boolean): Option<T> {
     return this.filter(param).andThen(() => this.take())
   }
+
+  toArray (): T[] {
+    return this.value.toArray()
+  }
 }

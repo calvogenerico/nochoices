@@ -814,4 +814,17 @@ describe('Option', () => {
       expect(called).to.eql(true)
     })
   })
+
+  describe('#toArray', () => {
+    it('none returns an empty array', () => {
+      const none = Option.None()
+      expect(none.toArray()).to.eql([])
+    })
+
+    it('some returns an array with the value contained', () => {
+      const obj = {}
+      const some = Option.Some(obj)
+      expect(some.toArray()).to.eql([obj])
+    })
+  })
 })

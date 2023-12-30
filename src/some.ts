@@ -121,4 +121,8 @@ export class Some<T> extends OptionalValue<T> {
   ifNone (_fn: () => void): void {
     /* no-op */
   }
+
+  toArray (): T[] {
+    return [this.value];
+  }
 }

@@ -106,4 +106,8 @@ export class None<T> extends OptionalValue<T> {
   ifNone (fn: () => void): void {
     fn()
   }
+
+  toArray (): T[] {
+    return [];
+  }
 }

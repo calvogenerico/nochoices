@@ -53,4 +53,6 @@ export abstract class OptionalValue<T> {
   abstract ifSome (param: (t: T) => void): void
 
   abstract ifNone (fn: () => void): void
+
+  abstract toArray (): T[]
 }
