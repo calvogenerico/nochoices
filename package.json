@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "gendocs": "pnpm typedoc --options typedoc.json"
   },
-  "keywords": [],
+  "keywords": ["option", "optional", "maybe", "some", "none", "nullable"],
   "author": "",
   "license": "ISC",
   "devDependencies": {
