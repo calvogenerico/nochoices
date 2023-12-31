@@ -1,5 +1,11 @@
 # nochoices
 
+## 1.1.2
+
+### Patch Changes
+
+- Make npm publish dist folder.
+
 ## 1.1.1
 
 ### Patch Changes
