@@ -15,6 +15,7 @@
     "build:tsc": "tsc",
     "build:esbuild": "tsx esbuild.ts",
     "build": "run-p build:tsc build:esbuild",
+    "prepublish": "run-s test build",
     "lint": "eslint .",
     "gendocs": "pnpm typedoc --options typedoc.json"
   },
