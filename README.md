@@ -1,6 +1,6 @@
 # With the right Options there is no choice to make
 
-This is a port of the rust built in `Option` type ported to typescript.
+This is the of the rust built in `Option` type ported to typescript.
 
 ## Why Options?
 
