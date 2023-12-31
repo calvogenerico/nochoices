@@ -1,0 +1,36 @@
+version: 2.1
+
+jobs:
+  build: # this can be any name you choose
+    docker:
+      - image: node:21 
+    parallelism: 1
+
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore pnpm Package Cache
+          keys:
+            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - run:
+          name: Install pnpm package manager
+          command: |
+            corepack enable
+            corepack prepare pnpm@latest-8 --activate
+      - run:
+          name: Install Dependencies
+          command: |
+            pnpm install
+      - run: 
+          name: lint sources
+          command: |
+            pnpm lint
+      - run: 
+          name: run tests
+          command: |
+            pnpm test
+      - save_cache:
+          name: Save pnpm Package Cache
+          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - node_modules
