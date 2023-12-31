@@ -8,11 +8,7 @@
   },
   "main": "./dist/mod/index.js",
   "types": "dist/mod/index.d.ts",
-  "exports": {
-    "index.iife.js": "./dist/index.iife.js",
-    "index.es2020.js": "./dist/index.es2020.js",
-    "*": "./dist/mod/*"
-  },
+  "exports": "./dist/mod/index.js",
   "type": "module",
   "scripts": {
     "test": "mocha",
