@@ -1,4 +1,4 @@
-[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/6whMRWCFzJbeZLENyiqZua/28wXr6DjVUCq9Fpw9wX9Ef/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/6whMRWCFzJbeZLENyiqZua/28wXr6DjVUCq9Fpw9wX9Ef/tree/main)
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/6whMRWCFzJbeZLENyiqZua/28wXr6DjVUCq9Fpw9wX9Ef/tree/main.svg?style=svg&circle-token=b77db5e5ba1441fb330f97c17e9d222669731f32)](https://dl.circleci.com/status-badge/redirect/circleci/6whMRWCFzJbeZLENyiqZua/28wXr6DjVUCq9Fpw9wX9Ef/tree/main)
 
 # With the right Options there is no choice to make
 
