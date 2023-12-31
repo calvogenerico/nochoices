@@ -102,6 +102,8 @@ const empty = Option.None()
 
 Docs can found [here](https://hojarasca.github.io/nochoices)
 
+De datil of the behavior is tested and explained in tests of the package.
+
 ## How to test
 
 ```bash
