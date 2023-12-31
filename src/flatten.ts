@@ -7,9 +7,9 @@ import {Option} from "./option.js"
  * Using this function is possible to ensure at compile time that the
  * target is optional is actually a nested optional.
  *
- * @typeparam T - Any type
- * @param {Option<Option<T>>} opt - Optional to flatten
- * @returns {Option<T>} Flattened option
+ * @typeParam T - Any type
+ * @param opt - Optional to flatten
+ * @returns Flattened option
  *
  * @example
  * ```ts

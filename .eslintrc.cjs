@@ -5,12 +5,13 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   plugins: [
-    '@typescript-eslint'
+    '@typescript-eslint',
+    'eslint-plugin-tsdoc'
   ],
   ignorePatterns: ['docs/**/*', 'dist/**/*', '*.js'],
   root: true,
   rules: {
-    // "tsdoc/syntax": "warn",
+    "tsdoc/syntax": "warn",
     "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
   }
 }

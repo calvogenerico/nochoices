@@ -93,11 +93,19 @@ export type TransformToOption<A, B> = (a: A) => Option<B>
 /**
  * Type helper for flatting options
  *
+ * ```ts
+ * let a1: FlattenOption<Option<Option<String>>>
+ * let a2: Option<String>
+ * // a1 and a2 have the same type
+ *
+ * let b1: FlattenOption<Option<number>>
+ * let b2: number
+ * // b1 and b2 have the same type
+ * ```
+ *
+ * @typeParam A - Any type.
  * @param A - any type
  * @param B - any type
- *
- * FlattenOption<Option<Option<String>>> is equivalent to Option<String>
- * FlattenOption<Option<number>> is equivalent to number
  */
 export type FlattenOption<A> = A extends Option<infer B>
   ? B

@@ -59,11 +59,9 @@ export class Option<T> {
   /**
    * Creates an instance of Option with a value. (Some)
    *
-   * @static
-   * @param {T} value - The value to be wrapped in an Option.
-   * @typeparam T - Type of the value that the Option may contain.
-   * @returns {Option<T>} An instance of Option containing the provided value ( Some(value) ).
-   * @contructor
+   * @param value - The value to be wrapped in an Option.
+   * @typeParam T - Type of the value that the Option may contain.
+   * @returns An instance of Option containing the provided value ( Some(value) ).
    *
    * @example
    * ```ts
@@ -79,9 +77,8 @@ export class Option<T> {
   /**
    * Creates an empty optional value (represents no value).
    *
-   * @static
-   * @typeparam T - Type of the value that the Option may contain.
-   * @returns {Option<T>} An instance of Option without a value ( None() ).
+   * @typeParam T - Type of the value that the Option may contain.
+   * @returns An instance of Option without a value ( None() ).
    *
    * @example
    * ```ts
@@ -98,10 +95,9 @@ export class Option<T> {
    * If the provided value is null or undefined, it returns an Option without a value (None).
    * Otherwise, it wraps the provided value in an Option (Some).
    *
-   * @static
-   * @param {T | null | undefined} param - The value to be wrapped in an Option.
-   * @typeparam T - Type of the value that the Option may contain.
-   * @returns {Option<T>} An instance of Option containing the provided value if it's not null or undefined, otherwise an Option without a value.
+   * @param param - The value to be wrapped in an Option.
+   * @typeParam T - Type of the value that the Option may contain.
+   * @returns An instance of Option containing the provided value if it's not null or undefined, otherwise an Option without a value.
    *
    * @example
    * ```ts
@@ -123,7 +119,7 @@ export class Option<T> {
   /**
    * Returns true if the instance does not contain a value. Returns false otherwise.
    *
-   * @returns {boolean} true if instance is none, otherwise true
+   * @returns true if instance is none, otherwise true
    *
    * @example
    * ```ts
@@ -140,7 +136,7 @@ export class Option<T> {
   /**
    * Checks if the Option instance contains a value.
    *
-   * @returns {boolean} Returns true if the Option instance contains a value, otherwise false.
+   * @returns Returns true if the Option instance contains a value, otherwise false.
    *
    * @example
    * ```ts
@@ -161,9 +157,9 @@ export class Option<T> {
    * If the Option instance contains a value (Some), it applies the mapping function to the value and returns a new
    * option with the mapped value.
    *
-   * @param {Transformation<T, M>} fn - The mapping function to apply to the value.
-   * @typeparam M - The type of the value that the new Option may contain after applying the mapping function.
-   * @returns {Option<M>} A new Option with the mapped value.
+   * @param  fn - The mapping function to apply to the value.
+   * @typeParam M - The type of the value that the new Option may contain after applying the mapping function.
+   * @returns A new Option with the mapped value.
    *
    * @example
    * ```ts
@@ -191,8 +187,8 @@ export class Option<T> {
    * If the desire is throw an error in case of a missing value, `expect` it's a better
    * alternative that allows for more expressive errors.
    *
-   * @returns {T} The value contained in the Option instance.
-   * @throws {Error} If the Option instance does not contain a value.
+   * @returns The value contained in the Option instance.
+   * @throws If the Option instance does not contain a value.
    *
    * @example
    * ```ts
@@ -211,8 +207,8 @@ export class Option<T> {
    * instance does not contain a value.
    * This is a safer alternative to `unwrap` where the normal flow of the program can be ensured.
    *
-   * @param {T} defaultValue - Value returned when current instance is None.
-   * @returns {T} The value contained in the Option instance or the provided default value.
+   * @param defaultValue - Value returned when current instance is None.
+   * @returns The value contained in the Option instance or the provided default value.
    *
    * @example
    * ```ts
@@ -232,9 +228,9 @@ export class Option<T> {
    * This is a safer alternative to plain `unwrap` that ensures that the flow of the program
    * can continue in case there is a missing value.
    *
-   * @param {Generator<T>} defaultFn - When instance is None, this function is called to create
+   * @param defaultFn - When instance is None, this function is called to create
    * a default value.
-   * @returns {T} The value contained in the intance or the generated default value.
+   * @returns The value contained in the intance or the generated default value.
    *
    * @example
    * ```ts
@@ -258,8 +254,8 @@ export class Option<T> {
    * - If the Option instance contains a value (Some) and the predicate function returns false when
    *   applied to the value, it returns a new Option without a value (None).
    *
-   * @param {Predicate<T>} fn - The predicate function used to filter.
-   * @returns {Option<T>} A new Option with the value if the predicate function returns true,
+   * @param fn - The predicate function used to filter.
+   * @returns A new Option with the value if the predicate function returns true,
    * otherwise an Option without a value.
    *
    * @example
@@ -279,9 +275,9 @@ export class Option<T> {
    *
    * This is the right method to use when you an error should be raised if the optional is empty.
    *
-   * @param {Error} err - The error to throw if the Option instance does not contain a value.
-   * @returns {T} The value contained in the Option instance.
-   * @throws {Error} The provided error if the Option instance does not contain a value.
+   * @param err - The error to throw if the Option instance does not contain a value.
+   * @returns The value contained in the Option instance.
+   * @throws The provided error if the Option instance does not contain a value.
    *
    * @example
    * ```ts
@@ -297,13 +293,13 @@ export class Option<T> {
 
   /**
    * Flattens nested options.
-   * An Option<Option<T>> returns an Option<T> with the same value inside (or no value in case of None).
+   * An `Option<Option<T>>` returns an `Option<T>` with the same value inside (or no value in case of None).
    *
    * In case the option is not nested, it returns the same option.
    *
    * There is a type safer alternative to this method as an exported function {@link flatten}
    *
-   * @returns {Option<FlattenOption<T>>} Flatterned version of the option.
+   * @returns Flatterned version of the option.
    *
    * @example
    * ```ts
@@ -322,9 +318,9 @@ export class Option<T> {
    * Returns the value inside the optional after applying the given transformation. If the
    * optional is empty it returns the default value
    *
-   * @param {U} defaultValue - The default value to return if the Option instance does not contain a value.
-   * @param {Transformation<T, U>} mapFn - The mapping function to apply to the value.
-   * @returns {U} The transformed contained value, or the provided default.
+   * @param defaultValue - The default value to return if the Option instance does not contain a value.
+   * @param mapFn - The mapping function to apply to the value.
+   * @returns The transformed contained value, or the provided default.
    *
    * @example
    * ```ts
@@ -344,10 +340,10 @@ export class Option<T> {
    *
    * The generator function is not called if there is a value.
    *
-   * @param {() => U} defFn - The default value generation function to call if the Option instance
+   * @param defFn - The default value generation function to call if the Option instance
    * does not contain a value.
-   * @param {Transformation<T, U>} mapFn - The mapping function to apply to the value.
-   * @returns {U} The transformed value, or the default generated value.
+   * @param mapFn - The mapping function to apply to the value.
+   * @returns The transformed value, or the default generated value.
    *
    * @example
    * ```ts
@@ -365,9 +361,9 @@ export class Option<T> {
    * Combines 2 options into an option with a tuple of size 2 inside.
    * In case tha any of the options (this, or the argument) is none, the result is going to be none.
    *
-   * @param {Option<U>} another - The other Option instance to combine with.
-   * @typeparam U - The type of the value that the other Option may contain.
-   * @returns {Option<[T, U]>} A new Option typed with a tuple of the 2 values.
+   * @param another - The other Option instance to combine with.
+   * @typeParam U - The type of the value that the other Option may contain.
+   * @returns A new Option typed with a tuple of the 2 values.
    *
    * @example
    * ```ts
@@ -388,12 +384,12 @@ export class Option<T> {
    * types as the result of the transformation. If any of the original options
    * is empty the result will be empty.
    *
-   * @param {Option<U>} another - The other Option instance to combine with.
-   * @param {ZipTransformation<T, U, V>} zipWithFn - The transformation function to apply to the
+   * @param another - The other Option instance to combine with.
+   * @param zipWithFn - The transformation function to apply to the
    * values of both Option instances.
-   * @typeparam U - The type of the value that the other Option may contain.
-   * @typeparam V - The type returned by the transformation.
-   * @returns {Option<V>} A new Option containing the result of applying the transformation
+   * @typeParam U - The type of the value that the other Option may contain.
+   * @typeParam V - The type returned by the transformation.
+   * @returns A new Option containing the result of applying the transformation
    * function to both values if both Option instances contain a value,
    * otherwise an Option without a value.
    *
@@ -417,9 +413,9 @@ export class Option<T> {
    * This method behaves similar to the `&&` operator, but translated to optional values instead
    * of booleans.
    *
-   * @param {Option<V>} another - Another optional value.
-   * @typeparam V - The type of the value that the other Option may contain.
-   * @returns {Option<V>} The result of applying an `and` operation between the 2 optionals.
+   * @param another - Another optional value.
+   * @typeParam V - The type of the value that the other Option may contain.
+   * @returns The result of applying an `and` operation between the 2 optionals.
    *
    * @example
    * ```ts
@@ -444,8 +440,8 @@ export class Option<T> {
    *
    * This operation behaves similar to the `||` but adapted from booleans to options.
    *
-   * @param {Option<T>} another - The other Option instance to combine with.
-   * @returns {Option<T>} A new option only present if any is present
+   * @param another - The other Option instance to combine with.
+   * @returns A new option only present if any is present
    *
    * @example
    * ```ts
@@ -470,8 +466,8 @@ export class Option<T> {
    * This operation behaves similar to the `xor` (exclusive or) operation but
    * adapted from booleans to options.
    *
-   * @param {Option<T>} another - The other Option instance to combine with.
-   * @returns {Option<T>} A new Option instance that is only present if exactly one of the instances (this, and the argument) are present.
+   * @param another - The other Option instance to combine with.
+   * @returns A new Option instance that is only present if exactly one of the instances (this, and the argument) are present.
    *
    * @example
    * ```ts
@@ -492,10 +488,10 @@ export class Option<T> {
    * Similar to {@link Option.and | `and` }, but allowing the second optional to be generated
    * lazily. The provided fn is not executed if `this` is None.
    *
-   * @param {TransformToOption<T, U>} fn - Function to generate the second option. It takes the
+   * @param fn - Function to generate the second option. It takes the
    * content of the current instance as argument.
-   * @typeparam U - The type returned by the given function.
-   * @returns {Option<U>} A new option only present if this is Some and the result
+   * @typeParam U - The type returned by the given function.
+   * @returns A new option only present if this is Some and the result
    * of the function is Some. The value is the one returned by the function.
    *
    * @example
@@ -514,9 +510,9 @@ export class Option<T> {
    * Similar to {@link Option.or | `or`} but allowing to generate the second option
    * lazily. The generator fn will only be called if needed.
    *
-   * @param {GenerateOption<T>} fn - function to generate an optional value to test agains
+   * @param fn - function to generate an optional value to test agains
    * `this`.
-   * @returns {Option<T>} A new option only present if any of the options is present.
+   * @returns A new option only present if any of the options is present.
    *
    * @example
    * ```ts
@@ -534,8 +530,8 @@ export class Option<T> {
   /**
    * Inserts a value into the Option instance, replacing the current value if it exists.
    *
-   * @param {T} value - The value to be inserted into the Option instance.
-   * @returns {Option<T>} The Option instance itself.
+   * @param value - The value to be inserted into the Option instance.
+   * @returns The Option instance itself.
    *
    * @example
    * ```ts
@@ -557,8 +553,8 @@ export class Option<T> {
    * Notice that if the instance already had a value this method does not replace it and the
    * argument is ignored.
    *
-   * @param {T} value - The value to be inserted and returned if the instance is None.
-   * @returns {T} The value contained in the Option instance after the operation.
+   * @param value - The value to be inserted and returned if the instance is None.
+   * @returns The value contained in the Option instance after the operation.
    *
    * @example
    * ```ts
@@ -585,8 +581,8 @@ export class Option<T> {
    * If the instance is None, the provided function is called, and the result is inserted
    * into the instance and returned.
    *
-   * @param {Generator<T>} fn - Function to generate the value to insert and return in case of none.
-   * @returns {T} The value contained in the Option instance after the operation.
+   * @param fn - Function to generate the value to insert and return in case of none.
+   * @returns The value contained in the Option instance after the operation.
    *
    * @example
    * ```ts
@@ -610,7 +606,7 @@ export class Option<T> {
    *
    * If the instance is None, it gets unnafected and theresult is None.
    *
-   * @returns {Option<T>} A new Option instance containing the value originally
+   * @returns A new Option instance containing the value originally
    * contained in the Option instance.
    *
    * @example
@@ -632,8 +628,8 @@ export class Option<T> {
   /**
    * Replaces the contained value of an option with the one provided as argument.
    *
-   * @param {T} newValue - The new value to be inserted into the Option instance.
-   * @returns {Option<T>} A new Option instance containing the old value.
+   * @param newValue - The new value to be inserted into the Option instance.
+   * @returns A new Option instance containing the old value.
    *
    * @example
    * ```ts
@@ -664,8 +660,8 @@ export class Option<T> {
    * }
    * ```
    *
-   * @param {Predicate<T>} andFn - The predicate function to apply to the contained value.
-   * @returns {boolean} Returns true if the Option instance contains a value and the predicate
+   * @param andFn - The predicate function to apply to the contained value.
+   * @returns Returns true if the Option instance contains a value and the predicate
    * function returns true when applied to the value, otherwise false.
    *
    * @example
@@ -674,6 +670,7 @@ export class Option<T> {
    * const result = some.isSomeAnd(value => value > 3) // true
    * const none = Option.None<number>()
    * const result2 = none.isSomeAnd(value => value > 3) // false
+   * ```
    */
   isSomeAnd (andFn: Predicate<T>): boolean {
     return this.value.isSomeAnd(andFn)
@@ -694,8 +691,8 @@ export class Option<T> {
    * })
    * ```
    *
-   * @param {fn: (t: T) => void} fn - Function executed if instance is some.
-   * @returns {Option<T>} Itself.
+   * @param fn - Function executed if instance is some.
+   * @returns Itself.
    *
    * @example
    * ```ts
@@ -728,8 +725,8 @@ export class Option<T> {
    * })
    * ```
    *
-   * @param {() => void} fn - The function to execute if the Option instance does not contain a value.
-   * @returns {Option<T>} The Option instance itself.
+   * @param fn - The function to execute if the Option instance does not contain a value.
+   * @returns The Option instance itself.
    *
    * @example
    * ```ts
@@ -752,7 +749,7 @@ export class Option<T> {
    *
    * If the instance is None, nothing happens.
    *
-   * @param {(t: T) => void} param - Function to exec if there is value inside.
+   * @param param - Function to exec if there is value inside.
    *
    * @example
    * ```ts
@@ -771,8 +768,8 @@ export class Option<T> {
    * If the value inside the instnace pass the predicate, the instance gets transformed to None
    * and the value is returned
    *
-   * @param {Predicate<T>} param - The predicate function to apply to the value.
-   * @returns {Option<T>} A new option with the filtered value.
+   * @param param - The predicate function to apply to the value.
+   * @returns A new option with the filtered value.
    *
    * @example
    * ```ts
@@ -797,7 +794,7 @@ export class Option<T> {
    * If the instance is None it returns an empty array
    * If the instance is Some it returns an array of size 1 containing the value.
    *
-   * @returns {T[]} An array with the content of the option.
+   * @returns An array with the content of the option.
    *
    * @example
    * ```ts

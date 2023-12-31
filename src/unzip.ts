@@ -7,11 +7,11 @@ export type OptionDuo<A, B> = [Option<A>, Option<B>]
 
 /**
  * Type safe function to unzip an option of a tuple of 2 into a tuple of 2 options.
- * @typeparam A - Any type
- * @typeparam B - Any type
+ * @typeParam A - Any type
+ * @typeParam B - Any type
  *
- * @param {[A, B]} opt - Option to unzip
- * @return {OptionDuo<A, B>} a tuple of 2 options.
+ * @param opt - Option to unzip
+ * @returns a tuple of 2 options.
  *
  * @example
  * ```ts
