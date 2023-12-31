@@ -1,5 +1,6 @@
-import {FlattenOption, Option} from "./option.js"
+import {Option} from "./option.js"
 import {Some} from "./some.js"
+import {FlattenOption} from "./types.js";
 
 export abstract class OptionalValue<T> {
   abstract isPresent (): boolean

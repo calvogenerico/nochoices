@@ -1,5 +1,6 @@
 import {OptionalValue} from "./optional-value.js"
-import {FlattenOption, Option} from "./option.js"
+import {Option} from "./option.js"
+import {FlattenOption} from "./types.js";
 
 export class Some<T> extends OptionalValue<T> {
   value: T
