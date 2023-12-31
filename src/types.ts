@@ -36,6 +36,8 @@ export type Predicate<A> = (a: A) => boolean
 /**
  * Type alias for functions that take no parameters and return a Value.
  *
+ * @param A - Any type
+ *
  * @example
  * ```ts
  * const fn1 = () => 10
@@ -79,6 +81,9 @@ export type ZipTransformation<A, B, C> = (a: A, b: B) => C
 /**
  * Similar to a {@link Transformation | `Transformation`} but the result has to
  * be an optional value
+ *
+ * @param A - any type
+ * @param B - any type
  *
  * @example
  * ```ts

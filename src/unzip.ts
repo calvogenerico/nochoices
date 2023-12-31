@@ -2,6 +2,9 @@ import {Option} from "./option.js";
 
 /**
  * Tuple of 2 options.
+ *
+ * @param A - Any type
+ * @param B - Any type
  */
 export type OptionDuo<A, B> = [Option<A>, Option<B>]
 
