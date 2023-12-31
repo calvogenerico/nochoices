@@ -20,7 +20,6 @@ import {
  *
  * There are several ways to create an optional value:
  *
- *
  * @example
  * ```ts
  * const none = Option.None()
@@ -50,8 +49,17 @@ import {
  * @param T - The type of the object wrapped by the optional
  */
 export class Option<T> {
+  /**
+   * @hidden
+   * @private
+   */
   private value: OptionalValue<T>
 
+  /**
+   * @hidden
+   * @param value
+   * @private
+   */
   private constructor (value: OptionalValue<T>) {
     this.value = value
   }
