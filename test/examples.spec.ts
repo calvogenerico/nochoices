@@ -30,7 +30,7 @@ describe('compare optional vs nullable', () => {
 
     expect(
         optional.filter(isEven).map(plus1).unwrapOr(-1)
-    ).to.eql(Option.Some(11)) // Simple logic easy to read.
+    ).to.eql(11) // Simple logic easy to read.
 
     expect(
         nullable ?? isEven(nullable) ? plus1(nullable) : -1

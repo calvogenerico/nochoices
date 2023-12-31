@@ -798,7 +798,7 @@ describe('Option', () => {
     it('none does not call the fn', () => {
       const none = Option.None()
       let called = false
-      none.inspect((_) => {
+      none.inspectContent((_) => {
         called = true
       })
       expect(called).to.eql(false)
@@ -807,7 +807,7 @@ describe('Option', () => {
     it('some calls the fn with the right arg', () => {
       const some = Option.Some(123)
       let called = false
-      some.inspect((arg) => {
+      some.inspectContent((arg) => {
         expect(arg).to.eql(123)
         called = true
       })

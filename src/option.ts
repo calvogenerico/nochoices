@@ -762,7 +762,7 @@ export class Option<T> {
    * none.inspect(value => console.log(value)) // does nothing
    * ```
    */
-  inspect (param: (t: T) => void) {
+  inspectContent (param: (t: T) => void) {
     this.ifSome(param)
   }
 
