@@ -2,11 +2,35 @@ import {OptionalValue} from "./optional-value.js"
 import {Some} from "./some.js"
 import {None} from "./none.js"
 
+/**
+ * Type helper for flatting options
+ *
+ * FlattenOption<Option<Option<String>>> is equivalent to Option<String>
+ * FlattenOption<Option<number>> is equivalent to number
+ */
 export type FlattenOption<T> = T extends Option<infer U>
   ? U
   : T
 
+/**
+ * Type alias for simple transformations functions.
+ *
+ * A transformation takes a Value if type A and return a value of type B.
+ *
+ * @example
+ * ```ts
+ * // All the following are valid transformations
+ * const f1: Transformation = (a: number): string => a.toString()
+ * const f2: Transformation = (a: number): number => a + 2
+ * const f3: Transformation = (_a: string): object => ({color: 'red'})
+ * ```
+ */
 export type Transformation<A, B> = (a: A) => B
+
+/**
+ * Type alias for functions that evaluate a value and return true or false.
+ *
+ */
 export type Predicate<A> = (a: A) => boolean
 export type Generator<A> = () => A
 export type GenerateOption<A> = () => Option<A>
