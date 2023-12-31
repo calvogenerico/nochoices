@@ -19,7 +19,7 @@ const optional = Option.Some(10)
 const nullable: number | null = 10
 
 // Filter
-const isEven = (n: number) => n % 2 === 0\
+const isEven = (n: number) => n % 2 === 0
 // Transformation
 const plus1 = (n: number) => n + 1
 
@@ -44,10 +44,10 @@ if (maybeTen) {
 
 if (maybeZero) {
   // ...
-} // b is not null, so it's present, but the value is falsey, the if is not executed.
+} // b is not null, so it's present, but the value is falsey, the if it's not executed.
 ```
 
-Optionals make this a ton more expresive:
+Optionals make this a ton more expressive:
 
 ```typescript
 const maybeTen = Option.Some(10)
@@ -141,15 +141,16 @@ The following methods where excluded:
   - `as_pin_mut`
   - `unwrap_unchecked`
 
-- Typescript does not have anything related to `Result` type, so the following were also omitted:
+- Methods tha interact with `Result` type, because typescript has no analog feature to that:
   - `ok_or`
   - `ok_or_else`
   - `transpose`
+
+- Methods that transform into slice. Still, there is a kind of similar behavior with `#toArray`.
   - `as_slice`
   - `as_mut_slice`
 
-- Certain methods are related to traits that do not have so much sense in ts. Those were
-  omitted. `toArray` kind of encapsulates the behavior of some of this, though.
+- Methods related to traits that are harder to match to typescript.
   - `into_iter`
   - `iter`
   - `iter_mut`
@@ -172,8 +173,8 @@ The following methods where excluded:
   - `from_output`
   - `branch`
 
-- Methods that are not part of traits, but expect that the paramers implement traits that not
-  applicable to ts:
+- Methods that are not part of traits, but that expect parameters or generic types binded
+  to traits that do not match easily with ts:
   - `unwrap_or_default`
   - `get_or_insert_default`
   - `copied`
