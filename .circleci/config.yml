@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  build: # this can be any name you choose
+  build_and_test: # this can be any name you choose
     docker:
       - image: node:21 
     parallelism: 1
