@@ -1,5 +1,11 @@
 # nochoices
 
+## 1.1.1
+
+### Patch Changes
+
+- e0357cd: Improved package.json.
+
 ## 1.1.0
 
 ### Minor Changes
