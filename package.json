@@ -2,14 +2,31 @@
   "name": "nochoices",
   "version": "1.1.0",
   "description": "Full featured implementation of options into typescript.",
-  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hojarasca/nochoices"
+  },
+  "main": "./dist/mod/index.js",
+  "types": "dist/mod/index.d.ts",
+  "exports": {
+    "index.iife.js": "./dist/index.iife.js",
+    "index.es2020.js": "./dist/index.es2020.js",
+    "*": "./dist/mod/*"
+  },
   "type": "module",
   "scripts": {
     "test": "mocha",
     "lint": "eslint .",
     "gendocs": "pnpm typedoc --options typedoc.json"
   },
-  "keywords": ["option", "optional", "maybe", "some", "none", "nullable"],
+  "keywords": [
+    "option",
+    "optional",
+    "maybe",
+    "some",
+    "none",
+    "nullable"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -19,6 +36,7 @@
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "chai": "^4.3.10",
+    "esbuild": "^0.19.11",
     "eslint": "^8.56.0",
     "mocha": "^10.2.0",
     "tsx": "^4.7.0",
