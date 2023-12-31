@@ -98,6 +98,10 @@ const empty = Option.None()
 // ...
 ```
 
+## Api docs
+
+Docs can found [here](https://hojarasca.github.io/nochoices)
+
 ## How to test
 
 ```bash
