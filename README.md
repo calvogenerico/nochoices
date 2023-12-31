@@ -1,3 +1,5 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/6whMRWCFzJbeZLENyiqZua/28wXr6DjVUCq9Fpw9wX9Ef/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/6whMRWCFzJbeZLENyiqZua/28wXr6DjVUCq9Fpw9wX9Ef/tree/main)
+
 # With the right Options there is no choice to make
 
 This is the of the rust built in `Option` type ported to typescript.
@@ -22,11 +24,11 @@ const isEven = (n: number) => n % 2 === 0\
 const plus1 = (n: number) => n + 1
 
 expect(
-    optional.filter(isEven).map(plus1).unwrapOr(-1)
+  optional.filter(isEven).map(plus1).unwrapOr(-1)
 ).to.eql(Option.Some(11)) // Simple logic easy to read.
 
 expect(
-    nullable && isEven(nullable) ? plus1(nullable) : -1
+  nullable && isEven(nullable) ? plus1(nullable) : -1
 ).to.eql(11) // Abuse of syntax, harder to read and understand.
 ```
 
@@ -107,26 +109,30 @@ pnpm test
 
 Issues and prs are open.
 
-
 ## Changes from rust option lib:
 
-There are certain rust features that are just not applicable in typescript. So methods related to those
+There are certain rust features that are just not applicable in typescript. So methods related to
+those
 features where excluded.
 
-There is also a few methods that are super desirable in ts that do not make sense in rust. Those were added.
+There is also a few methods that are super desirable in ts that do not make sense in rust. Those
+were added.
 
 Lastly, there are a few that I just like, so I added them.
 
 ### Added methods
 
-- `ifSome(fn: (t: T) => void): Option<T>`: execs the provided fn only if current value is some. Returns `this` always. 
-- `ifNone(fn: (t: T) => void): Option<T>`: execs the provided fn only if current value is none. Returns `this` always. 
+- `ifSome(fn: (t: T) => void): Option<T>`: execs the provided fn only if current value is some.
+  Returns `this` always.
+- `ifNone(fn: (t: T) => void): Option<T>`: execs the provided fn only if current value is none.
+  Returns `this` always.
 - `toArray(): T[]`: if none returns [], if some returns an array of size 1 with the value.
 
 ### Excluded methods
+
 The following methods where excluded:
 
-- Every method that converts between refs and mutability 
+- Every method that converts between refs and mutability
   - `as_ref`
   - `as_mut`
   - `as_deref`
@@ -135,14 +141,15 @@ The following methods where excluded:
   - `as_pin_mut`
   - `unwrap_unchecked`
 
-- Typescript does not have anything related to `Result` type, so the following were also omitted: 
+- Typescript does not have anything related to `Result` type, so the following were also omitted:
   - `ok_or`
   - `ok_or_else`
   - `transpose`
   - `as_slice`
   - `as_mut_slice`
 
-- Certain methods are related to traits that do not have so much sense in ts. Those were omitted. `toArray` kind of encapsulates the behavior of some of this, though.
+- Certain methods are related to traits that do not have so much sense in ts. Those were
+  omitted. `toArray` kind of encapsulates the behavior of some of this, though.
   - `into_iter`
   - `iter`
   - `iter_mut`
@@ -165,7 +172,8 @@ The following methods where excluded:
   - `from_output`
   - `branch`
 
-- Methods that are not part of traits, but expect that the paramers implement traits that not applicable to ts:
+- Methods that are not part of traits, but expect that the paramers implement traits that not
+  applicable to ts:
   - `unwrap_or_default`
   - `get_or_insert_default`
   - `copied`
