@@ -2,7 +2,7 @@
 
 # With the right Options there is no choice to make
 
-This is the of the rust built in `Option` type ported to typescript.
+Options in rust are great. This library is a port of the rust Option type into typescript.
 
 ## Why Options?
 
