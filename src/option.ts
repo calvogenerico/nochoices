@@ -685,6 +685,35 @@ export class Option<T> {
   }
 
   /**
+   * Returns true if and only if the current instance is Some and the value does not fulfill the given
+   * predicate.
+   *
+   * This is the options equivalent to do something like the following but in the world
+   * of optionals.
+   *
+   * ```ts
+   * if (a && !myCondition(a)) {
+   *   //...
+   * }
+   * ```
+   *
+   * @param condition - The predicate function to apply to the contained value.
+   * @returns Returns true if the Option instance contains a value and the predicate
+   * function returns false when applied to the value, otherwise true.
+   *
+   * @example
+   * ```ts
+   * const some = Option.Some(5)
+   * const result = some.isSomeBut(value => value > 3) // false
+   * const none = Option.None<number>()
+   * const result2 = none.isSomeBut(value => value > 3) // false
+   * ```
+   */
+  isSomeBut (condition: Predicate<T>) {
+    return this.value.isSomeAnd((t) => !condition(t))
+  }
+
+  /**
    * Allows to execute a block of code only if the instance is Some. It always
    * returns the current instance.
    *
@@ -814,9 +843,5 @@ export class Option<T> {
    */
   toArray (): T[] {
     return this.value.toArray()
-  }
-
-  isSomeBut (condition: Predicate<T>) {
-    return this.value.isSomeAnd((t) => !condition(t))
   }
 }
