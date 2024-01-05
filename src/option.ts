@@ -815,4 +815,8 @@ export class Option<T> {
   toArray (): T[] {
     return this.value.toArray()
   }
+
+  isSomeBut (condition: Predicate<T>) {
+    return this.value.isSomeAnd((t) => !condition(t))
+  }
 }

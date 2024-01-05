@@ -77,6 +77,56 @@ describe('Option', () => {
     })
   })
 
+  describe('#isSomeBut', () => {
+    it('none returns false', () => {
+      const none = Option.None()
+      const res = none.isSomeBut(() => true)
+      expect(res).to.eql(false)
+    })
+
+    it('none does not call the fn', () => {
+      const none = Option.None()
+      let called = false
+      none.isSomeBut(() => {
+        called = true
+        return true
+      })
+      expect(called).to.eql(false)
+    })
+
+    it('some returns true when the fn returns false', () => {
+      const some = Option.Some(123)
+      const res = some.isSomeBut((_) => false)
+      expect(res).to.eql(true)
+    })
+
+    it('some returns false when the fn returns true', () => {
+      const some = Option.Some(123)
+      const res = some.isSomeBut((_) => true)
+      expect(res).to.eql(false)
+    })
+
+    it('some calls the fn', () => {
+      const some = Option.Some(123)
+      let called = false
+      some.isSomeBut((_) => {
+        called = true
+        return true
+      })
+      expect(called).to.eql(true)
+    })
+
+    it('returns calls the fn with using its internal value as the argument', () => {
+      const obj = {}
+      const some: Option<object> = Option.Some(obj)
+      some.isSomeBut((o) => {
+        expect(o).to.equal(obj)
+        return true
+      })
+    })
+  })
+
+
 
   describe('#unwrap', () => {
     it('None.unwrap throws an error', () => {
