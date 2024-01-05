@@ -1,5 +1,11 @@
 # nochoices
 
+## 1.1.3
+
+### Patch Changes
+
+- Added Option#isSomeBut()
+
 ## 1.1.2
 
 ### Patch Changes
