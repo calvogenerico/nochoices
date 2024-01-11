@@ -2,6 +2,7 @@ import {OptionalValue} from "./optional-value.js"
 import {Some} from "./some.js"
 import {None} from "./none.js"
 import {
+  AreEqual,
   FlattenOption,
   GenerateOption,
   Generator,
@@ -843,5 +844,14 @@ export class Option<T> {
    */
   toArray (): T[] {
     return this.value.toArray()
+  }
+
+
+  equals (another: Option<T>): boolean {
+    return this.value.equals(another.value)
+  }
+
+  equalsBy (another: Option<T>, equality: AreEqual<T>): boolean {
+    return this.value.equalsBy(another.value, equality)
   }
 }

@@ -907,4 +907,88 @@ describe('Option', () => {
       expect(option.unwrap()).to.eql(0)
     })
   })
+
+  describe('#equals', () => {
+    it('returns true for 2 nones', () => {
+      const none1 = Option.None()
+      const none2 = Option.None()
+      expect(none1.equals(none2)).to.eql(true)
+    })
+
+    it('returns false for none and some', () => {
+      const none = Option.None()
+      const some = Option.Some(10)
+      expect(none.equals(some)).to.eql(false)
+    })
+
+    it('returns false for some and none', () => {
+      const some = Option.Some('foo')
+      const none = Option.None<string>()
+      expect(some.equals(none)).to.eql(false)
+    })
+
+    it('returns true for some and some with the same value', () => {
+      const some1 = Option.Some('foo')
+      const some2 = Option.Some('foo')
+      expect(some1.equals(some2)).to.eql(true)
+    })
+
+    it('returns false for some and some with different value', () => {
+      const some1 = Option.Some('foo')
+      const some2 = Option.Some('bar')
+      expect(some1.equals(some2)).to.eql(false)
+    })
+  })
+
+  describe('#equalsBy', () => {
+    it('returns true for 2 nones', () => {
+      const none1 = Option.None()
+      const none2 = Option.None()
+      const eq = none1.equalsBy(none2, () => false);
+      expect(eq).to.eql(true)
+    })
+
+    it('returns false for none and some', () => {
+      const none = Option.None()
+      const some = Option.Some(10)
+      const eq = none.equalsBy(some, () => true);
+      expect(eq).to.eql(false)
+    })
+
+    it('returns false for some and none', () => {
+      const some = Option.Some(10)
+      const none = Option.None<number>()
+      const eq = some.equalsBy(none, () => true);
+      expect(eq).to.eql(false)
+    })
+
+    it('returns false for some and some when equality fails', () => {
+      const some1 = Option.Some(10)
+      const some2 = Option.Some(10)
+      const eq = some1.equalsBy(some2, () => false);
+      expect(eq).to.eql(false)
+    })
+
+    it('returns true for some and some when equality returns true', () => {
+      const some1 = Option.Some(1)
+      const some2 = Option.Some(22)
+      const eq = some1.equalsBy(some2, () => true);
+      expect(eq).to.eql(true)
+    })
+
+    it('sends right parameter to equality', () => {
+      const obj1 = {}
+      const obj2 = {}
+      const some1 = Option.Some(obj1)
+      const some2 = Option.Some(obj2)
+      let called = false
+      some1.equalsBy(some2, (a, b) => {
+        expect(a).to.equals(obj1)
+        expect(b).to.equals(obj2)
+        called = true
+        return true
+      });
+      expect(called).to.eql(true)
+    })
+  })
 })

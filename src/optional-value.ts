@@ -1,6 +1,6 @@
 import {Option} from "./option.js"
 import {Some} from "./some.js"
-import {FlattenOption} from "./types.js";
+import {AreEqual, FlattenOption} from "./types.js";
 
 export abstract class OptionalValue<T> {
   abstract isPresent (): boolean
@@ -52,4 +52,8 @@ export abstract class OptionalValue<T> {
   abstract ifNone (fn: () => void): void
 
   abstract toArray (): T[]
+
+  abstract equals (another: OptionalValue<T>): boolean
+
+  abstract equalsBy (another: OptionalValue<T>, equality: AreEqual<T>)
 }

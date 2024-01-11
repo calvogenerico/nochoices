@@ -115,3 +115,5 @@ export type TransformToOption<A, B> = (a: A) => Option<B>
 export type FlattenOption<A> = A extends Option<infer B>
   ? B
   : A
+
+export type AreEqual<A> = (a1: A, a2: A) => boolean

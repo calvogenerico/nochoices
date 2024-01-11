@@ -1,7 +1,7 @@
 import {OptionalValue} from "./optional-value.js"
 import {Option} from "./option.js"
 import {Some} from "./some.js"
-import {FlattenOption} from "./types.js";
+import {AreEqual, FlattenOption} from "./types.js";
 
 export class None<T> extends OptionalValue<T> {
   isPresent (): boolean {
@@ -102,5 +102,13 @@ export class None<T> extends OptionalValue<T> {
 
   toArray (): T[] {
     return [];
+  }
+
+  equals (another: OptionalValue<T>): boolean {
+    return another.isAbsent();
+  }
+
+  equalsBy (another: OptionalValue<T>, _equality: AreEqual<T>) {
+    return another.isAbsent()
   }
 }

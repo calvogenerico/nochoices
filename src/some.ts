@@ -1,6 +1,6 @@
 import {OptionalValue} from "./optional-value.js"
 import {Option} from "./option.js"
-import {FlattenOption} from "./types.js";
+import {AreEqual, FlattenOption} from "./types.js";
 
 export class Some<T> extends OptionalValue<T> {
   value: T
@@ -117,5 +117,13 @@ export class Some<T> extends OptionalValue<T> {
 
   toArray (): T[] {
     return [this.value];
+  }
+
+  equals (another: OptionalValue<T>): boolean {
+    return another.isSomeAnd(t => t === this.value);
+  }
+
+  equalsBy (another: OptionalValue<T>, equality: AreEqual<T>) {
+    return another.isSomeAnd(t => equality(this.value, t));
   }
 }
