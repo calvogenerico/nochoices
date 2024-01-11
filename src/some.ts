@@ -119,11 +119,7 @@ export class Some<T> extends OptionalValue<T> {
     return [this.value];
   }
 
-  equals (another: OptionalValue<T>): boolean {
-    return another.isSomeAnd(t => t === this.value);
-  }
-
-  equalsBy (another: OptionalValue<T>, equality: AreEqual<T>) {
+  equalsWith (another: OptionalValue<T>, equality: AreEqual<T>): boolean {
     return another.isSomeAnd(t => equality(this.value, t));
   }
 }

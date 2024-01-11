@@ -53,7 +53,5 @@ export abstract class OptionalValue<T> {
 
   abstract toArray (): T[]
 
-  abstract equals (another: OptionalValue<T>): boolean
-
-  abstract equalsBy (another: OptionalValue<T>, equality: AreEqual<T>)
+  abstract equalsWith (another: OptionalValue<T>, equality: AreEqual<T>): boolean
 }

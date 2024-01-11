@@ -848,10 +848,10 @@ export class Option<T> {
 
 
   equals (another: Option<T>): boolean {
-    return this.value.equals(another.value)
+    return this.value.equalsWith(another.value, (a, b) => a === b)
   }
 
-  equalsBy (another: Option<T>, equality: AreEqual<T>): boolean {
-    return this.value.equalsBy(another.value, equality)
+  equalsWith (another: Option<T>, equality: AreEqual<T>): boolean {
+    return this.value.equalsWith(another.value, equality)
   }
 }

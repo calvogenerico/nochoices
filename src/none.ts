@@ -104,11 +104,7 @@ export class None<T> extends OptionalValue<T> {
     return [];
   }
 
-  equals (another: OptionalValue<T>): boolean {
-    return another.isAbsent();
-  }
-
-  equalsBy (another: OptionalValue<T>, _equality: AreEqual<T>) {
+  equalsWith (another: OptionalValue<T>, _equality: AreEqual<T>): boolean {
     return another.isAbsent()
   }
 }
