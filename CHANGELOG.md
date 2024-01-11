@@ -1,5 +1,11 @@
 # nochoices
 
+## 1.1.4
+
+### Patch Changes
+
+- Added equality methods: equals and equalsWith
+
 ## 1.1.3
 
 ### Patch Changes
