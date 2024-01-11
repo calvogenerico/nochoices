@@ -116,4 +116,22 @@ export type FlattenOption<A> = A extends Option<infer B>
   ? B
   : A
 
+
+/**
+ * Type alias for functions that takes two values of the same type and return a boolean.
+ *
+ * This kind of function is typically used to check if two values are equal or equivalent.
+ *
+ * @param A - any type
+ *
+ * @returns a boolean indicating whether the two values are equal
+ *
+ * @example
+ * ```ts
+ * // All the following are valid examples
+ * const fn1: AreEqual<number> = (a1: number, a2: number) => a1 === a2
+ * const fn2: AreEqual<string> = (a1: string, a2: string) => a1.localeCompare(a2) === 0
+ * const fn3: AreEqual<object> = (a1: object, a2: object) => JSON.stringify(a1) === JSON.stringify(a2)
+ * ```
+ */
 export type AreEqual<A> = (a1: A, a2: A) => boolean

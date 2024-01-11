@@ -58,7 +58,7 @@ export class Option<T> {
 
   /**
    * @hidden
-   * @param value
+   * @param value - Internal value for the optional
    * @private
    */
   private constructor (value: OptionalValue<T>) {
@@ -847,10 +847,45 @@ export class Option<T> {
   }
 
 
+  /**
+   * Returns true if and only of both optionals are some and both have the same
+   * value. Comparison is done using `===`.
+   *
+   * @param another - Another optional to compare with this
+   *
+   * @example
+   * ```ts
+   * Option.None().equals(Option.None()) // true
+   * Option.Some(10).equals(Option.None()) // false
+   * Option.None().equals(Option.Some('foo')) // false
+   * Option.Some('bar').equals(Option.Some('bar')) // true
+   * ```
+   */
   equals (another: Option<T>): boolean {
     return this.value.equalsWith(another.value, (a, b) => a === b)
   }
 
+  /**
+   * Returns true if and only of both optionals are some and the provided
+   * equality check returns true.
+   *
+   * @param another - Another optional to compare with this
+   * @param equality - Function to compare content of both.
+   *
+   * @example
+   * ```ts
+   * // If both are None, the equality function is not even called
+   * Option.None().equalsWith(Option.None(), () => false) // true
+   *
+   * // If one is some and the other is none, the equality function is not even called
+   * Option.Some(10).equalsWith(Option.None(), () => true) // false
+   * Option.None().equalsWith(Option.Some('foo'), () => true) // false
+   *
+   * // If both are some the equality function is called
+   * Option.Some(10).equalsWith(Option.Some(15), (a, b) => a % 5 === b % 5) // true
+   * Option.Some(7).equalsWith(Option.Some(15), (a, b) => a % 5 === b % 5) // false
+   * ```
+   */
   equalsWith (another: Option<T>, equality: AreEqual<T>): boolean {
     return this.value.equalsWith(another.value, equality)
   }
