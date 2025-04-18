@@ -1,6 +1,6 @@
-import {OptionalValue} from "./optional-value.js"
-import {Some} from "./some.js"
-import {None} from "./none.js"
+import { OptionalValue } from "./optional-value.js"
+import { Some } from "./some.js"
+import { None } from "./none.js"
 import {
   AreEqual,
   FlattenOption,
@@ -61,7 +61,7 @@ export class Option<T> {
    * @param value - Internal value for the optional
    * @private
    */
-  private constructor (value: OptionalValue<T>) {
+  private constructor(value: OptionalValue<T>) {
     this.value = value
   }
 
@@ -78,7 +78,7 @@ export class Option<T> {
    * some.unwrap() === 'foo' // true
    * ```
    */
-  static Some<T> (value: T): Option<T> {
+  static Some<T>(value: T): Option<T> {
     return new Option(new Some(value))
   }
 
@@ -95,7 +95,7 @@ export class Option<T> {
    * none.isNone() // true
    * ```
    */
-  static None<T> (): Option<T> {
+  static None<T>(): Option<T> {
     return new Option<T>(new None())
   }
 
@@ -116,7 +116,7 @@ export class Option<T> {
    * const maybe2 = Option.fromNullable(nullable2) // Some('foo')
    * ```
    */
-  static fromNullable<T> (param: T | null | undefined): Option<T> {
+  static fromNullable<T>(param: T | null | undefined): Option<T> {
     if (param === null || param === undefined) {
       return Option.None()
     } else {
@@ -138,7 +138,7 @@ export class Option<T> {
    * some.isNone() // false
    * ```
    */
-  isNone (): boolean {
+  isNone(): boolean {
     return this.value.isAbsent()
   }
 
@@ -155,7 +155,7 @@ export class Option<T> {
    * some.isSome() // true
    * ```
    */
-  isSome (): boolean {
+  isSome(): boolean {
     return this.value.isPresent()
   }
 
@@ -178,7 +178,7 @@ export class Option<T> {
    * const newNone = none.map(value => value * 2) // None
    * ```
    */
-  map<M> (fn: Transformation<T, M>): Option<M> {
+  map<M>(fn: Transformation<T, M>): Option<M> {
     return this.value.map(fn)
   }
 
@@ -207,7 +207,7 @@ export class Option<T> {
    * none.unwrap() // throws Error
    * ```
    */
-  unwrap (): T {
+  unwrap(): T {
     return this.value.unwrap()
   }
 
@@ -227,7 +227,7 @@ export class Option<T> {
    * none.unwrapOr('bar') // 'bar'
    * ```
    */
-  unwrapOr (defaultValue: T): T {
+  unwrapOr<U>(defaultValue: U): T | U {
     return this.value.unwrapOr(defaultValue)
   }
 
@@ -249,7 +249,7 @@ export class Option<T> {
    * none.unwrapOrElse(() => 'bar') // 'bar'
    * ```
    */
-  unwrapOrElse (defaultFn: Generator<T>): T {
+  unwrapOrElse(defaultFn: Generator<T>): T {
     return this.value.unwrapOrElse(defaultFn)
   }
 
@@ -275,7 +275,7 @@ export class Option<T> {
    * const newOpt2 = opt2.filter(value => value > 3) // None
    * ```
    */
-  filter (fn: Predicate<T>): Option<T> {
+  filter(fn: Predicate<T>): Option<T> {
     return this.value.filter(fn)
   }
 
@@ -296,7 +296,7 @@ export class Option<T> {
    * none.expect(new Error('No value')) // throws Error: 'No value'
    * ```
    */
-  expect (err: Error): T {
+  expect(err: Error): T {
     return this.value.expect(err)
   }
 
@@ -318,7 +318,7 @@ export class Option<T> {
    * none.flatten() // None
    * ```
    */
-  flatten (): Option<FlattenOption<T>> {
+  flatten(): Option<FlattenOption<T>> {
     return this.value.flatten()
   }
 
@@ -339,7 +339,7 @@ export class Option<T> {
    * const result2 = none.mapOr(0, value => value * 2) // 0
    * ```
    */
-  mapOr<U> (defaultValue: U, mapFn: Transformation<T, U>): U {
+  mapOr<U>(defaultValue: U, mapFn: Transformation<T, U>): U {
     return this.map(mapFn).unwrapOr(defaultValue)
   }
 
@@ -362,7 +362,7 @@ export class Option<T> {
    * const result2 = none.mapOrElse(() => 0, value => value * 2) // 0
    * ```
    */
-  mapOrElse<U> (defFn: () => U, mapFn: Transformation<T, U>): U {
+  mapOrElse<U>(defFn: () => U, mapFn: Transformation<T, U>): U {
     return this.map(mapFn).unwrapOrElse(defFn)
   }
 
@@ -383,7 +383,7 @@ export class Option<T> {
    * const result2 = some1.zip(none) // None
    * ```
    */
-  zip<U> (another: Option<U>): Option<[T, U]> {
+  zip<U>(another: Option<U>): Option<[T, U]> {
     return this.value.zip(another.value)
   }
 
@@ -411,7 +411,7 @@ export class Option<T> {
    * const result2 = some1.zipWith(none, (a, b) => a + b) // None
    * ```
    */
-  zipWith<U, V> (another: Option<U>, zipWithFn: ZipTransformation<T, U, V>): Option<V> {
+  zipWith<U, V>(another: Option<U>, zipWithFn: ZipTransformation<T, U, V>): Option<V> {
     return this.zip(another).map(([t, u]) => zipWithFn(t, u))
   }
 
@@ -436,7 +436,7 @@ export class Option<T> {
    * const result3 = some.and(none) // None
    * ```
    */
-  and<V> (another: Option<V>): Option<V> {
+  and<V>(another: Option<V>): Option<V> {
     return this.value.and(another)
   }
 
@@ -463,7 +463,7 @@ export class Option<T> {
    * const result4 = none.or(none) // None
    * ```
    */
-  or (another: Option<T>): Option<T> {
+  or(another: Option<T>): Option<T> {
     return this.value.or(this, another)
   }
 
@@ -489,7 +489,7 @@ export class Option<T> {
    * const result4 = none.xor(none) // None
    * ```
    */
-  xor (another: Option<T>): Option<T> {
+  xor(another: Option<T>): Option<T> {
     return this.value.xor(another.value)
   }
 
@@ -511,7 +511,7 @@ export class Option<T> {
    * const newNone = none.andThen(value => Option.Some(value * 2)) // None
    * ```
    */
-  andThen<U> (fn: TransformToOption<T, U>): Option<U> {
+  andThen<U>(fn: TransformToOption<T, U>): Option<U> {
     return this.value.andThen(fn)
   }
 
@@ -532,7 +532,7 @@ export class Option<T> {
    * const result3 = none.orElse(() => Option.None()) // None
    * ```
    */
-  orElse (fn: GenerateOption<T>): Option<T> {
+  orElse(fn: GenerateOption<T>): Option<T> {
     return this.value.orElse(fn)
   }
 
@@ -550,7 +550,7 @@ export class Option<T> {
    * some.insert('foo') // Some('foo')
    * ```
    */
-  insert (value: T): Option<T> {
+  insert(value: T): Option<T> {
     this.value = new Some(value)
     return this
   }
@@ -575,7 +575,7 @@ export class Option<T> {
    * opt2.getOrInsert('foo') // 'bar'
    * ```
    */
-  getOrInsert (value: T): T {
+  getOrInsert(value: T): T {
     this.value = this.value.getOrInsert(value)
     return this.unwrap()
   }
@@ -603,7 +603,7 @@ export class Option<T> {
    * opt2.getOrInsertWith(() => 'foo') // 'bar'
    * ```
    */
-  getOrInsertWith (fn: Generator<T>): T {
+  getOrInsertWith(fn: Generator<T>): T {
     this.value = this.value.getOrInsertWith(fn)
     return this.unwrap()
   }
@@ -628,7 +628,7 @@ export class Option<T> {
    * none.isNone() // true
    * ```
    */
-  take (): Option<T> {
+  take(): Option<T> {
     const takeValue = this.value.takeValue()
     this.value = new None()
     return takeValue
@@ -650,7 +650,7 @@ export class Option<T> {
    * opt2.unwrap() // 'foo'
    * ```
    */
-  replace (newValue: T): Option<T> {
+  replace(newValue: T): Option<T> {
     const oldValue = this.value
     this.value = new Some(newValue)
     return new Option<T>(oldValue)
@@ -681,7 +681,7 @@ export class Option<T> {
    * const result2 = none.isSomeAnd(value => value > 3) // false
    * ```
    */
-  isSomeAnd (andFn: Predicate<T>): boolean {
+  isSomeAnd(andFn: Predicate<T>): boolean {
     return this.value.isSomeAnd(andFn)
   }
 
@@ -710,7 +710,7 @@ export class Option<T> {
    * const result2 = none.isSomeBut(value => value > 3) // false
    * ```
    */
-  isSomeBut (condition: Predicate<T>) {
+  isSomeBut(condition: Predicate<T>) {
     return this.value.isSomeAnd((t) => !condition(t))
   }
 
@@ -742,7 +742,7 @@ export class Option<T> {
    * res2 === none // true
    * ```
    */
-  ifSome (fn: (t: T) => void): Option<T> {
+  ifSome(fn: (t: T) => void): Option<T> {
     this.value.ifSome(fn)
     return this
   }
@@ -774,7 +774,7 @@ export class Option<T> {
    * none.ifNone(() => console.log('No value')) // logs 'No value' to the console
    * ```
    */
-  ifNone (fn: () => void): Option<T> {
+  ifNone(fn: () => void): Option<T> {
     this.value.ifNone(fn)
     return this
   }
@@ -797,7 +797,7 @@ export class Option<T> {
    * none.inspect(value => console.log(value)) // does nothing
    * ```
    */
-  inspectContent (param: (t: T) => void) {
+  inspectContent(param: (t: T) => void) {
     this.ifSome(param)
   }
 
@@ -823,7 +823,7 @@ export class Option<T> {
    * opt3.isNone() // true
    * ```
    */
-  takeIf (param: Predicate<T>): Option<T> {
+  takeIf(param: Predicate<T>): Option<T> {
     return this.filter(param).andThen(() => this.take())
   }
 
@@ -842,7 +842,7 @@ export class Option<T> {
    * none.toArray() // []
    * ```
    */
-  toArray (): T[] {
+  toArray(): T[] {
     return this.value.toArray()
   }
 
@@ -861,7 +861,7 @@ export class Option<T> {
    * Option.Some('bar').equals(Option.Some('bar')) // true
    * ```
    */
-  equals (another: Option<T>): boolean {
+  equals(another: Option<T>): boolean {
     return this.value.equalsWith(another.value, (a, b) => a === b)
   }
 
@@ -886,7 +886,7 @@ export class Option<T> {
    * Option.Some(7).equalsWith(Option.Some(15), (a, b) => a % 5 === b % 5) // false
    * ```
    */
-  equalsWith (another: Option<T>, equality: AreEqual<T>): boolean {
+  equalsWith(another: Option<T>, equality: AreEqual<T>): boolean {
     return this.value.equalsWith(another.value, equality)
   }
 }

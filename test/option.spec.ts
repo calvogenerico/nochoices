@@ -158,7 +158,7 @@ describe('Option', () => {
     })
   })
 
-  describe('#unwrap_or', () => {
+  describe('#unwrapOr', () => {
     it('None returns the default value', () => {
       const none = Option.None()
       const defaultValue = 123
@@ -169,6 +169,13 @@ describe('Option', () => {
       const value = { a: 123 }
       const some = Option.Some(value)
       const defaultValue = { a: 0 }
+      expect(some.unwrapOr(defaultValue)).to.equal(value)
+    })
+
+    it('Default value can be of a different type', () => {
+      const value = 100
+      const some = Option.Some(value)
+      const defaultValue = '100'
       expect(some.unwrapOr(defaultValue)).to.equal(value)
     })
   })
