@@ -1,29 +1,28 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
+import {describe, it, expect} from 'vitest'
 import {Option} from "../src/index.js"
 
 describe('Option', () => {
   describe('#isSome', () => {
     it('None is not present', () => {
       const opt = Option.None()
-      expect(opt.isSome()).to.eql(false)
+      expect(opt.isSome()).toStrictEqual(false)
     })
 
     it('Some is present', () => {
       const opt = Option.Some(1)
-      expect(opt.isSome()).to.eql(true)
+      expect(opt.isSome()).toStrictEqual(true)
     })
   })
 
   describe('#isNone', () => {
     it('None is absent', () => {
       const opt = Option.None()
-      expect(opt.isNone()).to.eql(true)
+      expect(opt.isNone()).toStrictEqual(true)
     })
 
     it('Some is not absent', () => {
       const opt = Option.Some(1)
-      expect(opt.isNone()).to.eql(false)
+      expect(opt.isNone()).toStrictEqual(false)
     })
   })
 
@@ -32,7 +31,7 @@ describe('Option', () => {
     it('none returns false', () => {
       const none = Option.None()
       const res = none.isSomeAnd(() => true)
-      expect(res).to.eql(false)
+      expect(res).toStrictEqual(false)
     })
 
     it('none does not call the fn', () => {
@@ -42,19 +41,19 @@ describe('Option', () => {
         called = true
         return true
       })
-      expect(called).to.eql(false)
+      expect(called).toStrictEqual(false)
     })
 
     it('some returns false when the fn returns false', () => {
       const some = Option.Some(123)
       const res = some.isSomeAnd((_) => false)
-      expect(res).to.eql(false)
+      expect(res).toStrictEqual(false)
     })
 
     it('some returns true when the fn returns true', () => {
       const some = Option.Some(123)
       const res = some.isSomeAnd((_) => true)
-      expect(res).to.eql(true)
+      expect(res).toStrictEqual(true)
     })
 
     it('some calls the fn', () => {
@@ -64,14 +63,14 @@ describe('Option', () => {
         called = true
         return true
       })
-      expect(called).to.eql(true)
+      expect(called).toStrictEqual(true)
     })
 
     it('returns calls the fn with using its internal value as the argument', () => {
       const obj = {}
       const some: Option<object> = Option.Some(obj)
       some.isSomeAnd((o) => {
-        expect(o).to.equal(obj)
+        expect(o).toBe(obj)
         return true
       })
     })
@@ -81,7 +80,7 @@ describe('Option', () => {
     it('none returns false', () => {
       const none = Option.None()
       const res = none.isSomeBut(() => true)
-      expect(res).to.eql(false)
+      expect(res).toStrictEqual(false)
     })
 
     it('none does not call the fn', () => {
@@ -91,19 +90,19 @@ describe('Option', () => {
         called = true
         return true
       })
-      expect(called).to.eql(false)
+      expect(called).toStrictEqual(false)
     })
 
     it('some returns true when the fn returns false', () => {
       const some = Option.Some(123)
       const res = some.isSomeBut((_) => false)
-      expect(res).to.eql(true)
+      expect(res).toStrictEqual(true)
     })
 
     it('some returns false when the fn returns true', () => {
       const some = Option.Some(123)
       const res = some.isSomeBut((_) => true)
-      expect(res).to.eql(false)
+      expect(res).toStrictEqual(false)
     })
 
     it('some calls the fn', () => {
@@ -113,33 +112,32 @@ describe('Option', () => {
         called = true
         return true
       })
-      expect(called).to.eql(true)
+      expect(called).toStrictEqual(true)
     })
 
     it('returns calls the fn with using its internal value as the argument', () => {
       const obj = {}
       const some: Option<object> = Option.Some(obj)
       some.isSomeBut((o) => {
-        expect(o).to.equal(obj)
+        expect(o).toBe(obj)
         return true
       })
     })
   })
 
 
-
   describe('#unwrap', () => {
     it('None.unwrap throws an error', () => {
       const none = Option.None()
-      expect(() => none.unwrap()).to.throw(Error, 'unwrap over None.')
-      expect(none.isNone()).to.eq(true)
+      expect(() => none.unwrap()).toThrow('unwrap over None.')
+      expect(none.isNone()).toBe(true)
     })
 
     it('Some.unwrap returns the contained value', () => {
       const obj = {}
       const none = Option.Some(obj)
       const value = none.unwrap()
-      expect(value).to.equal(obj)
+      expect(value).toBe(obj)
     })
   })
 
@@ -147,14 +145,14 @@ describe('Option', () => {
     it('None.expect trows specified error', () => {
       const err = new Error('this is the error')
       const none = Option.None()
-      expect(() => none.expect(err)).to.throw(Error, 'this is the error')
+      expect(() => none.expect(err)).toThrow('this is the error')
     })
 
     it('Some.expect returns the contained value', () => {
       const obj = {}
       const err = new Error('this is the error')
       const some = Option.Some(obj)
-      expect(some.expect(err)).to.equal(obj)
+      expect(some.expect(err)).toBe(obj)
     })
   })
 
@@ -162,21 +160,21 @@ describe('Option', () => {
     it('None returns the default value', () => {
       const none = Option.None()
       const defaultValue = 123
-      expect(none.unwrapOr(defaultValue)).to.eql(123)
+      expect(none.unwrapOr(defaultValue)).toStrictEqual(123)
     })
 
     it('Some returns the contained value', () => {
-      const value = { a: 123 }
+      const value = {a: 123}
       const some = Option.Some(value)
-      const defaultValue = { a: 0 }
-      expect(some.unwrapOr(defaultValue)).to.equal(value)
+      const defaultValue = {a: 0}
+      expect(some.unwrapOr(defaultValue)).toBe(value)
     })
 
     it('Default value can be of a different type', () => {
       const value = 100
       const some = Option.Some(value)
       const defaultValue = '100'
-      expect(some.unwrapOr(defaultValue)).to.equal(value)
+      expect(some.unwrapOr(defaultValue)).toBe(value)
     })
   })
 
@@ -188,8 +186,8 @@ describe('Option', () => {
       expect(none.unwrapOrElse(() => {
         called = true
         return obj
-      })).to.equal(obj)
-      expect(called).to.eql(true)
+      })).toBe(obj)
+      expect(called).toStrictEqual(true)
     })
   })
 
@@ -204,14 +202,14 @@ describe('Option', () => {
       const opt = Option.Some(1)
       const mapped = opt.map((a) => a + 1)
       expect(mapped.isSome())
-      expect(mapped.unwrap()).to.eql(2)
+      expect(mapped.unwrap()).toStrictEqual(2)
     })
 
     it('can change the type of the option', () => {
       const opt1 = Option.Some(1)
       const opt2 = opt1.map(_ => 'a')
       expect(opt2.isSome())
-      expect(opt2.unwrap()).to.eql('a')
+      expect(opt2.unwrap()).toStrictEqual('a')
     })
 
     it('some sends the inner value to the fn', () => {
@@ -219,11 +217,11 @@ describe('Option', () => {
       const some = Option.Some(obj)
       let called = false
       some.map((value) => {
-        expect(value).to.equal(obj)
+        expect(value).toBe(obj)
         called = true
         return value
       })
-      expect(called).to.eql(true)
+      expect(called).toStrictEqual(true)
     })
   })
 
@@ -231,25 +229,25 @@ describe('Option', () => {
     it('None keeps none when the filterFn returns true', () => {
       const none = Option.None()
       const res = none.filter((_) => true)
-      expect(res.isNone()).to.eql(true)
+      expect(res.isNone()).toStrictEqual(true)
     })
 
     it('None keeps none when the filterFn returns false', () => {
       const none = Option.None()
       const res = none.filter((_) => false)
-      expect(res.isNone()).to.eql(true)
+      expect(res.isNone()).toStrictEqual(true)
     })
 
     it('Some keeps the value when the filterFn returns true', () => {
       const some = Option.Some(123)
       const res = some.filter((_) => true)
-      expect(res.unwrap()).to.eql(123)
+      expect(res.unwrap()).toStrictEqual(123)
     })
 
     it('Some returns None when when the filterFn returns false', () => {
       const some = Option.Some(123)
       const res = some.filter((_) => false)
-      expect(res.isNone()).to.eql(true)
+      expect(res.isNone()).toStrictEqual(true)
     })
 
     it('Sends the right value to the fn', () => {
@@ -257,12 +255,12 @@ describe('Option', () => {
       const some = Option.Some(obj)
       let called = false
       const res = some.filter((a) => {
-        expect(a).to.equal(obj)
+        expect(a).toBe(obj)
         called = true
         return true
       })
-      expect(res.isSome()).to.eql(true)
-      expect(called).to.eql(true)
+      expect(res.isSome()).toStrictEqual(true)
+      expect(called).toStrictEqual(true)
     })
   })
 
@@ -270,29 +268,29 @@ describe('Option', () => {
     it('none keeps being none', () => {
       const none = Option.None()
       const flattened = none.flatten()
-      expect(flattened.isNone()).to.eql(true)
+      expect(flattened.isNone()).toStrictEqual(true)
     })
 
     it('some of some of t returns some of t', () => {
       const some = Option.Some(Option.Some(1))
       const flattened = some.flatten()
-      expect(flattened.isSome()).to.eql(true)
-      expect(flattened.unwrap()).to.eql(1)
+      expect(flattened.isSome()).toStrictEqual(true)
+      expect(flattened.unwrap()).toStrictEqual(1)
     })
 
     it('some of t returns some of t', () => {
       const some = Option.Some(1)
       const flattened = some.flatten()
-      expect(flattened.isSome()).to.eql(true)
-      expect(flattened.unwrap()).to.eql(1)
+      expect(flattened.isSome()).toStrictEqual(true)
+      expect(flattened.unwrap()).toStrictEqual(1)
     })
 
     it('some of some of some of t returns some of some of t', () => {
       const obj = {}
       const some = Option.Some(Option.Some(Option.Some(obj)))
       const flattened = some.flatten()
-      expect(flattened.isSome()).to.eql(true)
-      expect(flattened.unwrap().unwrap()).to.eql(obj)
+      expect(flattened.isSome()).toStrictEqual(true)
+      expect(flattened.unwrap().unwrap()).toStrictEqual(obj)
     })
   })
 
@@ -300,13 +298,13 @@ describe('Option', () => {
     it('returns the default value for None', () => {
       const none = Option.None<number>()
       const mapped = none.mapOr(10, a => a + 1)
-      expect(mapped).to.eql(10)
+      expect(mapped).toStrictEqual(10)
     })
 
     it('returns the transformed value when is some', () => {
       const some = Option.Some(10)
       const mapped = some.mapOr(-1, a => a + 1)
-      expect(mapped).to.eql(11)
+      expect(mapped).toStrictEqual(11)
     })
 
     it('some sends the right value to map fn', () => {
@@ -314,11 +312,11 @@ describe('Option', () => {
       const some = Option.Some(obj)
       let called = false
       some.mapOr(-1, a => {
-        expect(a).to.equal(obj)
+        expect(a).toBe(obj)
         called = true
         return 10
       })
-      expect(called).to.eql(true)
+      expect(called).toStrictEqual(true)
     })
   })
 
@@ -326,14 +324,14 @@ describe('Option', () => {
     it('none returns execs the provided generator', () => {
       const n = 123123
       const none = Option.None<number>()
-      const res = none.mapOrElse(() => n, (_) =>  10)
-      expect(res).to.eql(n)
+      const res = none.mapOrElse(() => n, (_) => 10)
+      expect(res).toStrictEqual(n)
     })
 
     it('some returns maps the value', () => {
       const some = Option.Some(10)
-      const res = some.mapOrElse(() => -1, a =>  a + 1)
-      expect(res).to.eql(11)
+      const res = some.mapOrElse(() => -1, a => a + 1)
+      expect(res).toStrictEqual(11)
     })
 
     it('sends the right argument to map fn', () => {
@@ -341,11 +339,11 @@ describe('Option', () => {
       const some = Option.Some(obj)
       let called = false
       some.mapOrElse(() => -1, a => {
-        expect(a).to.equal(obj)
+        expect(a).toBe(obj)
         called = true
         return 10
       })
-      expect(called).to.eql(true)
+      expect(called).toStrictEqual(true)
     })
   })
 
@@ -354,28 +352,28 @@ describe('Option', () => {
       const none = Option.None()
       const arg = Option.None()
       const zipped = none.zip(arg)
-      expect(zipped.isNone()).to.eql(true)
+      expect(zipped.isNone()).toStrictEqual(true)
     })
 
     it('none returns None when receives Some as argument', () => {
       const none = Option.None()
       const arg = Option.Some(10)
       const zipped = none.zip(arg)
-      expect(zipped.isNone()).to.eql(true)
+      expect(zipped.isNone()).toStrictEqual(true)
     })
 
     it('Some returns None when recieves None', () => {
       const some = Option.Some(10)
       const arg = Option.None()
       const zipped = some.zip(arg)
-      expect(zipped.isNone()).to.eql(true)
+      expect(zipped.isNone()).toStrictEqual(true)
     })
 
     it('Some returns Some with both values when receives another Some', () => {
       const some = Option.Some(10)
       const arg = Option.Some('foo')
       const zipped = some.zip(arg)
-      expect(zipped.unwrap()).to.eql([10, 'foo'])
+      expect(zipped.unwrap()).toStrictEqual([10, 'foo'])
     })
   })
 
@@ -383,29 +381,35 @@ describe('Option', () => {
     it('None returns None when receives None as parameter', () => {
       const none = Option.None()
       const arg = Option.None()
-      const res = none.zipWith(arg, (_a, _b) => { expect.fail('should not be called')})
-      expect(res.isNone()).to.eql(true)
+      const res = none.zipWith(arg, (_a, _b) => {
+        expect.unreachable('should not be called')
+      })
+      expect(res.isNone()).toStrictEqual(true)
     })
 
     it('None returns None when receives Some as parameter', () => {
       const none = Option.None()
       const arg = Option.Some(10)
-      const res = none.zipWith(arg, (_a, _b) => { expect.fail('should not be called')})
-      expect(res.isNone()).to.eql(true)
+      const res = none.zipWith(arg, (_a, _b) => {
+        expect.unreachable('should not be called')
+      })
+      expect(res.isNone()).toStrictEqual(true)
     })
 
     it('Some returns None when receives None as parameter', () => {
       const none = Option.Some(10)
       const arg = Option.None()
-      const res = none.zipWith(arg, (_a, _b) => { expect.fail('should not be called')})
-      expect(res.isNone()).to.eql(true)
+      const res = none.zipWith(arg, (_a, _b) => {
+        expect.unreachable('should not be called')
+      })
+      expect(res.isNone()).toStrictEqual(true)
     })
 
     it('when Some receives Some it returns Some with the content of applying the map function', () => {
       const none = Option.Some(3)
       const arg = Option.Some('a')
       const res = none.zipWith(arg, (a, b) => b.repeat(a))
-      expect(res.unwrap()).to.eql('aaa')
+      expect(res.unwrap()).toStrictEqual('aaa')
     })
   })
 
@@ -414,35 +418,35 @@ describe('Option', () => {
       const none = Option.None()
       const arg = Option.None()
       const res = none.and(arg)
-      expect(res).to.eql(Option.None())
+      expect(res).toStrictEqual(Option.None())
     })
 
     it('none and some returns none', () => {
       const none = Option.None()
       const arg = Option.Some(123)
       const res = none.and(arg)
-      expect(res).to.eql(Option.None())
+      expect(res).toStrictEqual(Option.None())
     })
 
     it('some and none returns none', () => {
       const some = Option.Some(123)
       const arg = Option.None()
       const res = some.and(arg)
-      expect(res).to.eql(Option.None())
+      expect(res).toStrictEqual(Option.None())
     })
 
     it('some and some returns some with the value and type of the parameter', () => {
       const some = Option.Some(123)
       const arg = Option.Some('foo')
       const res = some.and(arg)
-      expect(res).to.eql(Option.Some('foo'))
+      expect(res).toStrictEqual(Option.Some('foo'))
     })
 
     it('some and some returns exactly the same instance sent as argument', () => {
       const some = Option.Some(123)
       const arg = Option.Some('foo')
       const res = some.and(arg)
-      expect(res).to.equal(arg)
+      expect(res).toBe(arg)
     })
   })
 
@@ -451,7 +455,7 @@ describe('Option', () => {
       const none = Option.None()
       const arg = Option.None()
       const res = none.or(arg)
-      expect(res.isNone()).to.eql(true)
+      expect(res.isNone()).toStrictEqual(true)
     })
 
     it('none or some returns the some given as arg', () => {
@@ -459,7 +463,7 @@ describe('Option', () => {
       const obj = {}
       const arg = Option.Some(obj)
       const res = none.or(arg)
-      expect(res.unwrap()).to.equal(obj)
+      expect(res.unwrap()).toBe(obj)
     })
 
     it('some or none returns the first some', () => {
@@ -467,14 +471,14 @@ describe('Option', () => {
       const some = Option.Some(obj)
       const arg: Option<object> = Option.None()
       const res = some.or(arg)
-      expect(res.unwrap()).to.equal(obj)
+      expect(res.unwrap()).toBe(obj)
     })
 
     it('some or none returns exactly the same instance', () => {
       const some = Option.Some(123)
       const arg: Option<number> = Option.None()
       const res = some.or(arg)
-      expect(res).to.equal(some)
+      expect(res).toBe(some)
     })
 
     it('some or some returns the first some', () => {
@@ -482,7 +486,7 @@ describe('Option', () => {
       const some = Option.Some(str)
       const arg = Option.Some('bar')
       const res = some.or(arg)
-      expect(res.unwrap()).to.equal(str)
+      expect(res.unwrap()).toBe(str)
     })
   })
 
@@ -491,7 +495,7 @@ describe('Option', () => {
       const none = Option.None()
       const arg = Option.None()
       const res = none.xor(arg)
-      expect(res).to.eql(Option.None())
+      expect(res).toStrictEqual(Option.None())
     })
 
     it('None xor Some returns the Some given as arg', () => {
@@ -499,7 +503,7 @@ describe('Option', () => {
       const value = {}
       const arg = Option.Some(value)
       const res = none.xor(arg)
-      expect(res.unwrap()).to.eql(value)
+      expect(res.unwrap()).toStrictEqual(value)
     })
 
     it('Some xor None returns the Some with the first value', () => {
@@ -507,14 +511,14 @@ describe('Option', () => {
       const some = Option.Some(value)
       const arg: Option<object> = Option.None()
       const res = some.xor(arg)
-      expect(res.unwrap()).to.eql(value)
+      expect(res.unwrap()).toStrictEqual(value)
     })
 
     it('Some xor Some returns None', () => {
       const some = Option.Some(123)
       const arg = Option.Some(456)
       const res = some.xor(arg)
-      expect(res.isNone()).to.eql(true)
+      expect(res.isNone()).toStrictEqual(true)
     })
   })
 
@@ -523,28 +527,28 @@ describe('Option', () => {
       const none: Option<number> = Option.None()
       const fn = (_a: number) => Option.None()
       const res = none.andThen(fn)
-      expect(res.isNone()).to.eql(true)
+      expect(res.isNone()).toStrictEqual(true)
     })
 
     it('some receives a function that returns some, the result is some of the result', () => {
       const some: Option<number> = Option.Some(10)
       const fn = (_a: number) => Option.Some('foo')
       const res = some.andThen(fn)
-      expect(res.unwrap()).to.eql('foo')
+      expect(res.unwrap()).toStrictEqual('foo')
     })
 
     it('some receives a function that returns none, the result is none', () => {
       const some: Option<number> = Option.Some(10)
       const fn = (_a: number) => Option.None()
       const res = some.andThen(fn)
-      expect(res.isNone()).to.eql(true)
+      expect(res.isNone()).toStrictEqual(true)
     })
 
     it('none receives a function that returns some, the result is none', () => {
       const none: Option<number> = Option.None()
       const fn = (_a: number) => Option.Some(10)
       const res = none.andThen(fn)
-      expect(res.isNone()).to.eql(true)
+      expect(res.isNone()).toStrictEqual(true)
     })
 
     it('sends the right argument to the callback', () => {
@@ -552,11 +556,11 @@ describe('Option', () => {
       const some: Option<object> = Option.Some(obj)
       let called = false
       some.andThen((a) => {
-        expect(a).to.equal(obj)
+        expect(a).toBe(obj)
         called = true
         return Option.None()
       })
-      expect(called).to.eql(true)
+      expect(called).toStrictEqual(true)
     })
 
     it('does not call the callback when returns none', () => {
@@ -566,7 +570,7 @@ describe('Option', () => {
         called = true
         return Option.None()
       })
-      expect(called).to.eql(false)
+      expect(called).toStrictEqual(false)
     })
   })
 
@@ -575,21 +579,21 @@ describe('Option', () => {
       const none = Option.None()
       const fn = () => Option.None()
       const res = none.orElse(fn)
-      expect(res.isNone()).to.eql(true)
+      expect(res.isNone()).toStrictEqual(true)
     })
 
     it('Some with a function that returns none is the original some', () => {
       const none = Option.None()
       const fn = () => Option.None()
       const res = none.orElse(fn)
-      expect(res.isNone()).to.eql(true)
+      expect(res.isNone()).toStrictEqual(true)
     })
 
     it('none with a function that returns some gets some with the returned option of the fn', () => {
       const none: Option<number> = Option.None()
       const fn = () => Option.Some(10)
       const res = none.orElse(fn)
-      expect(res.unwrap()).to.eql(10)
+      expect(res.unwrap()).toStrictEqual(10)
     })
 
     it('some with a function that returns some gets some with the value of self', () => {
@@ -597,7 +601,7 @@ describe('Option', () => {
       const some = Option.Some(data)
       const fn = () => Option.Some('bar')
       const res = some.orElse(fn)
-      expect(res.unwrap()).to.eql('foo')
+      expect(res.unwrap()).toStrictEqual('foo')
     })
   })
 
@@ -605,13 +609,13 @@ describe('Option', () => {
     it('none gets transformed into some with the given value', () => {
       const option = Option.None()
       option.insert(10)
-      expect(option.unwrap()).to.eql(10)
+      expect(option.unwrap()).toStrictEqual(10)
     })
 
     it('some replace the old value with the one given as argument', () => {
       const option = Option.Some(123)
       option.insert(456)
-      expect(option.unwrap()).to.eql(456)
+      expect(option.unwrap()).toStrictEqual(456)
     })
   })
 
@@ -619,25 +623,25 @@ describe('Option', () => {
     it('none returns the value given by default.', () => {
       const none = Option.None()
       const res = none.getOrInsert(123)
-      expect(res).to.eql(123)
+      expect(res).toStrictEqual(123)
     })
 
     it('none gets converted into some with the value.', () => {
       const option = Option.None()
       option.getOrInsert(123)
-      expect(option.unwrap()).to.eql(123)
+      expect(option.unwrap()).toStrictEqual(123)
     })
 
     it('some returns the value contained inside and ignores the argument.', () => {
       const some = Option.Some(123)
       const res = some.getOrInsert(456)
-      expect(res).to.eql(123)
+      expect(res).toStrictEqual(123)
     })
 
     it('some keeps its original value.', () => {
       const some = Option.Some(123)
       some.getOrInsert(456)
-      expect(some.unwrap()).to.eql(123)
+      expect(some.unwrap()).toStrictEqual(123)
     })
   })
 
@@ -646,29 +650,29 @@ describe('Option', () => {
       const none = Option.None()
       const fn = () => 'foo'
       const res = none.getOrInsertWith(fn);
-      expect(res).to.eql('foo')
+      expect(res).toStrictEqual('foo')
     })
 
     it('none gets transformed into some with the value returned by the fn', () => {
       const option = Option.None()
       const fn = () => 'foo'
       option.getOrInsertWith(fn);
-      expect(option.isSome()).to.eql(true)
-      expect(option.unwrap()).to.eql('foo')
+      expect(option.isSome()).toStrictEqual(true)
+      expect(option.unwrap()).toStrictEqual('foo')
     })
 
     it('some returns the value stored from before', () => {
       const some = Option.Some(123)
       const fn = () => 456
       const res = some.getOrInsertWith(fn)
-      expect(res).to.eql(123)
+      expect(res).toStrictEqual(123)
     })
 
     it('some does not change its value', () => {
       const some = Option.Some(123)
       const fn = () => 456
       some.getOrInsertWith(fn)
-      expect(some.unwrap()).to.eql(123)
+      expect(some.unwrap()).toStrictEqual(123)
     })
 
     it('some does not evaluate the function', () => {
@@ -678,32 +682,32 @@ describe('Option', () => {
         called = true
         return 456
       })
-      expect(called).to.eql(false)
+      expect(called).toStrictEqual(false)
     })
   })
 
   describe('#take', () => {
     it('take from none returns none', () => {
       const none = Option.None()
-      expect(none.take().isNone()).to.eql(true)
+      expect(none.take().isNone()).toStrictEqual(true)
     })
 
     it('take from none leaves self as none', () => {
       const none = Option.None()
       none.take();
-      expect(none.isNone()).to.eql(true)
+      expect(none.isNone()).toStrictEqual(true)
     })
 
     it('some returns its contained value', () => {
       const some = Option.Some(123)
       const res = some.take();
-      expect(res.unwrap()).to.eql(123)
+      expect(res.unwrap()).toStrictEqual(123)
     })
 
     it('some mutates into none', () => {
       const option = Option.Some(123)
       option.take();
-      expect(option.isNone()).to.eql(true)
+      expect(option.isNone()).toStrictEqual(true)
     })
   })
 
@@ -711,7 +715,7 @@ describe('Option', () => {
     it('none returns none', () => {
       const none = Option.None()
       const res = none.takeIf((_) => true)
-      expect(res.isNone()).to.eql(true)
+      expect(res.isNone()).toStrictEqual(true)
     })
     it('none does not call the fn', () => {
       const none = Option.None()
@@ -720,32 +724,32 @@ describe('Option', () => {
         called = true
         return true
       })
-      expect(called).to.eql(false)
+      expect(called).toStrictEqual(false)
     })
 
     it('some returns some with its value when predicate is true', () => {
       const some = Option.Some(123)
       const res = some.takeIf((_) => true)
-      expect(res.isSome()).to.eql(true)
-      expect(res.unwrap()).to.eql(123)
+      expect(res.isSome()).toStrictEqual(true)
+      expect(res.unwrap()).toStrictEqual(123)
     })
 
     it('some mutates into none when predicate returns true', () => {
       const some = Option.Some(123)
       some.takeIf((_) => true)
-      expect(some.isNone()).to.eql(true)
+      expect(some.isNone()).toStrictEqual(true)
     })
 
     it('some returns none when preducate returns false', () => {
       const some = Option.Some(123)
       const res = some.takeIf((_) => false)
-      expect(res.isNone()).to.eql(true)
+      expect(res.isNone()).toStrictEqual(true)
     })
 
     it('some does not mutate when predicate returns false', () => {
       const some = Option.Some(123)
       some.takeIf((_) => false)
-      expect(some.isSomeAnd(t => t === 123)).to.eql(true)
+      expect(some.isSomeAnd(t => t === 123)).toStrictEqual(true)
     })
   })
 
@@ -754,15 +758,15 @@ describe('Option', () => {
       const obj = {}
       const option: Option<object> = Option.None()
       option.replace(obj)
-      expect(option.isSome()).to.eql(true)
-      expect(option.unwrap()).to.equal(obj)
+      expect(option.isSome()).toStrictEqual(true)
+      expect(option.unwrap()).toBe(obj)
     })
 
     it('none returns none', () => {
       const obj = {}
       const none: Option<object> = Option.None()
       const res = none.replace(obj)
-      expect(res.isNone()).to.eql(true)
+      expect(res.isNone()).toStrictEqual(true)
     })
 
     it('some returns some with the old value', () => {
@@ -770,8 +774,8 @@ describe('Option', () => {
       const newValue = 456
       const some = Option.Some(oldValue)
       const res = some.replace(newValue)
-      expect(res.isSome()).to.eql(true)
-      expect(res.unwrap()).to.eql(oldValue)
+      expect(res.isSome()).toStrictEqual(true)
+      expect(res.unwrap()).toStrictEqual(oldValue)
     })
 
     it('some retains the new value inside', () => {
@@ -779,8 +783,8 @@ describe('Option', () => {
       const newValue = 456
       const some = Option.Some(oldValue)
       some.replace(newValue)
-      expect(some.isSome()).to.eql(true)
-      expect(some.unwrap()).to.eql(newValue)
+      expect(some.isSome()).toStrictEqual(true)
+      expect(some.unwrap()).toStrictEqual(newValue)
     })
   })
 
@@ -791,30 +795,32 @@ describe('Option', () => {
       none.ifSome((_) => {
         called = true
       })
-      expect(called).to.eql(false)
+      expect(called).toStrictEqual(false)
     })
 
     it('some calls the fn', () => {
       const some = Option.Some(123)
       let called = false
       some.ifSome((t) => {
-        expect(t).to.eql(123)
+        expect(t).toStrictEqual(123)
         called = true
       })
-      expect(called).to.eql(true)
+      expect(called).toStrictEqual(true)
     })
 
     it('none returns none', () => {
       const none = Option.None()
-      const res = none.ifSome((_) => {})
-      expect(res.isNone()).to.eql(true)
+      const res = none.ifSome((_) => {
+      })
+      expect(res.isNone()).toStrictEqual(true)
     })
 
     it('some returns self', () => {
       const some = Option.Some(123)
-      const res = some.ifSome((_) => {})
-      expect(res.isSome()).to.eql(true)
-      expect(res).to.equal(some)
+      const res = some.ifSome((_) => {
+      })
+      expect(res.isSome()).toStrictEqual(true)
+      expect(res).toBe(some)
     })
   })
 
@@ -825,7 +831,7 @@ describe('Option', () => {
       none.ifNone(() => {
         called = true
       })
-      expect(called).to.eql(true)
+      expect(called).toStrictEqual(true)
     })
 
     it('some does not call the fn', () => {
@@ -834,20 +840,22 @@ describe('Option', () => {
       some.ifNone(() => {
         called = true
       })
-      expect(called).to.eql(false)
+      expect(called).toStrictEqual(false)
     })
 
     it('none returns none', () => {
       const none = Option.None()
-      const res = none.ifNone(() => {})
-      expect(res.isNone()).to.eql(true)
+      const res = none.ifNone(() => {
+      })
+      expect(res.isNone()).toStrictEqual(true)
     })
 
     it('some returns self', () => {
       const some = Option.Some(123)
-      const res = some.ifNone(() => {})
-      expect(res.isSome()).to.eql(true)
-      expect(res).to.equal(some)
+      const res = some.ifNone(() => {
+      })
+      expect(res.isSome()).toStrictEqual(true)
+      expect(res).toBe(some)
     })
   })
 
@@ -858,60 +866,60 @@ describe('Option', () => {
       none.inspectContent((_) => {
         called = true
       })
-      expect(called).to.eql(false)
+      expect(called).toStrictEqual(false)
     })
 
     it('some calls the fn with the right arg', () => {
       const some = Option.Some(123)
       let called = false
       some.inspectContent((arg) => {
-        expect(arg).to.eql(123)
+        expect(arg).toStrictEqual(123)
         called = true
       })
-      expect(called).to.eql(true)
+      expect(called).toStrictEqual(true)
     })
   })
 
   describe('#toArray', () => {
     it('none returns an empty array', () => {
       const none = Option.None()
-      expect(none.toArray()).to.eql([])
+      expect(none.toArray()).toStrictEqual([])
     })
 
     it('some returns an array with the value contained', () => {
       const obj = {}
       const some = Option.Some(obj)
-      expect(some.toArray()).to.eql([obj])
+      expect(some.toArray()).toStrictEqual([obj])
     })
   })
 
   describe('Option.fromNullable', () => {
     it('returns none for null', () => {
       const option = Option.fromNullable(null)
-      expect(option.isNone()).to.eql(true)
+      expect(option.isNone()).toStrictEqual(true)
     })
 
     it('returns none for undefined', () => {
       const option = Option.fromNullable(undefined)
-      expect(option.isNone()).to.eql(true)
+      expect(option.isNone()).toStrictEqual(true)
     })
 
     it('returns some for a number', () => {
       const option = Option.fromNullable(10)
-      expect(option.isSome()).to.eql(true)
-      expect(option.unwrap()).to.eql(10)
+      expect(option.isSome()).toStrictEqual(true)
+      expect(option.unwrap()).toStrictEqual(10)
     })
 
     it('returns some for a false', () => {
       const option = Option.fromNullable(false)
-      expect(option.isSome()).to.eql(true)
-      expect(option.unwrap()).to.eql(false)
+      expect(option.isSome()).toStrictEqual(true)
+      expect(option.unwrap()).toStrictEqual(false)
     })
 
     it('returns some for a 0s', () => {
       const option = Option.fromNullable(0)
-      expect(option.isSome()).to.eql(true)
-      expect(option.unwrap()).to.eql(0)
+      expect(option.isSome()).toStrictEqual(true)
+      expect(option.unwrap()).toStrictEqual(0)
     })
   })
 
@@ -919,31 +927,31 @@ describe('Option', () => {
     it('returns true for 2 nones', () => {
       const none1 = Option.None()
       const none2 = Option.None()
-      expect(none1.equals(none2)).to.eql(true)
+      expect(none1.equals(none2)).toStrictEqual(true)
     })
 
     it('returns false for none and some', () => {
       const none = Option.None()
       const some = Option.Some(10)
-      expect(none.equals(some)).to.eql(false)
+      expect(none.equals(some)).toStrictEqual(false)
     })
 
     it('returns false for some and none', () => {
       const some = Option.Some('foo')
       const none = Option.None<string>()
-      expect(some.equals(none)).to.eql(false)
+      expect(some.equals(none)).toStrictEqual(false)
     })
 
     it('returns true for some and some with the same value', () => {
       const some1 = Option.Some('foo')
       const some2 = Option.Some('foo')
-      expect(some1.equals(some2)).to.eql(true)
+      expect(some1.equals(some2)).toStrictEqual(true)
     })
 
     it('returns false for some and some with different value', () => {
       const some1 = Option.Some('foo')
       const some2 = Option.Some('bar')
-      expect(some1.equals(some2)).to.eql(false)
+      expect(some1.equals(some2)).toStrictEqual(false)
     })
   })
 
@@ -952,35 +960,35 @@ describe('Option', () => {
       const none1 = Option.None()
       const none2 = Option.None()
       const eq = none1.equalsWith(none2, () => false);
-      expect(eq).to.eql(true)
+      expect(eq).toStrictEqual(true)
     })
 
     it('returns false for none and some', () => {
       const none = Option.None()
       const some = Option.Some(10)
       const eq = none.equalsWith(some, () => true);
-      expect(eq).to.eql(false)
+      expect(eq).toStrictEqual(false)
     })
 
     it('returns false for some and none', () => {
       const some = Option.Some(10)
       const none = Option.None<number>()
       const eq = some.equalsWith(none, () => true);
-      expect(eq).to.eql(false)
+      expect(eq).toStrictEqual(false)
     })
 
     it('returns false for some and some when equality fails', () => {
       const some1 = Option.Some(10)
       const some2 = Option.Some(10)
       const eq = some1.equalsWith(some2, () => false);
-      expect(eq).to.eql(false)
+      expect(eq).toStrictEqual(false)
     })
 
     it('returns true for some and some when equality returns true', () => {
       const some1 = Option.Some(1)
       const some2 = Option.Some(22)
       const eq = some1.equalsWith(some2, () => true);
-      expect(eq).to.eql(true)
+      expect(eq).toStrictEqual(true)
     })
 
     it('sends right parameter to equality', () => {
@@ -990,12 +998,19 @@ describe('Option', () => {
       const some2 = Option.Some(obj2)
       let called = false
       some1.equalsWith(some2, (a, b) => {
-        expect(a).to.equals(obj1)
-        expect(b).to.equals(obj2)
+        expect(a).toBe(obj1)
+        expect(b).toBe(obj2)
         called = true
         return true
       });
-      expect(called).to.eql(true)
+      expect(called).toStrictEqual(true)
     })
   })
+
+  // describe('transpose', () => {
+  //   it('', async () => {
+  //     const opt1 = Option.Some(Promise.resolve(10));
+  //     await opt1.transpose()
+  //   })
+  // })
 })
