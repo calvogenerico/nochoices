@@ -1,79 +1,79 @@
-import { OptionalValue } from "./optional-value.js"
-import { Option } from "./option.js"
-import { Some } from "./some.js"
-import { AreEqual, FlattenOption } from "./types.js";
+import { Option } from './option.js';
+import { OptionalValue } from './optional-value.js';
+import { Some } from './some.js';
+import type { AreEqual, FlattenOption } from './types.js';
 
 export class None<T> extends OptionalValue<T> {
   isPresent(): boolean {
-    return false
+    return false;
   }
 
   isAbsent(): boolean {
-    return true
+    return true;
   }
 
   unwrap(): T {
-    throw new Error('unwrap over None.')
+    throw new Error('unwrap over None.');
   }
 
   map<M>(_fn: (a: T) => M): Option<M> {
-    return Option.None()
+    return Option.None();
   }
 
   filter(_fn: (a: T) => boolean): Option<T> {
-    return Option.None()
+    return Option.None();
   }
 
   expect(err: Error): T {
-    throw err
+    throw err;
   }
 
   unwrapOr<U>(defaultValue: U): T | U {
-    return defaultValue
+    return defaultValue;
   }
 
   unwrapOrElse(defaultFn: () => T): T {
-    return defaultFn()
+    return defaultFn();
   }
 
   flatten(): Option<FlattenOption<T>> {
-    return Option.None()
+    return Option.None();
   }
 
   zip<U>(_another: OptionalValue<U>): Option<[T, U]> {
-    return Option.None()
+    return Option.None();
   }
 
   zipWithSome<U>(_some: Some<U>): Option<[U, T]> {
-    return Option.None()
+    return Option.None();
   }
 
   and<V>(_another: Option<V>): Option<V> {
-    return Option.None()
+    return Option.None();
   }
 
   or(_self: Option<T>, another: Option<T>): Option<T> {
-    return another
+    return another;
   }
 
   xor(another: OptionalValue<T>): Option<T> {
-    return another.xorWithNone()
+    return another.xorWithNone();
   }
 
   xorWithNone(): Option<T> {
-    return Option.None()
+    return Option.None();
   }
 
   xorWithSome(some: Some<T>): Option<T> {
-    return Option.Some(some.unwrap())
+    return Option.Some(some.unwrap());
   }
 
   andThen<U>(_fn: (t: T) => Option<U>): Option<U> {
-    return Option.None()
+    return Option.None();
   }
 
   orElse(fn: () => Option<T>): Option<T> {
-    return fn()
+    return fn();
   }
 
   getOrInsert(value: T): OptionalValue<T> {
@@ -97,7 +97,7 @@ export class None<T> extends OptionalValue<T> {
   }
 
   ifNone(fn: () => void): void {
-    fn()
+    fn();
   }
 
   toArray(): T[] {
@@ -105,6 +105,6 @@ export class None<T> extends OptionalValue<T> {
   }
 
   equalsWith(another: OptionalValue<T>, _equality: AreEqual<T>): boolean {
-    return another.isAbsent()
+    return another.isAbsent();
   }
 }

@@ -1,4 +1,4 @@
-import {Option} from "./option.js";
+import { Option } from './option.js';
 
 /**
  * Tuple of 2 options.
@@ -6,7 +6,7 @@ import {Option} from "./option.js";
  * @param A - Any type
  * @param B - Any type
  */
-export type OptionDuo<A, B> = [Option<A>, Option<B>]
+export type OptionDuo<A, B> = [Option<A>, Option<B>];
 
 /**
  * Type safe function to unzip an option of a tuple of 2 into a tuple of 2 options.
@@ -24,7 +24,8 @@ export type OptionDuo<A, B> = [Option<A>, Option<B>]
  * optB.unwrap() === 'foo' // true
  * ```
  */
-export function unzip<A, B> (opt: Option<[A, B]>): OptionDuo<A, B> {
-  return opt.map<OptionDuo<A, B>>(([a, b]) => [Option.Some(a), Option.Some(b)])
-      .unwrapOr([Option.None<A>(), Option.None<B>()])
+export function unzip<A, B>(opt: Option<[A, B]>): OptionDuo<A, B> {
+  return opt
+    .map<OptionDuo<A, B>>(([a, b]) => [Option.Some(a), Option.Some(b)])
+    .unwrapOr([Option.None<A>(), Option.None<B>()]);
 }

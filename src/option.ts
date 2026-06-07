@@ -1,7 +1,7 @@
-import { OptionalValue } from "./optional-value.js"
-import { Some } from "./some.js"
-import { None } from "./none.js"
-import {
+import { None } from './none.js';
+import type { OptionalValue } from './optional-value.js';
+import { Some } from './some.js';
+import type {
   AreEqual,
   FlattenOption,
   GenerateOption,
@@ -9,9 +9,8 @@ import {
   Predicate,
   Transformation,
   TransformToOption,
-  ZipTransformation
-} from "./types.js";
-
+  ZipTransformation,
+} from './types.js';
 
 /**
  *
@@ -54,7 +53,7 @@ export class Option<T> {
    * @hidden
    * @private
    */
-  private value: OptionalValue<T>
+  private value: OptionalValue<T>;
 
   /**
    * @hidden
@@ -62,7 +61,7 @@ export class Option<T> {
    * @private
    */
   private constructor(value: OptionalValue<T>) {
-    this.value = value
+    this.value = value;
   }
 
   /**
@@ -79,9 +78,8 @@ export class Option<T> {
    * ```
    */
   static Some<T>(value: T): Option<T> {
-    return new Option(new Some(value))
+    return new Option(new Some(value));
   }
-
 
   /**
    * Creates an empty optional value (represents no value).
@@ -96,7 +94,7 @@ export class Option<T> {
    * ```
    */
   static None<T>(): Option<T> {
-    return new Option<T>(new None())
+    return new Option<T>(new None());
   }
 
   /**
@@ -118,12 +116,11 @@ export class Option<T> {
    */
   static fromNullable<T>(param: T | null | undefined): Option<T> {
     if (param === null || param === undefined) {
-      return Option.None()
+      return Option.None();
     } else {
-      return Option.Some(param)
+      return Option.Some(param);
     }
   }
-
 
   /**
    * Returns true if the instance does not contain a value. Returns false otherwise.
@@ -139,7 +136,7 @@ export class Option<T> {
    * ```
    */
   isNone(): boolean {
-    return this.value.isAbsent()
+    return this.value.isAbsent();
   }
 
   /**
@@ -156,9 +153,8 @@ export class Option<T> {
    * ```
    */
   isSome(): boolean {
-    return this.value.isPresent()
+    return this.value.isPresent();
   }
-
 
   /**
    * Transforms the value contained in the Option instance using the provided mapping function.
@@ -179,7 +175,7 @@ export class Option<T> {
    * ```
    */
   map<M>(fn: Transformation<T, M>): Option<M> {
-    return this.value.map(fn)
+    return this.value.map(fn);
   }
 
   /**
@@ -208,7 +204,7 @@ export class Option<T> {
    * ```
    */
   unwrap(): T {
-    return this.value.unwrap()
+    return this.value.unwrap();
   }
 
   /**
@@ -228,7 +224,7 @@ export class Option<T> {
    * ```
    */
   unwrapOr<U>(defaultValue: U): T | U {
-    return this.value.unwrapOr(defaultValue)
+    return this.value.unwrapOr(defaultValue);
   }
 
   /**
@@ -250,7 +246,7 @@ export class Option<T> {
    * ```
    */
   unwrapOrElse(defaultFn: Generator<T>): T {
-    return this.value.unwrapOrElse(defaultFn)
+    return this.value.unwrapOrElse(defaultFn);
   }
 
   /**
@@ -276,7 +272,7 @@ export class Option<T> {
    * ```
    */
   filter(fn: Predicate<T>): Option<T> {
-    return this.value.filter(fn)
+    return this.value.filter(fn);
   }
 
   /**
@@ -297,7 +293,7 @@ export class Option<T> {
    * ```
    */
   expect(err: Error): T {
-    return this.value.expect(err)
+    return this.value.expect(err);
   }
 
   /**
@@ -319,9 +315,8 @@ export class Option<T> {
    * ```
    */
   flatten(): Option<FlattenOption<T>> {
-    return this.value.flatten()
+    return this.value.flatten();
   }
-
 
   /**
    * Returns the value inside the optional after applying the given transformation. If the
@@ -340,7 +335,7 @@ export class Option<T> {
    * ```
    */
   mapOr<U>(defaultValue: U, mapFn: Transformation<T, U>): U {
-    return this.map(mapFn).unwrapOr(defaultValue)
+    return this.map(mapFn).unwrapOr(defaultValue);
   }
 
   /**
@@ -363,7 +358,7 @@ export class Option<T> {
    * ```
    */
   mapOrElse<U>(defFn: () => U, mapFn: Transformation<T, U>): U {
-    return this.map(mapFn).unwrapOrElse(defFn)
+    return this.map(mapFn).unwrapOrElse(defFn);
   }
 
   /**
@@ -384,9 +379,8 @@ export class Option<T> {
    * ```
    */
   zip<U>(another: Option<U>): Option<[T, U]> {
-    return this.value.zip(another.value)
+    return this.value.zip(another.value);
   }
-
 
   /**
    * Combines 2 options and then applies a transformation. The result is an option
@@ -412,7 +406,7 @@ export class Option<T> {
    * ```
    */
   zipWith<U, V>(another: Option<U>, zipWithFn: ZipTransformation<T, U, V>): Option<V> {
-    return this.zip(another).map(([t, u]) => zipWithFn(t, u))
+    return this.zip(another).map(([t, u]) => zipWithFn(t, u));
   }
 
   /**
@@ -437,9 +431,8 @@ export class Option<T> {
    * ```
    */
   and<V>(another: Option<V>): Option<V> {
-    return this.value.and(another)
+    return this.value.and(another);
   }
-
 
   /**
    * Returns a new Option instance that is only present if any of the instances
@@ -464,7 +457,7 @@ export class Option<T> {
    * ```
    */
   or(another: Option<T>): Option<T> {
-    return this.value.or(this, another)
+    return this.value.or(this, another);
   }
 
   /**
@@ -490,7 +483,7 @@ export class Option<T> {
    * ```
    */
   xor(another: Option<T>): Option<T> {
-    return this.value.xor(another.value)
+    return this.value.xor(another.value);
   }
 
   /**
@@ -512,7 +505,7 @@ export class Option<T> {
    * ```
    */
   andThen<U>(fn: TransformToOption<T, U>): Option<U> {
-    return this.value.andThen(fn)
+    return this.value.andThen(fn);
   }
 
   /**
@@ -533,7 +526,7 @@ export class Option<T> {
    * ```
    */
   orElse(fn: GenerateOption<T>): Option<T> {
-    return this.value.orElse(fn)
+    return this.value.orElse(fn);
   }
 
   /**
@@ -551,8 +544,8 @@ export class Option<T> {
    * ```
    */
   insert(value: T): Option<T> {
-    this.value = new Some(value)
-    return this
+    this.value = new Some(value);
+    return this;
   }
 
   /**
@@ -576,8 +569,8 @@ export class Option<T> {
    * ```
    */
   getOrInsert(value: T): T {
-    this.value = this.value.getOrInsert(value)
-    return this.unwrap()
+    this.value = this.value.getOrInsert(value);
+    return this.unwrap();
   }
 
   /**
@@ -604,8 +597,8 @@ export class Option<T> {
    * ```
    */
   getOrInsertWith(fn: Generator<T>): T {
-    this.value = this.value.getOrInsertWith(fn)
-    return this.unwrap()
+    this.value = this.value.getOrInsertWith(fn);
+    return this.unwrap();
   }
 
   /**
@@ -629,9 +622,9 @@ export class Option<T> {
    * ```
    */
   take(): Option<T> {
-    const takeValue = this.value.takeValue()
-    this.value = new None()
-    return takeValue
+    const takeValue = this.value.takeValue();
+    this.value = new None();
+    return takeValue;
   }
 
   /**
@@ -651,9 +644,9 @@ export class Option<T> {
    * ```
    */
   replace(newValue: T): Option<T> {
-    const oldValue = this.value
-    this.value = new Some(newValue)
-    return new Option<T>(oldValue)
+    const oldValue = this.value;
+    this.value = new Some(newValue);
+    return new Option<T>(oldValue);
   }
 
   /**
@@ -682,7 +675,7 @@ export class Option<T> {
    * ```
    */
   isSomeAnd(andFn: Predicate<T>): boolean {
-    return this.value.isSomeAnd(andFn)
+    return this.value.isSomeAnd(andFn);
   }
 
   /**
@@ -711,7 +704,7 @@ export class Option<T> {
    * ```
    */
   isSomeBut(condition: Predicate<T>) {
-    return this.value.isSomeAnd((t) => !condition(t))
+    return this.value.isSomeAnd(t => !condition(t));
   }
 
   /**
@@ -743,8 +736,8 @@ export class Option<T> {
    * ```
    */
   ifSome(fn: (t: T) => void): Option<T> {
-    this.value.ifSome(fn)
-    return this
+    this.value.ifSome(fn);
+    return this;
   }
 
   /**
@@ -775,8 +768,8 @@ export class Option<T> {
    * ```
    */
   ifNone(fn: () => void): Option<T> {
-    this.value.ifNone(fn)
-    return this
+    this.value.ifNone(fn);
+    return this;
   }
 
   /**
@@ -798,7 +791,7 @@ export class Option<T> {
    * ```
    */
   inspectContent(param: (t: T) => void) {
-    this.ifSome(param)
+    this.ifSome(param);
   }
 
   /**
@@ -824,7 +817,7 @@ export class Option<T> {
    * ```
    */
   takeIf(param: Predicate<T>): Option<T> {
-    return this.filter(param).andThen(() => this.take())
+    return this.filter(param).andThen(() => this.take());
   }
 
   /**
@@ -843,9 +836,8 @@ export class Option<T> {
    * ```
    */
   toArray(): T[] {
-    return this.value.toArray()
+    return this.value.toArray();
   }
-
 
   /**
    * Returns true if and only of both optionals are some and both have the same
@@ -862,7 +854,7 @@ export class Option<T> {
    * ```
    */
   equals(another: Option<T>): boolean {
-    return this.value.equalsWith(another.value, (a, b) => a === b)
+    return this.value.equalsWith(another.value, (a, b) => a === b);
   }
 
   /**
@@ -887,6 +879,6 @@ export class Option<T> {
    * ```
    */
   equalsWith(another: Option<T>, equality: AreEqual<T>): boolean {
-    return this.value.equalsWith(another.value, equality)
+    return this.value.equalsWith(another.value, equality);
   }
 }

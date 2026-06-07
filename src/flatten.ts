@@ -1,4 +1,4 @@
-import {Option} from "./option.js"
+import { Option } from './option.js';
 
 /**
  * Flattens nested options in one level. This function
@@ -22,5 +22,5 @@ import {Option} from "./option.js"
  * ```
  */
 export function flatten<T>(opt: Option<Option<T>>): Option<T> {
-  return opt.unwrapOr(Option.None())
+  return opt.unwrapOr(Option.None());
 }

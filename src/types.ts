@@ -1,4 +1,4 @@
-import {Option} from "./option.js";
+import type { Option } from './option.js';
 
 /**
  * Type alias for simple transformations functions.
@@ -16,7 +16,7 @@ import {Option} from "./option.js";
  * const f3: Transformation = (_a: string): object => ({color: 'red'})
  * ```
  */
-export type Transformation<A, B> = (a: A) => B
+export type Transformation<A, B> = (a: A) => B;
 
 /**
  * Type alias for functions that given a value returns true or false.
@@ -31,7 +31,7 @@ export type Transformation<A, B> = (a: A) => B
  * const fn3 = (_a: any) => true
  * ```
  */
-export type Predicate<A> = (a: A) => boolean
+export type Predicate<A> = (a: A) => boolean;
 
 /**
  * Type alias for functions that take no parameters and return a Value.
@@ -45,7 +45,7 @@ export type Predicate<A> = (a: A) => boolean
  * const fn3 = () => Option.None()
  * ```
  */
-export type Generator<A> = () => A
+export type Generator<A> = () => A;
 
 /**
  * Type alias for functions that take no parameters and return an optional value.
@@ -59,7 +59,7 @@ export type Generator<A> = () => A
  * const fn3 = () => Option.None()
  * ```
  */
-export type GenerateOption<A> = () => Option<A>
+export type GenerateOption<A> = () => Option<A>;
 
 /**
  * Type alias for functions that 2 values and return any other value
@@ -76,7 +76,7 @@ export type GenerateOption<A> = () => Option<A>
  * const fn3 = (a: number, b: string): {a: number, b: string} => ({ a, b })
  * ```
  */
-export type ZipTransformation<A, B, C> = (a: A, b: B) => C
+export type ZipTransformation<A, B, C> = (a: A, b: B) => C;
 
 /**
  * Similar to a {@link Transformation | `Transformation`} but the result has to
@@ -93,7 +93,7 @@ export type ZipTransformation<A, B, C> = (a: A, b: B) => C
  * const fn3 = (a: number[]) => Option.fromNullable(a[0])
  * ```
  */
-export type TransformToOption<A, B> = (a: A) => Option<B>
+export type TransformToOption<A, B> = (a: A) => Option<B>;
 
 /**
  * Type helper for flatting options
@@ -112,10 +112,7 @@ export type TransformToOption<A, B> = (a: A) => Option<B>
  * @param A - any type
  * @param B - any type
  */
-export type FlattenOption<A> = A extends Option<infer B>
-  ? B
-  : A
-
+export type FlattenOption<A> = A extends Option<infer B> ? B : A;
 
 /**
  * Type alias for functions that takes two values of the same type and return a boolean.
@@ -134,4 +131,4 @@ export type FlattenOption<A> = A extends Option<infer B>
  * const fn3: AreEqual<object> = (a1: object, a2: object) => JSON.stringify(a1) === JSON.stringify(a2)
  * ```
  */
-export type AreEqual<A> = (a1: A, a2: A) => boolean
+export type AreEqual<A> = (a1: A, a2: A) => boolean;
