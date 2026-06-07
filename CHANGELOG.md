@@ -1,5 +1,12 @@
 # nochoices
 
+## 1.1.6
+
+### Patch Changes
+
+- b516818: Migrated tooling to newer and better. biome for lint and vitest for testing
+- 81d24f3: Added transpose
+
 ## 1.1.4
 
 ### Patch Changes
