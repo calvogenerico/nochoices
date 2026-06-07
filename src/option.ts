@@ -882,7 +882,23 @@ export class Option<T> {
     return this.value.equalsWith(another.value, equality);
   }
 
+  /**
+   * Transposes an `Option` of a `Promise` into a `Promise` of an `Option`.
+   *
+   * `Option.Some(promise)` becomes a promise that resolves to `Option.Some(value)`
+   * (where `value` is what the original promise resolved to).
+   * `Option.None()` becomes a promise that resolves to `Option.None()`.
+   *
+   * @example
+   * ```ts
+   * const opt = Option.Some(Promise.resolve(10));
+   * const result: Option<number> = await opt.transpose(); // Option.Some(10)
+   *
+   * const none = Option.None<Promise<number>>();
+   * const result2: Option<number> = await none.transpose(); // Option.None()
+   * ```
+   */
   async transpose<U>(this: Option<Promise<U>>): Promise<Option<U>> {
     return this.value.transpose();
-  };
+  }
 }
