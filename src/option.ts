@@ -881,4 +881,8 @@ export class Option<T> {
   equalsWith(another: Option<T>, equality: AreEqual<T>): boolean {
     return this.value.equalsWith(another.value, equality);
   }
+
+  async transpose<U>(this: Option<Promise<U>>): Promise<Option<U>> {
+    return this.value.transpose();
+  };
 }

@@ -1012,10 +1012,23 @@ describe('Option', () => {
     });
   });
 
-  // describe('transpose', () => {
-  //   it('', async () => {
-  //     const opt1 = Option.Some(Promise.resolve(10));
-  //     await opt1.transpose()
-  //   })
-  // })
+  describe('#transpose', () => {
+    it('flips the option and promise and allows to await to get the promise back', async () => {
+      const some = Option.Some(Promise.resolve(10));
+      const numberOption = await some.transpose();
+      expect(numberOption.unwrap()).toEqual(10);
+    });
+
+    it('await some with a rejection cascades the rejection', async () => {
+      const errorToken = { error: 'this was an error' };
+      const some = Option.Some(Promise.reject(errorToken));
+      await expect(some.transpose()).rejects.toEqual(errorToken);
+    });
+
+    it('for none it returns a promise with none', async () => {
+      const none = Option.None<Promise<number>>();
+      const numberOption = await none.transpose();
+      expect(numberOption.isNone()).toEqual(true);
+    });
+  });
 });

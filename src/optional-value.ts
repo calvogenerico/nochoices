@@ -54,4 +54,6 @@ export abstract class OptionalValue<T> {
   abstract toArray(): T[];
 
   abstract equalsWith(another: OptionalValue<T>, equality: AreEqual<T>): boolean;
+
+  abstract transpose<U>(this: OptionalValue<Promise<U>>): Promise<Option<U>>;
 }

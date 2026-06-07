@@ -122,4 +122,8 @@ export class Some<T> extends OptionalValue<T> {
   equalsWith(another: OptionalValue<T>, equality: AreEqual<T>): boolean {
     return another.isSomeAnd(t => equality(this.value, t));
   }
+
+  async transpose<U>(this: Some<Promise<U>>): Promise<Option<U>> {
+    return this.value.then(u => Option.Some(u));
+  }
 }

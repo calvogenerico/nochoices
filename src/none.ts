@@ -107,4 +107,8 @@ export class None<T> extends OptionalValue<T> {
   equalsWith(another: OptionalValue<T>, _equality: AreEqual<T>): boolean {
     return another.isAbsent();
   }
+
+  async transpose<U>(): Promise<Option<U>> {
+    return Promise.resolve(Option.None());
+  }
 }
